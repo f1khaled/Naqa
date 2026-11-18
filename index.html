@@ -619,6 +619,28 @@
     .ms .medal { width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; background: var(--surface-2); color: var(--ink-3); }
     .ms.on { color: var(--ink); }
     .ms.on .medal { background: var(--sand-soft); color: var(--sand-ink); }
+    .j-big { font-size: 46px; font-weight: 700; line-height: 1.05; letter-spacing: -1px; }
+    .j-big small { font-size: 16px; font-weight: 500; color: var(--ink-3); letter-spacing: 0; }
+    .cells { display: grid; grid-template-columns: repeat(30, 1fr); gap: 3px; margin-top: 18px; }
+    .cell { position: relative; height: 10px; border-radius: 3px; background: var(--surface-3); }
+    .cell.done { background: var(--sage); }
+    .cell.cur { background: var(--sage); opacity: .45; animation: budPulse 2.6s ease-in-out infinite; }
+    .cell.wk { margin-inline-start: 4px; }
+    .cell.ms::after { content: ""; position: absolute; top: -10px; left: 50%; width: 6px; height: 6px; border-radius: 1.5px; transform: translateX(-50%) rotate(45deg); background: var(--ink-3); opacity: .5; }
+    .cell.ms-on::after { background: var(--sand); opacity: 1; }
+    .up-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); }
+    .up-row:first-of-type { border-top: 0; }
+    .tiles { display: grid; grid-template-columns: repeat(var(--n), 1fr); gap: 6px; margin-top: 14px; }
+    .tile { position: relative; aspect-ratio: 1 / 1.2; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; font-size: 15px; font-weight: 700; color: var(--ink-3); background: transparent; border: 1px solid var(--line-2); transition: transform .15s var(--ease); }
+    .tile small { font-size: 10px; font-weight: 600; min-height: 12px; }
+    .tile.done { background: var(--sage-soft); color: var(--sage-ink); border-color: transparent; }
+    .tile.cur { background: var(--sage); color: var(--on-accent); border-color: transparent; }
+    .tile.sel { box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--sage); }
+    .tile .st { position: absolute; top: 2px; left: 3px; color: var(--sand); line-height: 0; }
+    .tile.cur .st { color: var(--on-accent); }
+    .tile .st .ic { width: 11px; height: 11px; }
+    .day-peek { display: flex; align-items: center; gap: 10px; width: 100%; text-align: right; margin-top: 14px; padding: 12px 14px; border-radius: 16px; background: var(--surface-2); }
+    .wk-row { display: flex; align-items: center; gap: 12px; width: 100%; text-align: right; padding: 14px 16px; border-bottom: 1px solid var(--line); }
     .empty { text-align: center; padding: 26px 18px; }
     .empty .ibox { margin: 0 auto 12px; width: 56px; height: 56px; border-radius: 20px; }
 
@@ -706,7 +728,7 @@
   <script>
   'use strict';
   /* Icons: Lucide v0.460.0 (ISC License) — inlined for offline use */
-  const ICONS = {"sun":"<circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 2v2\"/><path d=\"M12 20v2\"/><path d=\"m4.93 4.93 1.41 1.41\"/><path d=\"m17.66 17.66 1.41 1.41\"/><path d=\"M2 12h2\"/><path d=\"M20 12h2\"/><path d=\"m6.34 17.66-1.41 1.41\"/><path d=\"m19.07 4.93-1.41 1.41\"/>","route":"<circle cx=\"6\" cy=\"19\" r=\"3\"/><path d=\"M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15\"/><circle cx=\"18\" cy=\"5\" r=\"3\"/>","wind":"<path d=\"M12.8 19.6A2 2 0 1 0 14 16H2\"/><path d=\"M17.5 8a2.5 2.5 0 1 1 2 4H2\"/><path d=\"M9.8 4.4A2 2 0 1 1 11 8H2\"/>","user":"<path d=\"M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2\"/><circle cx=\"12\" cy=\"7\" r=\"4\"/>","x":"<path d=\"M18 6 6 18\"/><path d=\"m6 6 12 12\"/>","pause":"<rect x=\"14\" y=\"4\" width=\"4\" height=\"16\" rx=\"1\"/><rect x=\"6\" y=\"4\" width=\"4\" height=\"16\" rx=\"1\"/>","shield-check":"<path d=\"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z\"/><path d=\"m9 12 2 2 4-4\"/>","chevron-right":"<path d=\"m9 18 6-6-6-6\"/>","hand-heart":"<path d=\"M11 14h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16\"/><path d=\"m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9\"/><path d=\"m2 15 6 6\"/><path d=\"M19.5 8.5c.7-.7 1.5-1.6 1.5-2.7A2.73 2.73 0 0 0 16 4a2.78 2.78 0 0 0-5 1.8c0 1.2.8 2 1.5 2.8L16 12Z\"/>","calendar":"<path d=\"M8 2v4\"/><path d=\"M16 2v4\"/><rect width=\"18\" height=\"18\" x=\"3\" y=\"4\" rx=\"2\"/><path d=\"M3 10h18\"/>","trending-down":"<polyline points=\"22 17 13.5 8.5 8.5 13.5 2 7\"/><polyline points=\"16 17 22 17 22 11\"/>","minus":"<path d=\"M5 12h14\"/>","plus":"<path d=\"M5 12h14\"/><path d=\"M12 5v14\"/>","moon-star":"<path d=\"M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9\"/><path d=\"M20 3v4\"/><path d=\"M22 5h-4\"/>","leaf":"<path d=\"M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z\"/><path d=\"M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12\"/>","settings":"<path d=\"M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z\"/><circle cx=\"12\" cy=\"12\" r=\"3\"/>","info":"<circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M12 16v-4\"/><path d=\"M12 8h.01\"/>","sprout":"<path d=\"M7 20h10\"/><path d=\"M10 20c5.5-2.5.8-6.4 3-10\"/><path d=\"M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z\"/><path d=\"M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z\"/>","rotate-ccw":"<path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\"/><path d=\"M3 3v5h5\"/>","play":"<polygon points=\"6 3 20 12 6 21 6 3\"/>","check":"<path d=\"M20 6 9 17l-5-5\"/>","circle-check":"<circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"m9 12 2 2 4-4\"/>","chevron-down":"<path d=\"m6 9 6 6 6-6\"/>","chevron-left":"<path d=\"m15 18-6-6 6-6\"/>","zap":"<path d=\"M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z\"/>","book-open":"<path d=\"M12 7v14\"/><path d=\"M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z\"/>","activity":"<path d=\"M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2\"/>","download":"<path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/><polyline points=\"7 10 12 15 17 10\"/><line x1=\"12\" x2=\"12\" y1=\"15\" y2=\"3\"/>","smartphone":"<rect width=\"14\" height=\"20\" x=\"5\" y=\"2\" rx=\"2\" ry=\"2\"/><path d=\"M12 18h.01\"/>","shield":"<path d=\"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z\"/>","users":"<path d=\"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2\"/><circle cx=\"9\" cy=\"7\" r=\"4\"/><path d=\"M22 21v-2a4 4 0 0 0-3-3.87\"/><path d=\"M16 3.13a4 4 0 0 1 0 7.75\"/>","target":"<circle cx=\"12\" cy=\"12\" r=\"10\"/><circle cx=\"12\" cy=\"12\" r=\"6\"/><circle cx=\"12\" cy=\"12\" r=\"2\"/>","heart-pulse":"<path d=\"M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z\"/><path d=\"M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27\"/>","pill":"<path d=\"m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z\"/><path d=\"m8.5 8.5 7 7\"/>","crown":"<path d=\"M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z\"/><path d=\"M5 21h14\"/>","bell":"<path d=\"M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9\"/><path d=\"M10.3 21a1.94 1.94 0 0 0 3.4 0\"/>","share-2":"<circle cx=\"18\" cy=\"5\" r=\"3\"/><circle cx=\"6\" cy=\"12\" r=\"3\"/><circle cx=\"18\" cy=\"19\" r=\"3\"/><line x1=\"8.59\" x2=\"15.42\" y1=\"13.51\" y2=\"17.49\"/><line x1=\"15.41\" x2=\"8.59\" y1=\"6.51\" y2=\"10.49\"/>","clock":"<circle cx=\"12\" cy=\"12\" r=\"10\"/><polyline points=\"12 6 12 12 16 14\"/>","pen-line":"<path d=\"M12 20h9\"/><path d=\"M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z\"/>","chart-column":"<path d=\"M3 3v16a2 2 0 0 0 2 2h16\"/><path d=\"M18 17V9\"/><path d=\"M13 17V5\"/><path d=\"M8 17v-3\"/>","lightbulb":"<path d=\"M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5\"/><path d=\"M9 18h6\"/><path d=\"M10 22h4\"/>","pencil":"<path d=\"M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z\"/><path d=\"m15 5 4 4\"/>","trash-2":"<path d=\"M3 6h18\"/><path d=\"M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6\"/><path d=\"M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2\"/><line x1=\"10\" x2=\"10\" y1=\"11\" y2=\"17\"/><line x1=\"14\" x2=\"14\" y1=\"11\" y2=\"17\"/>","list-checks":"<path d=\"m3 17 2 2 4-4\"/><path d=\"m3 7 2 2 4-4\"/><path d=\"M13 6h8\"/><path d=\"M13 12h8\"/><path d=\"M13 18h8\"/>","gift":"<rect x=\"3\" y=\"8\" width=\"18\" height=\"4\" rx=\"1\"/><path d=\"M12 8v13\"/><path d=\"M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7\"/><path d=\"M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5\"/>","palette":"<circle cx=\"13.5\" cy=\"6.5\" r=\".5\" fill=\"currentColor\"/><circle cx=\"17.5\" cy=\"10.5\" r=\".5\" fill=\"currentColor\"/><circle cx=\"8.5\" cy=\"7.5\" r=\".5\" fill=\"currentColor\"/><circle cx=\"6.5\" cy=\"12.5\" r=\".5\" fill=\"currentColor\"/><path d=\"M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z\"/>","vibrate":"<path d=\"m2 8 2 2-2 2 2 2-2 2\"/><path d=\"m22 8-2 2 2 2-2 2 2 2\"/><rect width=\"8\" height=\"14\" x=\"8\" y=\"5\" rx=\"1\"/>","banknote":"<rect width=\"20\" height=\"12\" x=\"2\" y=\"6\" rx=\"2\"/><circle cx=\"12\" cy=\"12\" r=\"2\"/><path d=\"M6 12h.01M18 12h.01\"/>","upload":"<path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/><polyline points=\"17 8 12 3 7 8\"/><line x1=\"12\" x2=\"12\" y1=\"3\" y2=\"15\"/>","star":"<path d=\"M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z\"/>","eye":"<path d=\"M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0\"/><circle cx=\"12\" cy=\"12\" r=\"3\"/>","heart":"<path d=\"M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z\"/>","lock":"<rect width=\"18\" height=\"11\" x=\"3\" y=\"11\" rx=\"2\" ry=\"2\"/><path d=\"M7 11V7a5 5 0 0 1 10 0v4\"/>","mail":"<rect width=\"20\" height=\"16\" x=\"2\" y=\"4\" rx=\"2\"/><path d=\"m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7\"/>","wallet":"<path d=\"M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1\"/><path d=\"M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4\"/>","gauge":"<path d=\"m12 14 4-4\"/><path d=\"M3.34 19a10 10 0 1 1 17.32 0\"/>","flag":"<path d=\"M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z\"/><line x1=\"4\" x2=\"4\" y1=\"22\" y2=\"15\"/>","flame":"<path d=\"M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z\"/>","unlink":"<path d=\"m18.84 12.25 1.72-1.71h-.02a5.004 5.004 0 0 0-.12-7.07 5.006 5.006 0 0 0-6.95 0l-1.72 1.71\"/><path d=\"m5.17 11.75-1.71 1.71a5.004 5.004 0 0 0 .12 7.07 5.006 5.006 0 0 0 6.95 0l1.71-1.71\"/><line x1=\"8\" x2=\"8\" y1=\"2\" y2=\"5\"/><line x1=\"2\" x2=\"5\" y1=\"8\" y2=\"8\"/><line x1=\"16\" x2=\"16\" y1=\"19\" y2=\"22\"/><line x1=\"19\" x2=\"22\" y1=\"16\" y2=\"16\"/>","brain":"<path d=\"M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z\"/><path d=\"M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z\"/><path d=\"M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4\"/><path d=\"M17.599 6.5a3 3 0 0 0 .399-1.375\"/><path d=\"M6.003 5.125A3 3 0 0 0 6.401 6.5\"/><path d=\"M3.477 10.896a4 4 0 0 1 .585-.396\"/><path d=\"M19.938 10.5a4 4 0 0 1 .585.396\"/><path d=\"M6 18a4 4 0 0 1-1.967-.516\"/><path d=\"M19.967 17.484A4 4 0 0 1 18 18\"/>","droplet":"<path d=\"M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z\"/>","sparkles":"<path d=\"M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z\"/><path d=\"M20 3v4\"/><path d=\"M22 5h-4\"/><path d=\"M4 17v2\"/><path d=\"M5 18H3\"/>","flower-2":"<path d=\"M12 5a3 3 0 1 1 3 3m-3-3a3 3 0 1 0-3 3m3-3v1M9 8a3 3 0 1 0 3 3M9 8h1m5 0a3 3 0 1 1-3 3m3-3h-1m-2 3v-1\"/><circle cx=\"12\" cy=\"8\" r=\"2\"/><path d=\"M12 10v12\"/><path d=\"M12 22c4.2 0 7-1.667 7-5-4.2 0-7 1.667-7 5Z\"/><path d=\"M12 22c-4.2 0-7-1.667-7-5 4.2 0 7 1.667 7 5Z\"/>","orbit":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"19\" cy=\"5\" r=\"2\"/><circle cx=\"5\" cy=\"19\" r=\"2\"/><path d=\"M10.4 21.9a10 10 0 0 0 9.941-15.416\"/><path d=\"M13.5 2.1a10 10 0 0 0-9.841 15.416\"/>","mountain":"<path d=\"m8 3 4 8 5-5 5 15H2L8 3z\"/>","coffee":"<path d=\"M10 2v2\"/><path d=\"M14 2v2\"/><path d=\"M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1\"/><path d=\"M6 2v2\"/>","car":"<path d=\"M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2\"/><circle cx=\"7\" cy=\"17\" r=\"2\"/><path d=\"M9 17h6\"/><circle cx=\"17\" cy=\"17\" r=\"2\"/>","briefcase":"<path d=\"M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16\"/><rect width=\"20\" height=\"14\" x=\"2\" y=\"6\" rx=\"2\"/>","cloud":"<path d=\"M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z\"/>","utensils":"<path d=\"M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2\"/><path d=\"M7 2v20\"/><path d=\"M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7\"/>","gamepad-2":"<line x1=\"6\" x2=\"10\" y1=\"11\" y2=\"11\"/><line x1=\"8\" x2=\"8\" y1=\"9\" y2=\"13\"/><line x1=\"15\" x2=\"15.01\" y1=\"12\" y2=\"12\"/><line x1=\"18\" x2=\"18.01\" y1=\"10\" y2=\"10\"/><path d=\"M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z\"/>","cloud-rain":"<path d=\"M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242\"/><path d=\"M16 14v6\"/><path d=\"M8 14v6\"/><path d=\"M12 16v6\"/>","cloud-sun":"<path d=\"M12 2v2\"/><path d=\"m4.93 4.93 1.41 1.41\"/><path d=\"M20 12h2\"/><path d=\"m19.07 4.93-1.41 1.41\"/><path d=\"M15.947 12.65a4 4 0 0 0-5.925-4.128\"/><path d=\"M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z\"/>","glass-water":"<path d=\"M5.116 4.104A1 1 0 0 1 6.11 3h11.78a1 1 0 0 1 .994 1.105L17.19 20.21A2 2 0 0 1 15.2 22H8.8a2 2 0 0 1-2-1.79z\"/><path d=\"M6 12a5 5 0 0 1 6 0 5 5 0 0 0 6 0\"/>","feather":"<path d=\"M12.67 19a2 2 0 0 0 1.416-.588l6.154-6.172a6 6 0 0 0-8.49-8.49L5.586 9.914A2 2 0 0 0 5 11.328V18a1 1 0 0 0 1 1z\"/><path d=\"M16 8 2 22\"/><path d=\"M17.5 15H9\"/>","footprints":"<path d=\"M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z\"/><path d=\"M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z\"/><path d=\"M16 17h4\"/><path d=\"M4 13h4\"/>","sunrise":"<path d=\"M12 2v8\"/><path d=\"m4.93 10.93 1.41 1.41\"/><path d=\"M2 18h2\"/><path d=\"M20 18h2\"/><path d=\"m19.07 10.93-1.41 1.41\"/><path d=\"M22 22H2\"/><path d=\"m8 6 4-4 4 4\"/><path d=\"M16 18a4 4 0 0 0-8 0\"/>","focus":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><path d=\"M3 7V5a2 2 0 0 1 2-2h2\"/><path d=\"M17 3h2a2 2 0 0 1 2 2v2\"/><path d=\"M21 17v2a2 2 0 0 1-2 2h-2\"/><path d=\"M7 21H5a2 2 0 0 1-2-2v-2\"/>","history":"<path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\"/><path d=\"M3 3v5h5\"/><path d=\"M12 7v5l4 2\"/>","waves":"<path d=\"M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1\"/><path d=\"M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1\"/><path d=\"M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1\"/>","bed":"<path d=\"M2 4v16\"/><path d=\"M2 8h18a2 2 0 0 1 2 2v10\"/><path d=\"M2 17h20\"/><path d=\"M6 8v9\"/>","circle-alert":"<circle cx=\"12\" cy=\"12\" r=\"10\"/><line x1=\"12\" x2=\"12\" y1=\"8\" y2=\"12\"/><line x1=\"12\" x2=\"12.01\" y1=\"16\" y2=\"16\"/>","sliders-horizontal":"<line x1=\"21\" x2=\"14\" y1=\"4\" y2=\"4\"/><line x1=\"10\" x2=\"3\" y1=\"4\" y2=\"4\"/><line x1=\"21\" x2=\"12\" y1=\"12\" y2=\"12\"/><line x1=\"8\" x2=\"3\" y1=\"12\" y2=\"12\"/><line x1=\"21\" x2=\"16\" y1=\"20\" y2=\"20\"/><line x1=\"12\" x2=\"3\" y1=\"20\" y2=\"20\"/><line x1=\"14\" x2=\"14\" y1=\"2\" y2=\"6\"/><line x1=\"8\" x2=\"8\" y1=\"10\" y2=\"14\"/><line x1=\"16\" x2=\"16\" y1=\"18\" y2=\"22\"/>","share":"<path d=\"M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8\"/><polyline points=\"16 6 12 2 8 6\"/><line x1=\"12\" x2=\"12\" y1=\"2\" y2=\"15\"/>","currency":"<circle cx=\"12\" cy=\"12\" r=\"8\"/><line x1=\"3\" x2=\"6\" y1=\"3\" y2=\"6\"/><line x1=\"21\" x2=\"18\" y1=\"3\" y2=\"6\"/><line x1=\"3\" x2=\"6\" y1=\"21\" y2=\"18\"/><line x1=\"21\" x2=\"18\" y1=\"21\" y2=\"18\"/>","mouse":"<rect x=\"5\" y=\"2\" width=\"14\" height=\"20\" rx=\"7\"/><path d=\"M12 6v4\"/>","scroll":"<path d=\"M19 17V5a2 2 0 0 0-2-2H4\"/><path d=\"M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3\"/>"};
+  const ICONS = {"sun":"<circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 2v2\"/><path d=\"M12 20v2\"/><path d=\"m4.93 4.93 1.41 1.41\"/><path d=\"m17.66 17.66 1.41 1.41\"/><path d=\"M2 12h2\"/><path d=\"M20 12h2\"/><path d=\"m6.34 17.66-1.41 1.41\"/><path d=\"m19.07 4.93-1.41 1.41\"/>","route":"<circle cx=\"6\" cy=\"19\" r=\"3\"/><path d=\"M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15\"/><circle cx=\"18\" cy=\"5\" r=\"3\"/>","wind":"<path d=\"M12.8 19.6A2 2 0 1 0 14 16H2\"/><path d=\"M17.5 8a2.5 2.5 0 1 1 2 4H2\"/><path d=\"M9.8 4.4A2 2 0 1 1 11 8H2\"/>","user":"<path d=\"M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2\"/><circle cx=\"12\" cy=\"7\" r=\"4\"/>","x":"<path d=\"M18 6 6 18\"/><path d=\"m6 6 12 12\"/>","pause":"<rect x=\"14\" y=\"4\" width=\"4\" height=\"16\" rx=\"1\"/><rect x=\"6\" y=\"4\" width=\"4\" height=\"16\" rx=\"1\"/>","shield-check":"<path d=\"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z\"/><path d=\"m9 12 2 2 4-4\"/>","chevron-right":"<path d=\"m9 18 6-6-6-6\"/>","hand-heart":"<path d=\"M11 14h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16\"/><path d=\"m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9\"/><path d=\"m2 15 6 6\"/><path d=\"M19.5 8.5c.7-.7 1.5-1.6 1.5-2.7A2.73 2.73 0 0 0 16 4a2.78 2.78 0 0 0-5 1.8c0 1.2.8 2 1.5 2.8L16 12Z\"/>","calendar":"<path d=\"M8 2v4\"/><path d=\"M16 2v4\"/><rect width=\"18\" height=\"18\" x=\"3\" y=\"4\" rx=\"2\"/><path d=\"M3 10h18\"/>","trending-down":"<polyline points=\"22 17 13.5 8.5 8.5 13.5 2 7\"/><polyline points=\"16 17 22 17 22 11\"/>","minus":"<path d=\"M5 12h14\"/>","plus":"<path d=\"M5 12h14\"/><path d=\"M12 5v14\"/>","moon-star":"<path d=\"M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9\"/><path d=\"M20 3v4\"/><path d=\"M22 5h-4\"/>","leaf":"<path d=\"M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z\"/><path d=\"M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12\"/>","settings":"<path d=\"M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z\"/><circle cx=\"12\" cy=\"12\" r=\"3\"/>","info":"<circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M12 16v-4\"/><path d=\"M12 8h.01\"/>","sprout":"<path d=\"M7 20h10\"/><path d=\"M10 20c5.5-2.5.8-6.4 3-10\"/><path d=\"M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z\"/><path d=\"M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z\"/>","rotate-ccw":"<path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\"/><path d=\"M3 3v5h5\"/>","play":"<polygon points=\"6 3 20 12 6 21 6 3\"/>","check":"<path d=\"M20 6 9 17l-5-5\"/>","circle-check":"<circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"m9 12 2 2 4-4\"/>","chevron-down":"<path d=\"m6 9 6 6 6-6\"/>","chevron-left":"<path d=\"m15 18-6-6 6-6\"/>","zap":"<path d=\"M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z\"/>","book-open":"<path d=\"M12 7v14\"/><path d=\"M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z\"/>","activity":"<path d=\"M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2\"/>","download":"<path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/><polyline points=\"7 10 12 15 17 10\"/><line x1=\"12\" x2=\"12\" y1=\"15\" y2=\"3\"/>","smartphone":"<rect width=\"14\" height=\"20\" x=\"5\" y=\"2\" rx=\"2\" ry=\"2\"/><path d=\"M12 18h.01\"/>","shield":"<path d=\"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z\"/>","users":"<path d=\"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2\"/><circle cx=\"9\" cy=\"7\" r=\"4\"/><path d=\"M22 21v-2a4 4 0 0 0-3-3.87\"/><path d=\"M16 3.13a4 4 0 0 1 0 7.75\"/>","target":"<circle cx=\"12\" cy=\"12\" r=\"10\"/><circle cx=\"12\" cy=\"12\" r=\"6\"/><circle cx=\"12\" cy=\"12\" r=\"2\"/>","crown":"<path d=\"M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z\"/><path d=\"M5 21h14\"/>","star":"<path d=\"M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z\"/>","pill":"<path d=\"m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z\"/><path d=\"m8.5 8.5 7 7\"/>","bell":"<path d=\"M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9\"/><path d=\"M10.3 21a1.94 1.94 0 0 0 3.4 0\"/>","share-2":"<circle cx=\"18\" cy=\"5\" r=\"3\"/><circle cx=\"6\" cy=\"12\" r=\"3\"/><circle cx=\"18\" cy=\"19\" r=\"3\"/><line x1=\"8.59\" x2=\"15.42\" y1=\"13.51\" y2=\"17.49\"/><line x1=\"15.41\" x2=\"8.59\" y1=\"6.51\" y2=\"10.49\"/>","clock":"<circle cx=\"12\" cy=\"12\" r=\"10\"/><polyline points=\"12 6 12 12 16 14\"/>","pen-line":"<path d=\"M12 20h9\"/><path d=\"M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z\"/>","chart-column":"<path d=\"M3 3v16a2 2 0 0 0 2 2h16\"/><path d=\"M18 17V9\"/><path d=\"M13 17V5\"/><path d=\"M8 17v-3\"/>","lightbulb":"<path d=\"M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5\"/><path d=\"M9 18h6\"/><path d=\"M10 22h4\"/>","pencil":"<path d=\"M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z\"/><path d=\"m15 5 4 4\"/>","trash-2":"<path d=\"M3 6h18\"/><path d=\"M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6\"/><path d=\"M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2\"/><line x1=\"10\" x2=\"10\" y1=\"11\" y2=\"17\"/><line x1=\"14\" x2=\"14\" y1=\"11\" y2=\"17\"/>","list-checks":"<path d=\"m3 17 2 2 4-4\"/><path d=\"m3 7 2 2 4-4\"/><path d=\"M13 6h8\"/><path d=\"M13 12h8\"/><path d=\"M13 18h8\"/>","gift":"<rect x=\"3\" y=\"8\" width=\"18\" height=\"4\" rx=\"1\"/><path d=\"M12 8v13\"/><path d=\"M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7\"/><path d=\"M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5\"/>","palette":"<circle cx=\"13.5\" cy=\"6.5\" r=\".5\" fill=\"currentColor\"/><circle cx=\"17.5\" cy=\"10.5\" r=\".5\" fill=\"currentColor\"/><circle cx=\"8.5\" cy=\"7.5\" r=\".5\" fill=\"currentColor\"/><circle cx=\"6.5\" cy=\"12.5\" r=\".5\" fill=\"currentColor\"/><path d=\"M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z\"/>","vibrate":"<path d=\"m2 8 2 2-2 2 2 2-2 2\"/><path d=\"m22 8-2 2 2 2-2 2 2 2\"/><rect width=\"8\" height=\"14\" x=\"8\" y=\"5\" rx=\"1\"/>","banknote":"<rect width=\"20\" height=\"12\" x=\"2\" y=\"6\" rx=\"2\"/><circle cx=\"12\" cy=\"12\" r=\"2\"/><path d=\"M6 12h.01M18 12h.01\"/>","upload":"<path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/><polyline points=\"17 8 12 3 7 8\"/><line x1=\"12\" x2=\"12\" y1=\"3\" y2=\"15\"/>","eye":"<path d=\"M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0\"/><circle cx=\"12\" cy=\"12\" r=\"3\"/>","heart":"<path d=\"M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z\"/>","lock":"<rect width=\"18\" height=\"11\" x=\"3\" y=\"11\" rx=\"2\" ry=\"2\"/><path d=\"M7 11V7a5 5 0 0 1 10 0v4\"/>","mail":"<rect width=\"20\" height=\"16\" x=\"2\" y=\"4\" rx=\"2\"/><path d=\"m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7\"/>","wallet":"<path d=\"M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1\"/><path d=\"M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4\"/>","gauge":"<path d=\"m12 14 4-4\"/><path d=\"M3.34 19a10 10 0 1 1 17.32 0\"/>","flag":"<path d=\"M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z\"/><line x1=\"4\" x2=\"4\" y1=\"22\" y2=\"15\"/>","flame":"<path d=\"M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z\"/>","unlink":"<path d=\"m18.84 12.25 1.72-1.71h-.02a5.004 5.004 0 0 0-.12-7.07 5.006 5.006 0 0 0-6.95 0l-1.72 1.71\"/><path d=\"m5.17 11.75-1.71 1.71a5.004 5.004 0 0 0 .12 7.07 5.006 5.006 0 0 0 6.95 0l1.71-1.71\"/><line x1=\"8\" x2=\"8\" y1=\"2\" y2=\"5\"/><line x1=\"2\" x2=\"5\" y1=\"8\" y2=\"8\"/><line x1=\"16\" x2=\"16\" y1=\"19\" y2=\"22\"/><line x1=\"19\" x2=\"22\" y1=\"16\" y2=\"16\"/>","brain":"<path d=\"M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z\"/><path d=\"M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z\"/><path d=\"M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4\"/><path d=\"M17.599 6.5a3 3 0 0 0 .399-1.375\"/><path d=\"M6.003 5.125A3 3 0 0 0 6.401 6.5\"/><path d=\"M3.477 10.896a4 4 0 0 1 .585-.396\"/><path d=\"M19.938 10.5a4 4 0 0 1 .585.396\"/><path d=\"M6 18a4 4 0 0 1-1.967-.516\"/><path d=\"M19.967 17.484A4 4 0 0 1 18 18\"/>","droplet":"<path d=\"M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z\"/>","heart-pulse":"<path d=\"M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z\"/><path d=\"M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27\"/>","sparkles":"<path d=\"M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z\"/><path d=\"M20 3v4\"/><path d=\"M22 5h-4\"/><path d=\"M4 17v2\"/><path d=\"M5 18H3\"/>","flower-2":"<path d=\"M12 5a3 3 0 1 1 3 3m-3-3a3 3 0 1 0-3 3m3-3v1M9 8a3 3 0 1 0 3 3M9 8h1m5 0a3 3 0 1 1-3 3m3-3h-1m-2 3v-1\"/><circle cx=\"12\" cy=\"8\" r=\"2\"/><path d=\"M12 10v12\"/><path d=\"M12 22c4.2 0 7-1.667 7-5-4.2 0-7 1.667-7 5Z\"/><path d=\"M12 22c-4.2 0-7-1.667-7-5 4.2 0 7 1.667 7 5Z\"/>","orbit":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"19\" cy=\"5\" r=\"2\"/><circle cx=\"5\" cy=\"19\" r=\"2\"/><path d=\"M10.4 21.9a10 10 0 0 0 9.941-15.416\"/><path d=\"M13.5 2.1a10 10 0 0 0-9.841 15.416\"/>","mountain":"<path d=\"m8 3 4 8 5-5 5 15H2L8 3z\"/>","coffee":"<path d=\"M10 2v2\"/><path d=\"M14 2v2\"/><path d=\"M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1\"/><path d=\"M6 2v2\"/>","car":"<path d=\"M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2\"/><circle cx=\"7\" cy=\"17\" r=\"2\"/><path d=\"M9 17h6\"/><circle cx=\"17\" cy=\"17\" r=\"2\"/>","briefcase":"<path d=\"M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16\"/><rect width=\"20\" height=\"14\" x=\"2\" y=\"6\" rx=\"2\"/>","cloud":"<path d=\"M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z\"/>","utensils":"<path d=\"M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2\"/><path d=\"M7 2v20\"/><path d=\"M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7\"/>","gamepad-2":"<line x1=\"6\" x2=\"10\" y1=\"11\" y2=\"11\"/><line x1=\"8\" x2=\"8\" y1=\"9\" y2=\"13\"/><line x1=\"15\" x2=\"15.01\" y1=\"12\" y2=\"12\"/><line x1=\"18\" x2=\"18.01\" y1=\"10\" y2=\"10\"/><path d=\"M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z\"/>","cloud-rain":"<path d=\"M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242\"/><path d=\"M16 14v6\"/><path d=\"M8 14v6\"/><path d=\"M12 16v6\"/>","cloud-sun":"<path d=\"M12 2v2\"/><path d=\"m4.93 4.93 1.41 1.41\"/><path d=\"M20 12h2\"/><path d=\"m19.07 4.93-1.41 1.41\"/><path d=\"M15.947 12.65a4 4 0 0 0-5.925-4.128\"/><path d=\"M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z\"/>","glass-water":"<path d=\"M5.116 4.104A1 1 0 0 1 6.11 3h11.78a1 1 0 0 1 .994 1.105L17.19 20.21A2 2 0 0 1 15.2 22H8.8a2 2 0 0 1-2-1.79z\"/><path d=\"M6 12a5 5 0 0 1 6 0 5 5 0 0 0 6 0\"/>","feather":"<path d=\"M12.67 19a2 2 0 0 0 1.416-.588l6.154-6.172a6 6 0 0 0-8.49-8.49L5.586 9.914A2 2 0 0 0 5 11.328V18a1 1 0 0 0 1 1z\"/><path d=\"M16 8 2 22\"/><path d=\"M17.5 15H9\"/>","footprints":"<path d=\"M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z\"/><path d=\"M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z\"/><path d=\"M16 17h4\"/><path d=\"M4 13h4\"/>","sunrise":"<path d=\"M12 2v8\"/><path d=\"m4.93 10.93 1.41 1.41\"/><path d=\"M2 18h2\"/><path d=\"M20 18h2\"/><path d=\"m19.07 10.93-1.41 1.41\"/><path d=\"M22 22H2\"/><path d=\"m8 6 4-4 4 4\"/><path d=\"M16 18a4 4 0 0 0-8 0\"/>","focus":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><path d=\"M3 7V5a2 2 0 0 1 2-2h2\"/><path d=\"M17 3h2a2 2 0 0 1 2 2v2\"/><path d=\"M21 17v2a2 2 0 0 1-2 2h-2\"/><path d=\"M7 21H5a2 2 0 0 1-2-2v-2\"/>","history":"<path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\"/><path d=\"M3 3v5h5\"/><path d=\"M12 7v5l4 2\"/>","waves":"<path d=\"M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1\"/><path d=\"M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1\"/><path d=\"M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1\"/>","bed":"<path d=\"M2 4v16\"/><path d=\"M2 8h18a2 2 0 0 1 2 2v10\"/><path d=\"M2 17h20\"/><path d=\"M6 8v9\"/>","circle-alert":"<circle cx=\"12\" cy=\"12\" r=\"10\"/><line x1=\"12\" x2=\"12\" y1=\"8\" y2=\"12\"/><line x1=\"12\" x2=\"12.01\" y1=\"16\" y2=\"16\"/>","sliders-horizontal":"<line x1=\"21\" x2=\"14\" y1=\"4\" y2=\"4\"/><line x1=\"10\" x2=\"3\" y1=\"4\" y2=\"4\"/><line x1=\"21\" x2=\"12\" y1=\"12\" y2=\"12\"/><line x1=\"8\" x2=\"3\" y1=\"12\" y2=\"12\"/><line x1=\"21\" x2=\"16\" y1=\"20\" y2=\"20\"/><line x1=\"12\" x2=\"3\" y1=\"20\" y2=\"20\"/><line x1=\"14\" x2=\"14\" y1=\"2\" y2=\"6\"/><line x1=\"8\" x2=\"8\" y1=\"10\" y2=\"14\"/><line x1=\"16\" x2=\"16\" y1=\"18\" y2=\"22\"/>","share":"<path d=\"M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8\"/><polyline points=\"16 6 12 2 8 6\"/><line x1=\"12\" x2=\"12\" y1=\"2\" y2=\"15\"/>","currency":"<circle cx=\"12\" cy=\"12\" r=\"8\"/><line x1=\"3\" x2=\"6\" y1=\"3\" y2=\"6\"/><line x1=\"21\" x2=\"18\" y1=\"3\" y2=\"6\"/><line x1=\"3\" x2=\"6\" y1=\"21\" y2=\"18\"/><line x1=\"21\" x2=\"18\" y1=\"21\" y2=\"18\"/>","mouse":"<rect x=\"5\" y=\"2\" width=\"14\" height=\"20\" rx=\"7\"/><path d=\"M12 6v4\"/>","scroll":"<path d=\"M19 17V5a2 2 0 0 0-2-2H4\"/><path d=\"M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3\"/>"};
 
   /* =========================================================
      CONTENT
@@ -1681,7 +1703,7 @@
           <span class="ibox sm sand">${ic('trending-down', 'sm')}</span>
           <div class="grow">
             <div class="small bold">${m.allowed ? 'حصة اليوم: ' + nf(m.usedToday) + ' من ' + nf(m.allowed) : 'يوم صفر — لا أظرف اليوم'}</div>
-            ${m.allowed ? `<div class="xs muted">بتركيز ${nf(targetMg(m.day))} ملغ أو أقل${state.taperHold && m.now < state.taperHold.until ? ' · الحصة مثبّتة حتى ' + fmtDate(state.taperHold.until) : ''}</div>` : ''}
+            ${m.allowed ? `<div class="xs muted">بتركيز ${nf(targetMg(m.day))} ملغ أو أقل${state.taperHold && m.now < state.taperHold.until ? ' — الحصة مثبّتة حتى ' + fmtDate(state.taperHold.until) : ''}</div>` : ''}
             ${dots ? `<div class="pouches" style="margin-top:6px">${dots}</div>` : ''}
           </div>
           <button class="btn sm soft-sand" data-action="taperAdd">${ic('plus', 'xs')} ظرف</button>
@@ -1699,7 +1721,7 @@
       <div class="bar thin" style="margin:10px 0 14px"><i style="width:${doneN / tasks.length * 100}%"></i></div>`;
     if (nxt) {
       html += `<div class="next-task">
-        <div class="xs sage bold">${ic('play', 'xs')} مهمتك التالية · ${nxt.when || 'الآن'}</div>
+        <div class="xs sage bold">${ic('play', 'xs')} مهمتك التالية — ${nxt.when || 'الآن'}</div>
         <p class="h3" style="margin:6px 0 12px;line-height:1.7">${nxt.t}</p>
         <button class="btn primary block" data-action="taskGo" data-id="${nxt.id}">${nxt.act ? nxt.btn : ic('check', 'sm') + ' تم'}</button>
       </div>`;
@@ -1711,7 +1733,7 @@
       </div>`;
     }
     const rest = tasks.filter(t => t !== nxt);
-    html += (nxt ? `<details class="more" ${restOpen ? 'open' : ''} id="rest-tasks"><summary>بقية خطتك · اختياري (${ar(rest.length)}) ${ic('chevron-down', 'xs')}</summary>` : '') + `<div class="tasks">` + rest.map(t => {
+    html += (nxt ? `<details class="more" ${restOpen ? 'open' : ''} id="rest-tasks"><summary>بقية خطتك — اختياري (${ar(rest.length)}) ${ic('chevron-down', 'xs')}</summary>` : '') + `<div class="tasks">` + rest.map(t => {
       const dn = isTaskDone(scope, t);
       return `<button class="task" data-action="taskRow" data-id="${t.id}" aria-pressed="${dn}">
         <span class="tick-box">${dn ? ic('check', 'xs') : ''}</span>
@@ -1806,7 +1828,7 @@
   ];
   function symptomsHTML(day) {
     const now = SYMPTOMS.filter(s => day >= s.from && day <= s.to), later = SYMPTOMS.filter(s => !(day >= s.from && day <= s.to));
-    const item = s => `<div class="row" style="align-items:flex-start;padding:10px 0;border-top:1px solid var(--line)"><span class="ibox sm">${ic(s.icon, 'sm')}</span><div class="grow"><div class="small bold">${s.t} <span class="xs muted">· الأيام ${ar(s.from)}–${ar(s.to)}</span></div><p class="small ink2" style="margin:2px 0 0;line-height:1.75">${s.d}</p></div></div>`;
+    const item = s => `<div class="row" style="align-items:flex-start;padding:10px 0;border-top:1px solid var(--line)"><span class="ibox sm">${ic(s.icon, 'sm')}</span><div class="grow"><div class="small bold">${s.t} <span class="xs muted"> — الأيام ${ar(s.from)}–${ar(s.to)}</span></div><p class="small ink2" style="margin:2px 0 0;line-height:1.75">${s.d}</p></div></div>`;
     return `<p class="small ink2" style="margin:0">${day ? 'شائع في يومك (' + ar(day) + ')' : 'ما قد تشعر به'} — أغلبها مؤقت ويخف تدريجياً. إن اشتد عرض أو استمر الحزن أكثر من أسبوعين، كلّم طبيب:</p>
       <div>${now.map(item).join('')}</div>${later.length ? `<details class="more"><summary>أعراض أخرى ${ic('chevron-down', 'xs')}</summary><div>${later.map(item).join('')}</div></details>` : ''}`;
   }
@@ -1852,73 +1874,135 @@
   /* =========================================================
      VIEW: JOURNEY
      ========================================================= */
-  let openChapter = null;
+  /* ---------- Journey: "where am I, how much is left, what's next?" ---------- */
+  let openWeek = null, selDay = null, showAllBody = false;
+  const MS_NEED = { h24: 24, h72: 72, d7: 168, d14: 336, d30: 720 };
+  const msUsesClean = id => id === 'h24' || id === 'h72';
+  function msDay(id, m) { return ({ h24: m.gradual ? 29 : 1, h72: m.gradual ? 30 : 3, d7: 7, d14: 14, d30: 30 })[id]; }
+  function msHoursLeft(b, m) {
+    const need = MS_NEED[b.id];
+    if (msUsesClean(b.id) && m.gradual) return 27 * 24 + need - m.pd * 24;
+    return need - (msUsesClean(b.id) ? m.cleanH : m.pd * 24);
+  }
+  function nextMilestone(m) {
+    return BADGES.filter(b => !b.ok(m)).map(b => ({ b, left: msHoursLeft(b, m) })).sort((a, z) => a.left - z.left)[0] || null;
+  }
+
   RENDER.journey = function () {
     const m = metrics();
-    let html = `
-      <header class="topbar"><div><p class="eyebrow">${m.prep ? 'مرحلة التحضير' : m.free ? 'خلّصت الثلاثين — الشجرة مكتملة' : 'خلّصت ' + nf(Math.floor(m.pd)) + ' من ٣٠ يوماً'}</p><h1 class="h1">رحلتك</h1></div>
-        </header>
-      <div class="seg" role="tablist">
-        <button data-action="journeySeg" data-v="path" aria-pressed="${journeySeg === 'path'}">الخطة</button>
-        <button data-action="journeySeg" data-v="body" aria-pressed="${journeySeg === 'body'}">جسدك</button>
-      </div>`;
+    const done = m.prep ? 0 : Math.min(30, Math.floor(m.pd));
+    const nm = nextMilestone(m);
+    let html = `<header class="topbar"><h1 class="h1">رحلتك</h1></header>`;
 
-    if (journeySeg !== 'body') {
-      html += `<section class="card tight"><div class="ms-row">${BADGES.map(b => { const on = b.ok(m); return `<button class="ms ${on ? 'on' : ''}" data-action="openBadge" data-id="${b.id}"><span class="medal">${ic(on ? b.icon : 'lock', on ? '' : 'sm')}</span>${b.t}</button>`; }).join('')}</div></section>`;
-      if (m.free) html += freedomCard(m);
-      if (m.prep) html += `<section class="card" style="border-color:var(--sage)"><div class="row"><span class="ibox">${ic('calendar')}</span><div class="grow"><div class="xs sage bold">أنت هنا</div><h2 class="h3">التحضير</h2><p class="xs muted" style="margin:0">يوم إقلاعك ${fmtDate(m.st, { weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: '2-digit' })}</p></div></div></section>`;
-      if (openChapter === null) openChapter = m.free ? 0 : m.chapter.n;
-      CHAPTERS.forEach((c, ci) => {
-        const days = DAYS.filter(d => d.day >= c.from && d.day <= c.to);
-        const isDone = d => (!m.prep && d.day < m.day) || m.free;
-        const doneN = days.filter(isDone).length;
-        const isCur = !m.prep && !m.free && m.chapter.n === c.n;
-        const allDone = doneN === days.length;
-        const open = openChapter === c.n;
-        const goal = m.gradual ? WEEK_GOALS[ci].g(allowance(c.from), targetMg(c.from)) : WEEK_GOALS[ci].c;
-        html += `<section class="card" ${isCur ? 'style="border-color:var(--sage)"' : ''}>
-          <button class="chapter-head" style="width:100%;text-align:right" data-action="toggleChapter" data-n="${c.n}" aria-expanded="${open}">
-            <span class="ibox ${allDone || isCur ? '' : 'sand'}">${ic(allDone ? 'circle-check' : c.icon)}</span>
-            <div class="grow"><div class="xs ${isCur ? 'sage' : 'muted'} bold">الأسبوع ${ar(c.n)} · الأيام ${ar(c.from)}–${ar(c.to)}${isCur ? ' · أنت هنا' : allDone ? ' · مكتمل' : ''}</div>
-              <h2 class="h3">${c.title}</h2>
-              <p class="xs ink2" style="margin:2px 0 0">${ic('target', 'xs')} الهدف: ${goal}</p></div>
-            <span class="muted" style="transition:transform .25s;${open ? 'transform:rotate(180deg)' : ''}">${ic('chevron-down', 'sm')}</span>
-          </button>
-          <div class="day-dots">${days.map(d => `<button class="dd ${isDone(d) ? 'done' : ''} ${!m.prep && !m.free && d.day === m.day ? 'cur' : ''} ${d.ms ? 'ms' : ''}" data-action="openDay" data-day="${d.day}" aria-label="اليوم ${ar(d.day)}">${ar(d.day)}</button>`).join('')}</div>`;
-        if (open) {
-          html += `<div class="col" style="gap:0;margin-top:8px">` + days.map(d => {
-            const dc = dayContent(d.day, m.gradual), cur = !m.prep && !m.free && d.day === m.day;
-            return `<button class="day-row ${cur ? 'cur' : ''}" data-action="openDay" data-day="${d.day}">
-              <span class="num xs bold ${isDone(d) ? 'sage' : cur ? 'sand' : 'muted'}" style="width:28px">${ar(d.day)}</span>
-              <span class="grow"><span class="small bold">${d.t}</span>${d.ms ? ` <span class="xs sand">· ${d.ms}</span>` : ''}<span class="xs muted clamp-2" style="display:block">${dc.act}</span></span>
-              ${isDone(d) ? ic(state.completedChallenges[d.day] ? 'circle-check' : 'check', 'sm sage') : cur ? '<span class="chip sage">اليوم</span>' : ''}
-            </button>`;
-          }).join('') + `</div>`;
-        }
-        html += `</section>`;
-      });
-      if (!m.free) html += freedomCard(m);
-    } else if (journeySeg === 'body') {
-      const hx = m.cleanH;
-      const nextI = BODY.findIndex(b => b.h > hx);
-      html += `<section class="card"><div class="card-head"><span class="ibox sand">${ic('heart-pulse')}</span><h2 class="h3 grow">هل ما أشعر به طبيعي؟</h2></div>${symptomsHTML(m.prep ? 1 : m.day)}</section>` + supportCallout();
-      if (state.useNRT) html += `<div class="callout sage small" style="line-height:1.8">${ic('pill', 'xs')} أنت تستخدم بدائل النيكوتين الطبية: هذا الخط الزمني يخص توقفك عن الأظرف. اتبع جدول الصيدلي لتخفيض البدائل خلال ٨–١٢ أسبوعاً.</div>`;
-      if (m.gradual && hx <= 0) html += `<div class="callout sand small" style="line-height:1.8">${ic('info', 'xs')} في مسار التدرّج تبدأ ساعات التعافي الكاملة من <b>يوم الصفر (اليوم ٢٨)</b>. حتى ذلك الحين، كل ظرف تخفّضه يعني نيكوتيناً أقل في دمك.</div>`;
-      html += `<section class="card"><div class="card-head"><span class="ibox">${ic('activity')}</span><div class="grow"><h2 class="h3">ماذا يحدث في جسدك؟</h2><p class="xs muted" style="margin:0">خط زمني يتحدّث تلقائياً مع كل ساعة بلا نيكوتين</p></div></div>
-        <div class="timeline">` + BODY.map((b, i) => {
-          const done = hx >= b.h, next = i === nextI && hx > 0;
-          const prevH = i ? BODY[i - 1].h : 0;
-          const pct = done ? 100 : next ? clamp((hx - prevH) / (b.h - prevH) * 100, 2, 100) : 0;
-          return `<div class="tl-item ${done ? 'done' : next ? 'next' : ''}">
-            <div class="tl-dot">${ic(done ? 'check' : b.icon, 'sm')}</div>
-            <div style="padding-bottom:8px;border-bottom:1px solid var(--line)">
-              <div class="row between"><span class="h3">${b.t}</span><span class="xs ${done ? 'sage' : next ? 'sand' : 'muted'} bold">${done ? 'تحقّق' : next ? 'بعد ' + fmtDur(b.h - hx) : 'عند ' + fmtDur(b.h)}</span></div>
-              <p class="small ink2" style="margin:2px 0 ${next ? '8px' : '0'};line-height:1.75">${b.d}</p>
-              ${next ? `<div class="bar thin"><i style="width:${pct}%"></i></div>` : ''}
-            </div></div>`;
-        }).join('') + `</div>
-        <p class="xs muted" style="margin:14px 0 0">${ic('info', 'xs')} الأزمنة تقريبية وتختلف بين الأشخاص. نَقَاء أداة دعم وليس بديلاً عن استشارة الطبيب.</p></section>`;
+    // ---- 1. Hero: one number + one bar ----
+    if (m.prep) {
+      const cp = counterParts(m), pt = prepTasks(), pd = pt.filter(t => isTaskDone('prep', t)).length;
+      html += `<section class="card">
+        <p class="xs muted" style="margin:0">${cp.lbl}</p>
+        <div class="j-big num">${cp.big} <small>${cp.unit}</small></div>
+        <p class="small ink2" style="margin:6px 0 0">${ic('calendar', 'xs')} ${fmtDate(m.st, { weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: '2-digit' })}</p>
+        <div class="bar thin" style="margin-top:12px"><i style="width:${Math.max(3, pd / pt.length * 100)}%"></i></div>
+        <p class="xs muted" style="margin:6px 0 0">التحضير: ${ar(pd)} من ${ar(pt.length)} — كمّلها من «اليوم»</p>
+      </section>`;
+    } else if (m.free) {
+      const aw = afterIdx(m), f = AFTER30[aw], fd = !!state.completedChallenges['w' + aw];
+      html += `<section class="card">
+        <p class="xs muted" style="margin:0">خطة الحماية بعد الثلاثين</p>
+        <div class="j-big num">${ar(aw + 5)} <small>من ١٣ أسبوعاً</small></div>
+        <div class="cells" style="grid-template-columns:repeat(${AFTER30.length},1fr)">${AFTER30.map((_, i) => `<span class="cell ${i < aw ? 'done' : i === aw ? 'cur' : ''}"></span>`).join('')}</div>
+        <div class="callout sand" style="margin-top:14px">
+          <div class="callout-title sand">${ic('target', 'xs')} تركيز هذا الأسبوع ${fd ? '— أنجزته ✓' : ''}</div>
+          <p class="small" style="margin:0;line-height:1.8"><b>${f.t}:</b> ${f.d}</p>
+        </div>
+      </section>
+      <section class="card tight"><div class="wk-row" style="border:0;padding:4px 2px"><span class="ibox sm">${ic('crown', 'sm')}</span><div class="grow"><div class="small bold">خلّصت خطة الثلاثين يوماً</div><div class="xs muted">كل المحطات الخمس تحققت</div></div>${ic('circle-check', 'sm sage')}</div></section>`;
+    } else {
+      const ch = m.chapter;
+      html += `<section class="card">
+        <div class="row between" style="align-items:flex-end">
+          <div><div class="j-big num">${nf(done)} <small>/ ٣٠ يوماً</small></div><p class="small ink2" style="margin:6px 0 0">الأسبوع ${ar(ch.n)} — ${ch.title}</p></div>
+          ${m.logTaper ? `<span class="chip sand">${ic('trending-down', 'xs')} حصة اليوم ${nf(m.allowed)}</span>` : ''}
+        </div>
+        <div class="cells" aria-label="تقدمك في ٣٠ يوماً">${DAYS.map(d => {
+          const msB = BADGES.find(b => msDay(b.id, m) === d.day);
+          const cls = ['cell', d.day <= done ? 'done' : d.day === m.day ? 'cur' : '', [8, 15, 22].includes(d.day) ? 'wk' : '', msB ? 'ms' : '', msB && msB.ok(m) ? 'ms-on' : ''].join(' ');
+          return `<span class="${cls}"></span>`;
+        }).join('')}</div>
+        <div class="row between xs muted" style="margin-top:8px"><span>${ic('star', 'xs sand')} المحطات</span><span>${nm ? 'التالي: ' + nm.b.t + ' بعد ' + fmtDur(Math.max(.02, nm.left)) : 'كل المحطات تحققت'}</span></div>
+      </section>`;
     }
+
+    // ---- 2. Coming up: next milestone + next body change ----
+    const hx = m.cleanH, nb = BODY.find(b => b.h > hx);
+    const rows = [];
+    if (nm && !m.free) rows.push(`<div class="up-row"><span class="ibox sm sand">${ic(nm.b.icon, 'sm')}</span><div class="grow"><div class="small bold">${nm.b.t}</div><div class="xs muted">محطة في خطتك</div></div><span class="xs bold sand">بعد ${fmtDur(Math.max(.02, nm.left))}</span></div>`);
+    if (nb) rows.push(`<div class="up-row"><span class="ibox sm">${ic(nb.icon, 'sm')}</span><div class="grow"><div class="small bold">${nb.t}</div><div class="xs muted">${m.gradual && hx <= 0 ? 'يبدأ العدّ من يوم الصفر (اليوم ٢٨)' : 'تغيّر في جسدك'}</div></div><span class="xs bold sage">${m.gradual && hx <= 0 ? 'بعد يوم الصفر' : 'بعد ' + fmtDur(nb.h - hx)}</span></div>`);
+    if (rows.length && !m.prep) html += `<section class="card tight"><p class="xs muted" style="margin:0 0 4px">الجاي قريب</p>${rows.join('')}</section>`;
+
+    // ---- 3. Current week, then the others as single rows ----
+    if (!m.free) {
+      const curN = m.prep ? 1 : m.chapter.n;
+      if (openWeek === null) openWeek = curN;
+      if (selDay === null || selDay < 1) selDay = m.prep ? 1 : m.day;
+      const weekCard = c => {
+        const days = DAYS.filter(d => d.day >= c.from && d.day <= c.to);
+        const goal = m.gradual ? WEEK_GOALS[c.n - 1].g(allowance(c.from), targetMg(c.from)) : WEEK_GOALS[c.n - 1].c;
+        const sel = days.find(d => d.day === selDay) || days.find(d => d.day === m.day) || days[0];
+        const sc = dayContent(sel.day, m.gradual);
+        return `<section class="card" style="${c.n === curN && !m.prep ? 'border-color:var(--sage)' : ''}">
+          <div class="row between"><h2 class="h3">الأسبوع ${ar(c.n)} — ${c.title}</h2>${c.n === curN && !m.prep ? '<span class="chip sage">أنت هنا</span>' : `<button class="icon-btn sm" data-action="jWeek" data-n="${c.n}" aria-label="طي">${ic('chevron-down', 'xs')}</button>`}</div>
+          <p class="xs ink2" style="margin:4px 0 0">${ic('target', 'xs')} ${goal}</p>
+          <div class="tiles" style="--n:${days.length}">${days.map(d => {
+            const dn = !m.prep && d.day < m.day, cur = !m.prep && d.day === m.day;
+            return `<button class="tile ${dn ? 'done' : ''} ${cur ? 'cur' : ''} ${d.day === sel.day ? 'sel' : ''}" data-action="jDay" data-day="${d.day}" aria-label="اليوم ${ar(d.day)}">
+              ${d.ms ? `<span class="st">${ic('star', 'xs')}</span>` : ''}<span class="num">${ar(d.day)}</span><small>${cur ? 'اليوم' : dn ? '✓' : ''}</small></button>`;
+          }).join('')}</div>
+          <button class="day-peek" data-action="openDay" data-day="${sel.day}">
+            <div class="grow"><div class="xs ${sel.day === m.day && !m.prep ? 'sage' : 'muted'} bold">اليوم ${ar(sel.day)}${sel.ms ? ' — ' + sel.ms : ''}${sel.day > m.day || m.prep ? ' — نظرة مسبقة' : ''}</div>
+              <div class="small bold" style="margin-top:2px">${sel.t}</div>
+              <div class="xs ink2 clamp-2" style="margin-top:2px">${ic('target', 'xs')} ${sc.act}</div></div>
+            ${ic('chevron-left', 'sm')}
+          </button>
+        </section>`;
+      };
+      const open = CHAPTERS.find(c => c.n === openWeek) || CHAPTERS[curN - 1];
+      html += weekCard(open);
+      html += `<section class="card" style="padding:0">` + CHAPTERS.filter(c => c !== open).map(c => {
+        const days = DAYS.filter(d => d.day >= c.from && d.day <= c.to);
+        const dn = m.prep ? 0 : days.filter(d => d.day < m.day).length;
+        const all = dn === days.length;
+        return `<button class="wk-row" data-action="jWeek" data-n="${c.n}">
+          <span class="num xs bold ${all ? 'sage' : 'muted'}" style="width:54px">الأسبوع ${ar(c.n)}</span>
+          <span class="grow small bold">${c.title}</span>
+          ${all ? `<span class="xs sage bold">${ic('circle-check', 'sm')}</span>` : c.n === curN && !m.prep ? `<span class="chip sage">أنت هنا</span>` : `<span class="xs muted">${ar(c.from)}–${ar(c.to)}</span>`}
+          ${ic('chevron-left', 'sm muted')}
+        </button>`;
+      }).join('') + `<div class="wk-row" style="border-bottom:0"><span class="ibox sm sand">${ic('crown', 'sm')}</span><span class="grow"><span class="small bold">بعد الثلاثين: خطة الحماية</span><span class="xs muted" style="display:block">٩ أسابيع تحرس إنجازك من الانتكاس</span></span></div></section>`;
+    }
+
+    // ---- 4. Body changes (moved here from its own tab) ----
+    const nextI = BODY.findIndex(b => b.h > hx);
+    const list = showAllBody ? BODY.map((b, i) => i) : [nextI - 1, nextI, nextI + 1].filter(i => i >= 0 && i < BODY.length);
+    html += `<section class="card">
+      <div class="row between"><h2 class="h3">${ic('activity', 'sm sage')} تغيّرات جسدك</h2><span class="xs muted">${ar(BODY.filter(b => hx >= b.h).length)} من ${ar(BODY.length)} تحقّق</span></div>
+      ${state.useNRT ? `<p class="xs ink2" style="margin:6px 0 0">${ic('pill', 'xs')} مع بدائل النيكوتين: هذا يخص توقفك عن الأظرف. اتبع جدول الصيدلي لتخفيض البدائل.</p>` : ''}
+      ${m.gradual && hx <= 0 ? `<p class="xs ink2" style="margin:6px 0 0">${ic('info', 'xs')} في التدرّج يبدأ هذا العدّ من يوم الصفر (اليوم ٢٨). كل ظرف تخفّضه قبلها يعني نيكوتيناً أقل.</p>` : ''}
+      <div class="timeline" style="margin-top:12px">` + list.map(i => {
+        const b = BODY[i], dn = hx >= b.h, nx = i === nextI && hx > 0;
+        const prevH = i ? BODY[i - 1].h : 0;
+        const pct = dn ? 100 : nx ? clamp((hx - prevH) / (b.h - prevH) * 100, 2, 100) : 0;
+        return `<div class="tl-item ${dn ? 'done' : nx ? 'next' : ''}">
+          <div class="tl-dot">${ic(dn ? 'check' : b.icon, 'sm')}</div>
+          <div style="padding-bottom:8px;border-bottom:1px solid var(--line)">
+            <div class="row between"><span class="small bold">${b.t}</span><span class="xs ${dn ? 'sage' : nx ? 'sand' : 'muted'} bold">${dn ? 'تحقّق' : nx ? 'بعد ' + fmtDur(b.h - hx) : 'عند ' + fmtDur(b.h)}</span></div>
+            <p class="xs ink2" style="margin:2px 0 ${nx ? '8px' : '0'};line-height:1.7">${b.d}</p>
+            ${nx ? `<div class="bar thin"><i style="width:${pct}%"></i></div>` : ''}
+          </div></div>`;
+      }).join('') + `</div>
+      <button class="btn ghost block sm" style="margin-top:6px" data-action="jBody">${showAllBody ? 'عرض أقل' : 'كل التغيّرات حتى عام كامل'} ${ic(showAllBody ? 'chevron-down' : 'chevron-left', 'xs')}</button>
+      <p class="xs muted" style="margin:8px 0 0">${ic('info', 'xs')} الأزمنة تقريبية وتختلف بين الأشخاص.</p>
+    </section>`;
+
     $('#view-journey').innerHTML = html;
   };
 
@@ -1928,7 +2012,7 @@
     }
     const cur = afterIdx(m);
     return `<section class="card" style="border-color:var(--sand)">
-      <div class="card-head"><span class="ibox sand">${ic('crown')}</span><div class="grow"><h2 class="h3">خطة الحماية · الأسبوع ${ar(cur + 5)}</h2><p class="xs muted" style="margin:0">حرّ منذ ${daysW(Math.max(1, m.days))}. هذه الأسابيع تثبّت ما بنيته.</p></div></div>
+      <div class="card-head"><span class="ibox sand">${ic('crown')}</span><div class="grow"><h2 class="h3">خطة الحماية — الأسبوع ${ar(cur + 5)}</h2><p class="xs muted" style="margin:0">حرّ منذ ${daysW(Math.max(1, m.days))}. هذه الأسابيع تثبّت ما بنيته.</p></div></div>
       <div class="col" style="gap:8px">${AFTER30.map((a, i) => `<div class="callout ${i === cur ? 'sand' : ''}" style="padding:10px 12px;${i > cur ? 'opacity:.55' : ''}">
         <div class="row"><span class="xs bold num ${i === cur ? 'sand' : 'muted'}" style="width:52px">أسبوع ${ar(i + 5)}</span><div class="grow small"><b>${a.t}</b>${i <= cur ? `<div class="xs ink2" style="line-height:1.7">${a.d}</div>` : ''}</div>${state.completedChallenges['w' + i] ? ic('circle-check', 'sm sage') : ''}</div></div>`).join('')}</div>
     </section>`;
@@ -2030,6 +2114,7 @@
         <div id="alt-box" class="callout sage small" style="margin-top:12px;line-height:1.8" hidden></div>
       </section>
 
+      <button class="btn block" data-action="symptoms">${ic('activity', 'sm')} هل ما أشعر به طبيعي؟</button>
       ${supportCallout()}
 
       <button class="btn block" data-action="logCraving">${ic('pen-line', 'sm')} سجّل رغبة مرّت بك</button>`;
@@ -2055,7 +2140,7 @@
         <button class="btn soft" data-action="logCraving">${ic('pen-line', 'sm')} سجّل أول رغبة</button></section>`;
     } else {
       html += `<section class="card">
-        <div class="card-head"><span class="ibox">${ic('clock')}</span><div class="grow"><h2 class="h3">متى تأتيك الرغبة؟</h2><p class="xs muted" style="margin:0">${nf(total)} رغبة مسجّلة${rate != null ? ' · نسبة العبور ' + nf(rate) + '٪' : ''}</p></div></div>
+        <div class="card-head"><span class="ibox">${ic('clock')}</span><div class="grow"><h2 class="h3">متى تأتيك الرغبة؟</h2><p class="xs muted" style="margin:0">${nf(total)} رغبة مسجّلة${rate != null ? ' — نسبة العبور ' + nf(rate) + '٪' : ''}</p></div></div>
         <div class="bars" role="img" aria-label="توزيع الرغبات على ساعات اليوم">
           ${buckets.map((v, i) => `<div class="bar-col" data-tip="${BUCKET_LONG[i]}: ${v ? nf(v) + ' رغبة' : 'لا شيء'}">
             <div class="bar-track">${i === peakI ? `<span class="bar-val num" style="bottom:${v / maxB * 100}%">${nf(v)}</span>` : ''}<div class="bar-fill ${i === peakI ? 'peak' : ''}" style="height:${maxB ? v / maxB * 100 : 0}%"></div></div>
@@ -2094,7 +2179,7 @@
       html += `<section class="card"><div class="card-head"><span class="ibox sand">${ic('list-checks')}</span><h2 class="h3 grow">آخر الرغبات</h2></div><div class="col" style="gap:0">` +
         recent.map(c => { const t = TRIGGERS.find(x => x.id === c.trigger) || TRIGGERS.find(x => x.id === 'other'); return `<div class="row" style="padding:10px 0;border-bottom:1px solid var(--line)">
           <span class="ibox sm ${c.outcome === 'won' ? '' : 'rose'}">${ic(c.outcome === 'won' ? 'shield-check' : 'rotate-ccw', 'xs')}</span>
-          <div class="grow"><div class="small bold">${t.t} <span class="xs muted">· ${INTENSITY[c.intensity] || ''}</span></div>${c.note ? `<div class="xs muted">${esc(c.note)}</div>` : ''}</div>
+          <div class="grow"><div class="small bold">${t.t} <span class="xs muted"> — ${INTENSITY[c.intensity] || ''}</span></div>${c.note ? `<div class="xs muted">${esc(c.note)}</div>` : ''}</div>
           <span class="xs muted">${fmtDate(c.ts, { day: 'numeric', month: 'short' })} ${fmtTime(c.ts)}</span></div>`; }).join('') + `</div></section>`;
     }
     const lessons = state.slips.filter(s => s.lesson).slice().reverse().slice(0, 5);
@@ -2126,7 +2211,7 @@
       <section class="card">
         <div class="row">
           <div class="welcome-logo" style="width:56px;height:56px;border-radius:20px;margin:0;font-size:22px;font-weight:700">${esc(initial)}</div>
-          <div class="grow"><h2 class="h2">${esc(state.name || 'صديق نَقَاء')}</h2><p class="xs muted" style="margin:0">${m.gradual ? 'التدرّج الذكي' : 'القطع الفوري'} · ${m.prep ? 'يوم إقلاعك' : 'بدأت'} ${fmtDate(m.st, { day: 'numeric', month: 'long', year: 'numeric' })}</p></div>
+          <div class="grow"><h2 class="h2">${esc(state.name || 'صديق نَقَاء')}</h2><p class="xs muted" style="margin:0">${m.gradual ? 'التدرّج الذكي' : 'القطع الفوري'} — ${m.prep ? 'يوم إقلاعك' : 'بدأت'} ${fmtDate(m.st, { day: 'numeric', month: 'long', year: 'numeric' })}</p></div>
         </div>
       </section>
 
@@ -2138,12 +2223,14 @@
         </div>
         <div class="row between small" style="margin-bottom:8px"><span><b class="num sand">${nf(Math.min(m.saved, state.goalPrice), 0)} ${cur}</b> <span class="muted">من ${nf(state.goalPrice)}</span></span><b class="num">${nf(Math.floor(m.goalPct))}٪</b></div>
         <div class="bar"><i style="width:${Math.max(2, m.goalPct)}%"></i></div>
-        <p class="xs muted" style="margin:10px 0 0">${m.goalPct >= 100 ? 'مبارك! جمعت قيمة مكافأتك كاملة — اشترِها بفخر.' : 'توفّر ' + nf(m.perDay, 1) + ' ' + cur + ' يومياً · تصل إليها تقريباً في ' + fmtDate(Math.max(m.now, m.st) + dayLeft * 864e5)}</p>
+        <p class="xs muted" style="margin:10px 0 0">${m.goalPct >= 100 ? 'مبارك! جمعت قيمة مكافأتك كاملة — اشترِها بفخر.' : 'توفّر ' + nf(m.perDay, 1) + ' ' + cur + ' يومياً — تصل إليها تقريباً في ' + fmtDate(Math.max(m.now, m.st) + dayLeft * 864e5)}</p>
         <div class="grid-2" style="margin-top:12px;text-align:center">
           <div class="callout" style="padding:10px"><div class="h3 num">${nf(Math.floor(m.avoided))}</div><div class="xs muted">ظرف تجنّبته</div></div>
           <div class="callout" style="padding:10px"><div class="h3 num">${nf(Math.round(m.mg))}</div><div class="xs muted">ملغ نيكوتين تجنّبته (حسب تركيز علبتك)</div></div>
         </div>
       </section>
+
+      <section class="card tight"><p class="xs muted" style="margin:0 0 10px">محطاتك</p><div class="ms-row">${BADGES.map(b => { const on = b.ok(m); return `<button class="ms ${on ? 'on' : ''}" data-action="openBadge" data-id="${b.id}"><span class="medal">${ic(on ? b.icon : 'lock', on ? '' : 'sm')}</span>${b.t}</button>`; }).join('')}</div></section>
 
       <p class="group-title">لماذا أترك</p>
       <div class="list">
@@ -2158,7 +2245,7 @@
         ${row('support', 'hand-heart', 'دعم إضافي آمن', 'بدائل النيكوتين الطبية والصيدلي')}
         ${row('share', 'share-2', 'شارك بطاقة إنجازك', 'صورة بشجرتك وأرقامك', 'sand')}
       </div>
-      <p class="xs muted center" style="margin:6px 0 0">نَقَاء · الإصدار ٥٫٠</p>`;
+      <p class="xs muted center" style="margin:6px 0 0">نَقَاء — الإصدار ٥٫٠</p>`;
     } else {
       html += patternsHTML(m);
     }
@@ -2215,7 +2302,7 @@
     const dk = dateKey();
     const dayChanged = lastDay !== null && (m.day !== lastDay || m.prep !== lastPrep || (lastDK && dk !== lastDK));
     lastDay = m.day; lastPrep = m.prep; lastDK = dk;
-    if (dayChanged) { previewDay = null; rerender(); } else updateLive(m);
+    if (dayChanged) { previewDay = null; selDay = null; openWeek = null; rerender(); } else updateLive(m);
     checkCelebrations(m);
   }
 
@@ -2260,12 +2347,12 @@
     const d = dayContent(day, m.gradual), ch = chapterOf(day), done = !!state.completedChallenges[day];
     const ahead = m.prep || day > m.day;
     openSheet(`
-      <div class="row between"><span class="chip sage">اليوم ${ar(day)} · الأسبوع ${ar(ch.n)}</span>${d.ms ? `<span class="chip sand">${ic('star', 'xs')} ${d.ms}</span>` : ''}</div>
+      <div class="row between"><span class="chip sage">اليوم ${ar(day)} — الأسبوع ${ar(ch.n)}</span>${d.ms ? `<span class="chip sand">${ic('star', 'xs')} ${d.ms}</span>` : ''}</div>
       <h2 class="h1">${d.t}</h2>
       ${ahead ? `<p class="xs muted" style="margin:-6px 0 0">${ic('eye', 'xs')} نظرة مسبقة — تبدأ هذا اليوم ${m.prep ? 'بعد يوم إقلاعك' : 'بعد ' + daysW(day - m.day)}</p>` : ''}
       <div class="callout sage"><div class="callout-title sage">${ic('activity', 'xs')} ما يحدث في جسدك</div><p class="small" style="margin:0;line-height:1.85">${d.body}</p></div>
       <div class="callout"><div class="callout-title">${ic('heart', 'xs')} ما قد تشعر به</div><p class="small ink2" style="margin:0;line-height:1.85">${d.feel}</p></div>
-      <div class="callout sand"><div class="callout-title sand">${ic('list-checks', 'xs')} خطة هذا اليوم ${done ? '· التحدي أُنجز ✓' : ''}</div>
+      <div class="callout sand"><div class="callout-title sand">${ic('list-checks', 'xs')} خطة هذا اليوم ${done ? '— التحدي أُنجز ✓' : ''}</div>
         <div class="col" style="gap:8px">${planTasks(day).map(t => `<div class="row small" style="align-items:flex-start;line-height:1.75">${ic(t.icon, 'xs sand')}<span><b>${t.when}:</b> ${t.t}</span></div>`).join('')}</div></div>
       <p class="small sand" style="margin:0">${ic('lightbulb', 'xs')} ${d.tip}</p>
       <button class="btn block" data-action="closeSheet">إغلاق</button>`);
@@ -2454,7 +2541,7 @@
     $('#ss-tool-breath').innerHTML = `
       <div class="seg">${Object.entries(BREATHS).map(([k, v]) => `<button data-action="breathPattern" data-v="${k}" aria-pressed="${state.breathPattern === k}">${v.t}</button>`).join('')}</div>
       <div class="breath-stage"><div class="breath-ring"></div><div class="breath-orb" id="br-orb"><span class="ph" id="br-ph">استعد</span><span class="sec num" id="br-sec"></span></div></div>
-      <p class="xs muted center" style="margin:0">${p.d} · <span id="br-cycles">${br.cycles ? 'دورات: ' + nf(br.cycles) : 'اتبع الدائرة'}</span></p>`;
+      <p class="xs muted center" style="margin:0">${p.d} — <span id="br-cycles">${br.cycles ? 'دورات: ' + nf(br.cycles) : 'اتبع الدائرة'}</span></p>`;
   }
   function breathStart() {
     breathStop();
@@ -2601,7 +2688,7 @@
       const first = prepDays ? prepTasks(ctx).slice(0, 3) : planTasks(1, ctx).slice(0, 3);
       body = `<div><h2 class="h1">هذه خطتك</h2><p class="body">${esc(D.name) ? esc(D.name) + '، ' : ''}كل ما عليك هو الخطوة التالية.</p></div>
         <div class="card col" style="gap:0;padding:6px 16px">
-          ${prepDays ? `<div class="plan-row"><span class="ibox sm">${ic('calendar', 'sm')}</span><div class="grow"><div class="small bold">التحضير · ${daysW(prepDays)}</div><div class="xs muted">بدائل، شخص داعم، وخطط لمواقفك</div></div></div>` : ''}
+          ${prepDays ? `<div class="plan-row"><span class="ibox sm">${ic('calendar', 'sm')}</span><div class="grow"><div class="small bold">التحضير — ${daysW(prepDays)}</div><div class="xs muted">بدائل، شخص داعم، وخطط لمواقفك</div></div></div>` : ''}
           <div class="plan-row"><span class="ibox sm sand">${ic('flag', 'sm')}</span><div class="grow"><div class="small bold">${g ? 'بداية التدرّج' : 'يوم الإقلاع'}</div><div class="xs muted">${st > now ? fmtDate(st, { weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: '2-digit' }) : 'بدأ — أنت في الخطة الآن'}</div></div></div>
           ${CHAPTERS.map((c, i) => `<div class="plan-row"><span class="num xs bold muted" style="width:32px;text-align:center">أ${ar(c.n)}</span><div class="grow"><div class="small bold">${c.title}</div><div class="xs muted">${g ? WEEK_GOALS[i].g(allowance(c.from, D.dailyPouches), targetMg(c.from, D.pouchMg)) : WEEK_GOALS[i].c}</div></div></div>`).join('')}
         </div>
@@ -2714,6 +2801,9 @@
     supporter: () => openSupporter(),
     meSeg: el => { meSeg = el.dataset.v; RENDER.me(); },
     support: () => openSupport(),
+    jWeek: el => { const n = +el.dataset.n; const c = CHAPTERS[n - 1], m = metrics(); openWeek = n; selDay = (!m.prep && m.day >= c.from && m.day <= c.to) ? m.day : c.from; RENDER.journey(); },
+    jDay: el => { selDay = +el.dataset.day; buzz(6); RENDER.journey(); },
+    jBody: () => { showAllBody = !showAllBody; RENDER.journey(); },
     toggleChapter: el => { const n = +el.dataset.n; openChapter = openChapter === n ? -1 : n; RENDER.journey(); },
     ckMood: el => { checkinDraft.mood = +el.dataset.v; buzz(); RENDER.today(); },
     ckCrave: el => { checkinDraft.craving = +el.dataset.v; buzz(); RENDER.today(); },
