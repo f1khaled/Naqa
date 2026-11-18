@@ -9,7 +9,7 @@
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="نَقَاء" />
-  <meta name="theme-color" content="#0A0F0D" />
+  <meta name="theme-color" content="#F2F2F7" />
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="icons/icon-192.png" />
@@ -879,9 +879,108 @@
 
     .mini-links button { font-size: 15px; font-weight: 400; color: var(--sage-ink); }
     .link-btn { font-size: 15px; font-weight: 400; color: var(--sage-ink); text-decoration: none; }
+
+    /* =========================================================
+       MOTION v9
+       ========================================================= */
+    .sway { transform-box: view-box; transform-origin: 180px 176px; animation: sway 7s ease-in-out infinite; }
+    @keyframes sway { 0%, 100% { transform: rotate(-.9deg); } 50% { transform: rotate(.9deg); } }
+    .cloud { animation: drift 38s ease-in-out infinite alternate; }
+    @keyframes drift { from { transform: translateX(-14px); } to { transform: translateX(14px); } }
+    .sun-glow { transform-box: fill-box; transform-origin: center; animation: glow 5s ease-in-out infinite; }
+    @keyframes glow { 0%, 100% { transform: scale(1); opacity: .9; } 50% { transform: scale(1.08); opacity: 1; } }
+    .fruit-pop { transform-box: fill-box; transform-origin: center; animation: fruitPop .9s cubic-bezier(.34, 1.56, .64, 1) both .25s; }
+    @keyframes fruitPop { from { transform: scale(0); } to { transform: scale(1); } }
+
+    .view.enter .bar > i, .view.enter .cell.done { animation: barIn .9s var(--ease) both .1s; transform-origin: right center; }
+    @keyframes barIn { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+    .view.enter .card { animation: cardIn .5s var(--ease) both; }
+    .view.enter .card:nth-of-type(2) { animation-delay: .04s; }
+    .view.enter .card:nth-of-type(3) { animation-delay: .08s; }
+    .view.enter .card:nth-of-type(4) { animation-delay: .12s; }
+    @keyframes cardIn { from { opacity: 0; transform: translateY(10px) scale(.99); } to { opacity: 1; transform: none; } }
+
+    .next-task { position: relative; overflow: hidden; }
+    .next-task.leaving > *:not(.done-check) { animation: taskOut .42s var(--ease) forwards; }
+    @keyframes taskOut { to { opacity: 0; transform: translateX(-18px); } }
+    .next-task.arriving > * { animation: taskIn .5s var(--ease) both; }
+    @keyframes taskIn { from { opacity: 0; transform: translateX(18px); } to { opacity: 1; transform: none; } }
+    .done-check { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; }
+    .done-check svg { width: 64px; height: 64px; }
+    .dc-c { fill: var(--sage); opacity: 0; animation: dcIn .25s ease forwards; }
+    .dc-p { fill: none; stroke: var(--on-accent); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 40; stroke-dashoffset: 40; animation: dcDraw .35s ease forwards .15s; }
+    @keyframes dcIn { from { opacity: 0; transform: scale(.6); } to { opacity: 1; transform: none; } }
+    @keyframes dcDraw { to { stroke-dashoffset: 0; } }
+    .dc-c { transform-box: fill-box; transform-origin: center; }
+
+    .tab:active .ic { transform: scale(.86); transition: transform .1s; }
+    .tile:active, .opt:active, .list-row:active { transform: scale(.98); }
+
+    .sheet-grab { height: 26px; margin: -8px -18px 2px; display: grid; place-items: center; touch-action: none; cursor: grab; }
+    .sheet-grab .sheet-handle { margin: 0; }
+    .sheet-layer.closing { pointer-events: none; }
+    .sheet-layer.closing .sheet { animation: sheetDown .26s var(--ease) forwards; }
+    .sheet-layer.closing .sheet-backdrop { animation: fadeOut .26s ease forwards; }
+    @keyframes sheetDown { to { transform: translateY(100%); } }
+    @keyframes fadeOut { to { opacity: 0; } }
+
+    /* full-screen celebration */
+    .celebrate { position: fixed; inset: 0; z-index: 92; display: grid; place-items: center; padding: 24px; color: #fff; text-align: center;
+      background: radial-gradient(120% 80% at 50% 30%, #0F6B5E 0%, #06332D 60%, #021A17 100%); opacity: 0; transition: opacity .35s ease; }
+    .celebrate.on { opacity: 1; }
+    .cel-rays { position: absolute; width: 640px; height: 640px; left: 50%; top: 38%; margin: -320px 0 0 -320px; border-radius: 50%;
+      background: repeating-conic-gradient(rgba(255,255,255,.06) 0 10deg, transparent 10deg 20deg); animation: spin 40s linear infinite;
+      -webkit-mask: radial-gradient(circle, #000 20%, transparent 65%); mask: radial-gradient(circle, #000 20%, transparent 65%); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .cel-body { position: relative; max-width: 340px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .cel-medal { width: 120px; height: 120px; border-radius: 50%; display: grid; place-items: center; color: #3A2400;
+      background: radial-gradient(circle at 35% 30%, #FFF0C2, #FFC453 55%, #E08A1E); box-shadow: 0 20px 60px -10px rgba(255, 196, 83, .6), inset 0 -6px 14px rgba(0,0,0,.15);
+      transform: scale(.4); opacity: 0; transition: transform .7s cubic-bezier(.34, 1.56, .64, 1) .1s, opacity .3s ease .1s; }
+    .cel-medal .ic { width: 52px; height: 52px; }
+    .celebrate.on .cel-medal { transform: none; opacity: 1; }
+    .cel-kicker { margin: 10px 0 0; font-size: 14px; font-weight: 600; letter-spacing: .5px; color: #FFD27A; }
+    .cel-title { margin: 0; font-size: 40px; font-weight: 800; line-height: 1.15; }
+    .cel-text { margin: 0; font-size: 17px; line-height: 1.7; color: rgba(255,255,255,.86); }
+    .cel-sub { margin: 4px 0 10px; font-size: 14px; color: rgba(255,255,255,.7); }
+    .cel-body > *:not(.cel-medal) { opacity: 0; transform: translateY(8px); transition: opacity .5s ease, transform .5s var(--ease); }
+    .celebrate.on .cel-body > *:not(.cel-medal) { opacity: 1; transform: none; transition-delay: .35s; }
+    .cel-btn { width: 220px; background: #fff; color: #06332D; }
+
+    /* immersive SOS session */
+    .session {
+      --sage: #8CF0D9; --sage-ink: #8CF0D9; --sage-soft: rgba(140, 240, 217, .14); --sand: #FFD27A; --sand-ink: #FFD27A; --sand-soft: rgba(255, 210, 122, .14);
+      --surface: #062925; --surface-2: rgba(255, 255, 255, .1); --surface-3: rgba(255, 255, 255, .18);
+      --ink: #FFFFFF; --ink-2: rgba(234, 247, 244, .85); --ink-3: rgba(234, 247, 244, .62); --line: rgba(255, 255, 255, .1); --line-2: rgba(255, 255, 255, .22); --on-accent: #063A33;
+      background: radial-gradient(120% 70% at 50% 0%, #0E5A50 0%, #063A33 45%, #031B18 100%); color: #EAF7F4;
+    }
+    .session .card { background: rgba(255, 255, 255, .07); }
+    .session .seg button[aria-pressed="true"] { background: rgba(255, 255, 255, .22); color: #fff; box-shadow: none; }
+    .session .btn { background: rgba(255, 255, 255, .12); color: #fff; }
+    .session .btn.grad, .session .btn.primary { background: #fff; color: #063A33; }
+    .session .icon-btn { background: rgba(255, 255, 255, .12); color: #fff; }
+    .session .timer-big { font-size: 48px; font-weight: 200; color: #fff; letter-spacing: 1px; }
+    .session .breath-stage { width: 290px; height: 290px; }
+    .session .breath-ring { border: 1px solid rgba(255, 255, 255, .14); box-shadow: 0 0 0 28px rgba(255, 255, 255, .025), 0 0 0 56px rgba(255, 255, 255, .015); }
+    .session .breath-orb { width: 156px; height: 156px; background: radial-gradient(circle at 50% 36%, rgba(170, 255, 236, .9), rgba(48, 213, 181, .5) 45%, rgba(0, 122, 104, .18) 76%); box-shadow: 0 0 90px 12px rgba(48, 213, 181, .35), inset 0 0 30px rgba(255, 255, 255, .25); }
+    .session .breath-orb .ph { color: #fff; font-size: 20px; }
+    .session .breath-orb .sec { color: #fff; font-size: 44px; font-weight: 200; }
+    .session .stat { background: rgba(255, 255, 255, .07); box-shadow: none; }
+
+    /* launch screen */
+    #launch { position: fixed; inset: 0; z-index: 99; display: grid; place-items: center; background: var(--bg); transition: opacity .4s ease; }
+    #launch.out { opacity: 0; pointer-events: none; }
+    #launch .l-wrap { display: flex; flex-direction: column; align-items: center; gap: 14px; animation: launchIn .6s var(--ease) both; }
+    #launch img { width: 96px; height: 96px; border-radius: 24px; box-shadow: 0 16px 40px -14px rgba(0, 122, 104, .55); }
+    #launch span { font-size: 26px; font-weight: 800; color: var(--ink); }
+    @keyframes launchIn { from { opacity: 0; transform: scale(.92); } to { opacity: 1; transform: none; } }
+
+    @media (prefers-reduced-motion: reduce) {
+      .sway, .cloud, .sun-glow, .cel-rays { animation: none !important; }
+    }
   </style>
 </head>
 <body>
+  <div id="launch" aria-hidden="true"><div class="l-wrap"><img src="icons/icon-192.png" alt="" /><span>نَقَاء</span></div></div>
   <div id="navbar" class="navbar" aria-hidden="true"><span id="navbar-title"></span></div>
   <noscript><p style="padding:24px;text-align:center">يحتاج نَقَاء إلى تفعيل JavaScript ليعمل.</p></noscript>
 
@@ -905,7 +1004,7 @@
       <div class="row between">
         <button class="btn sm" data-action="sessionEnd"><i data-i="x" class="sm"></i>إنهاء</button>
         <div class="center">
-          <div class="xs muted">جلسة ٣ دقائق</div>
+          <div class="xs muted">جلسة ٣ دقايق</div>
           <div id="ss-timer" class="timer-big num">٠٣:٠٠</div>
         </div>
         <button class="icon-btn" data-action="sessionPause" id="ss-pause" aria-label="إيقاف مؤقت"><i data-i="pause" class="sm"></i></button>
@@ -913,7 +1012,7 @@
 
       <div class="card tight">
         <svg id="ss-wave" class="wave-svg" viewBox="0 0 320 110" preserveAspectRatio="none" aria-hidden="true"></svg>
-        <p id="ss-phase" class="small center bold" style="margin:6px 0 0">الرغبة ترتفع — تنفّس معها، لا تقاومها</p>
+        <p id="ss-phase" class="small center bold" style="margin:6px 0 0">الرغبة تزيد — تنفّس معها ولا تقاومها</p>
       </div>
 
       <div class="seg" role="tablist" id="ss-tools">
@@ -924,7 +1023,7 @@
       <div id="ss-tool-breath" class="col"></div>
       <div id="ss-tool-remind" class="col" hidden></div>
 
-      <button class="btn grad block" data-action="sessionWon"><i data-i="shield-check" class="sm"></i>تجاوزت الرغبة</button>
+      <button class="btn grad block" data-action="sessionWon"><i data-i="shield-check" class="sm"></i>عدّيت الرغبة</button>
     </div>
   </section>
 
@@ -945,7 +1044,7 @@
   <div id="sheet-layer" class="sheet-layer" hidden>
     <div class="sheet-backdrop" data-action="closeSheet"></div>
     <div class="sheet" role="dialog" aria-modal="true">
-      <div class="sheet-handle"></div>
+      <div class="sheet-grab"><div class="sheet-handle"></div></div>
       <div class="sheet-body" id="sheet-body"></div>
     </div>
   </div>
@@ -974,117 +1073,117 @@
     { t: 'الخطوة الأصعب… وقد خطوتها', ms: '٢٤ ساعة',
       body: 'خلال الساعات الأولى يهبط مستوى النيكوتين في دمك بسرعة؛ فعمر النصف للنيكوتين قرابة ساعتين. يزول أثره المنبّه عن القلب، وتبدأ الأوعية الدقيقة في اللثة بالتحرر من الانقباض.',
       feel: 'رغبة متكررة ووعي زائد بمكان الظرف تحت شفتك. هذا طبيعي: إنها عادة اليد والفم قبل أن تكون حاجة الجسد.',
-      act: 'تخلّص من أي علبة متبقية — في السيارة والحقيبة والمكتب — واشرب ٨ أكواب ماء اليوم.',
+      act: 'تخلّص من أي علبة باقية — بالسيارة والشنطة والمكتب — واشرب ٨ أكواب ماي اليوم.',
       tip: 'جهّز بديلاً للفم في جيبك: علكة نعناع خالية من السكر أو مسواك.' },
     { t: 'الجسد يطالب… وأنت تقرر',
       body: 'يواصل جسدك التخلّص من النيكوتين ونواتجه. هذه عادةً أيام ذروة الانسحاب، لأن مستقبلات النيكوتين في الدماغ اعتادت جرعات منتظمة وتحتج على غيابها.',
       feel: 'تهيّج، صعوبة تركيز، وربما صداع خفيف أو جوع زائد. كلها علامات تعافٍ مؤقتة وليست ضعفاً منك.',
-      act: 'عند كل رغبة اليوم افتح «نجدة» وأكمل ٣ دقائق قبل أي قرار.',
+      act: 'كل ما جتك رغبة اليوم افتح «نجدة» وكمّل ٣ دقايق قبل أي قرار.',
       tip: 'الرغبة تبلغ ذروتها ثم تنحسر خلال دقائق، حتى لو لم تفعل شيئاً.' },
     { t: 'قمة الجبل الكيميائي', ms: '٧٢ ساعة',
       body: 'النيكوتين نفسه يخرج من دمك خلال ساعات، وبعد نحو ٧٢ ساعة تكون معظم نواتجه قد خرجت أيضاً. هنا تبلغ أعراض الانسحاب ذروتها عند كثيرين ثم تبدأ بالانحسار، ويواصل الدماغ إعادة ضبط مستقبلاته لأسابيع.',
       feel: 'قد يكون اليوم من أصعب الأيام، وغالباً ما يكون ما بعده أسهل. أنت تعبر القمة الآن.',
-      act: 'امشِ ٢٠ دقيقة بخطى سريعة؛ الحركة تخفف حدة الرغبة وتحسّن المزاج.',
+      act: 'امشِ ٢٠ دقيقة بخطوات سريعة؛ الحركة تخفف الرغبة وتعدّل المزاج.',
       tip: 'احتفل بالـ٧٢ ساعة بشيء صغير تحبه — الإنجاز يستحق.' },
     { t: 'إعادة رسم الصباح',
       body: 'صار جسدك خالياً من النيكوتين تقريباً، والمعركة الآن مع الارتباطات: القهوة، السيارة، ما بعد الأكل. كل موقف تعبره دون ظرف يُضعف الرابط العصبي بينه وبين الرغبة.',
       feel: 'رغبات مرتبطة بأوقات بعينها أكثر من كونها مستمرة طوال اليوم.',
-      act: 'غيّر طقس قهوتك الصباحية: مكان مختلف، كوب مختلف، أو أضف إليها مشياً قصيراً.',
+      act: 'غيّر روتين قهوة الصبح: مكان غير، كوب غير، أو امشِ شوي معها.',
       tip: 'سجّل كل رغبة في «أنا ← أنماطي»؛ معرفة نمطك نصف الحل.' },
     { t: 'لثّة تتنفس',
       body: 'تبدأ أنسجة الفم والغشاء المبطّن للشفة بالتعافي من التهيّج الموضعي الذي يسببه الظرف. التغيّرات الموضعية الناتجة عن الأظرف غالباً ما تتحسن تدريجياً خلال أسابيع من التوقف.',
       feel: 'قد تشعر بحساسية خفيفة في مكان الظرف المعتاد، وهي جزء من التئام الأنسجة.',
-      act: 'التقط صورة لمكان الظرف في لثتك — ستقارنها بصورة اليوم ٢٨.',
+      act: 'صوّر مكان الظرف في لثتك — بتقارنها بصورة اليوم ٢٨.',
       tip: 'إن لاحظت تقرحاً لا يلتئم خلال أسبوعين، راجع طبيب الأسنان للاطمئنان.' },
     { t: 'النوم يعيد ترتيب نفسه',
       body: 'اضطراب النوم شائع في الأسبوع الأول، لأن الدماغ يتكيف مع غياب منبّه اعتاده طوال اليوم. هذا مؤقت ويتحسن عادةً خلال أسابيع قليلة.',
       feel: 'أحلام واضحة، أو استيقاظ متقطع، أو نعاس في النهار.',
-      act: 'نم الليلة أبكر بـ٣٠ دقيقة، وأبعد الهاتف عن السرير.',
+      act: 'نم الليلة بدري بنص ساعة، وخلّ الجوال بعيد عن السرير.',
       tip: 'قلّل الكافيين بعد العصر؛ النوم الجيد يخفف الرغبة والتوتر.' },
     { t: 'أسبوع من النقاء', ms: 'أسبوع',
       body: '١٦٨ ساعة بلا نيكوتين. تجاوزت أشد مراحل الانسحاب الجسدي، والأسبوع الأول هو الأصعب في أي رحلة إقلاع — وأنت عبرته.',
       feel: 'فخر، وربما بعض الإرهاق. الرغبات أقل تكراراً لكنها قد تأتي فجأة.',
-      act: 'كافئ نفسك اليوم بوجبة تحبها أو نشاط يسعدك.',
+      act: 'كافئ نفسك اليوم بأكلة تحبها أو طلعة تونّسك.',
       tip: 'شارك إنجازك مع شخص يدعمك؛ الإعلان يقوّي الالتزام.' },
     { t: 'العادة أقوى من المادة',
       body: 'التحدي الآن سلوكي أكثر منه كيميائي. يدك وفمك اعتادا حركة وضع الظرف آلاف المرات، والدماغ يحتاج وقتاً لنسيان هذا الروتين.',
       feel: 'لحظات «سهو» تمد فيها يدك إلى جيبك تلقائياً.',
-      act: 'اكتب خطة «إذا… فسأ…» لأخطر ٣ مواقف عليك في «أنا ← أنماطي».',
+      act: 'اكتب خطة لأخطر ٣ مواقف عندك في «أنا ← أنماطي».',
       tip: 'خطط «إذا… فسأ…» من أكثر أساليب تغيير العادات فاعلية في الأبحاث.' },
     { t: 'دفء يعود للأطراف',
       body: 'النيكوتين يقبض الأوعية الدموية. بغيابه تتحسن الدورة الدموية الطرفية، ومعها تروية اللثة والجلد.',
       feel: 'قد تلاحظ طاقة أفضل أثناء المشي أو صعود الدرج.',
-      act: 'مارس ٣ جولات تنفّس في «نجدة» اليوم — حتى دون رغبة — لتتقن الأداة قبل الحاجة.',
+      act: 'سوّ ٣ جولات تنفّس في «نجدة» اليوم — حتى لو ما فيه رغبة — عشان تتقنها قبل لا تحتاجها.',
       tip: 'الزفير الطويل يهدّئ الجهاز العصبي خلال دقيقة أو اثنتين.' },
     { t: 'تفكيك الارتباط الشرطي',
       body: 'كل مرة تقود أو تذاكر أو تشرب القهوة دون ظرف، يتعلّم دماغك أن هذه المواقف لا تتطلب نيكوتين. إنه «محو» تدريجي للارتباط.',
       feel: 'رغبات أخف وأقصر من الأسبوع الأول، وأحياناً تمر ساعات دون تفكير بالظرف.',
-      act: 'اكسر روتيناً واحداً اليوم: طريق مختلف، أو مكان جلوس جديد.',
+      act: 'اكسر روتين واحد اليوم: طريق غير، أو مكان جلوس جديد.',
       tip: 'عشرة أيام! انظر كم وفّرت في شاشة «اليوم».' },
     { t: 'شهية جديدة',
       body: 'يزداد الإحساس بالجوع لدى كثيرين بعد الإقلاع، لأن النيكوتين كان يكبت الشهية ويرفع معدل الحرق قليلاً.',
       feel: 'رغبة في الحلويات أو الوجبات الخفيفة. زيادة بسيطة في الوزن شائعة بعد الإقلاع — المشي اليومي والماء يساعدون، وصحتك تكسب أكثر بكثير.',
-      act: 'جهّز وجبات خفيفة صحية: خضار مقرمشة، مكسرات غير مملحة، فواكه.',
+      act: 'جهّز سناكات صحية: خضار، مكسرات بدون ملح، فواكه.',
       tip: 'كوب ماء بارد قبل الأكل يساعدك على التمييز بين الجوع والرغبة.' },
     { t: 'فم أكثر نقاءً',
       body: 'يتحسن توازن الفم وإفراز اللعاب، ويقل التهيّج في مكان الظرف. أنسجة اللثة تستعيد تدريجياً مرونتها ولونها الصحي.',
       feel: 'إحساس أوضح بالطعم وانتعاش في النفَس.',
-      act: 'نظّف بين أسنانك بالخيط الليلة، ولاحظ حال لثتك.',
+      act: 'نظّف بين أسنانك بالخيط الليلة، ولاحظ لثتك.',
       tip: 'فرشاة ناعمة وحركات لطيفة أفضل للثة في مرحلة التعافي.' },
     { t: 'مزاج أكثر استقراراً',
       body: 'مع غياب دورة «ارتفاع ثم هبوط» النيكوتين كل ساعة، تبدأ تقلبات المزاج بالهدوء. التهيّج المرتبط بالانسحاب يخف عادةً خلال أسبوعين إلى أربعة.',
       feel: 'لحظات ضيق قد تظهر، لكنها أقصر وأقل حدة.',
-      act: 'لاحظ مزاجك اليوم: متى كان أسوأ؟ ومتى كان أفضل؟ وما الذي ساعدك؟',
+      act: 'لاحظ مزاجك اليوم: متى كان أسوأ؟ ومتى كان أحسن؟ ووش اللي ساعدك؟',
       tip: 'حين يضيق صدرك اسأل: هل هذا ضيق حقيقي أم صوت الإدمان؟' },
     { t: 'منتصف الرحلة', ms: 'نصف الطريق',
       body: 'أسبوعان كاملان. الرغبات الجسدية تراجعت كثيراً، وما تبقى غالباً ذكريات مرتبطة بمواقف. لثتك تواصل الالتئام.',
       feel: 'ثقة متزايدة — وقد تأتيك فكرة «أنا مسيطر، ظرف واحد لن يضر». احذرها.',
-      act: 'اقرأ رسالتك لنفسك وأسبابك في «أنا»، وأضف سبباً جديداً اكتشفته.',
+      act: 'اقرأ رسالتك لنفسك وأسبابك في «أنا»، وأضف سبب جديد اكتشفته.',
       tip: 'خطر الانتكاس لا يأتي من الرغبة القوية فقط، بل من الثقة الزائدة.' },
     { t: 'متعة بلا وسيط',
       body: 'دماغك يعيد ضبط نظام المكافأة. الأشياء البسيطة — القهوة، إنجاز مهمة، حديث جميل — تبدأ تمنحك متعة دون الحاجة لنيكوتين.',
       feel: 'لحظات ملل أو فتور طبيعية أثناء إعادة الضبط.',
-      act: 'أنجز مهمة مؤجلة واستمتع بشعور الإنجاز الصافي.',
+      act: 'خلّص مهمة مأجّلة واستمتع بإحساس الإنجاز.',
       tip: 'الحركة والشمس والنوم الجيد ترفع المزاج طبيعياً.' },
     { t: 'تركيز متصل',
       body: 'لم يعد انتباهك ينقطع كل ساعة لطلب جرعة جديدة. كثيرون يلاحظون في الأسبوع الثالث تحسناً في القدرة على العمل المتصل.',
       feel: 'قد يتقلب التركيز، لكن الاتجاه العام للأفضل.',
-      act: 'اعمل أو اقرأ ٤٥ دقيقة متصلة مع كوب ماء بجانبك.',
+      act: 'اشتغل أو اقرأ ٤٥ دقيقة متواصلة وكوب ماي جنبك.',
       tip: 'قسّم وقتك لجلسات مركّزة مع استراحات قصيرة للحركة.' },
     { t: 'نَفَس منعش',
       body: 'تتراجع آثار المنكّهات والأملاح على الفم، ويتحسن جفاف الفم الصباحي ورائحة النفَس.',
       feel: 'إحساس أوضح بنكهات الطعام.',
-      act: 'جرّب اليوم مشروب نعناع طازج أو بابونج دافئ.',
+      act: 'جرّب اليوم نعناع طازج أو بابونج دافي.',
       tip: 'النعناع البارد بديل ممتاز لإحساس «البرودة» الذي اعتادته لثتك.' },
     { t: 'حقيقة التوتر',
       body: 'تُظهر الدراسات أن القلق والتوتر لدى من يقلعون عن النيكوتين يتحسنان مع الوقت. الظرف لم يكن يزيل التوتر؛ كان يزيل توتر الانسحاب الذي سببه الظرف السابق.',
       feel: 'ضغوط الحياة ما زالت موجودة، لكنك تواجهها دون حلقة الاعتماد.',
-      act: 'عند أي ضغط اليوم، خذ ٣ أنفاس بطيئة قبل أن ترد.',
+      act: 'إذا ضغطت اليوم، خذ ٣ أنفاس بطيئة قبل لا ترد.',
       tip: 'سمِّ ما تشعر به بالكلمات؛ تسمية الشعور تخفف حدته.' },
     { t: 'لثّة تتماسك',
       body: 'تتحسن تروية اللثة بعد زوال الأثر القابض للنيكوتين. انحسار اللثة الذي حدث لا يعود وحده عادةً، لكن الإقلاع يوقف مزيداً من الضرر.',
       feel: 'قد تلاحظ نزفاً بسيطاً عند التنظيف مع عودة التروية؛ إن استمر فراجع طبيب الأسنان.',
-      act: 'احجز موعداً لفحص اللثة أو تنظيف الأسنان.',
+      act: 'احجز موعد فحص لثة أو تنظيف أسنان.',
       tip: 'استبدل فرشاتك القديمة بأخرى ناعمة جديدة احتفالاً.' },
     { t: 'لياقة ونَفَس أطول',
       body: 'مع استقرار النبض وضغط الدم وتحسّن الدورة الدموية يصبح الجهد البدني أسهل. الرياضة الآن حليف قوي ضد الرغبة.',
       feel: 'طاقة أفضل في التمارين.',
-      act: 'مارس ٢٠ دقيقة من نشاط بدني تحبه.',
+      act: 'سوّ ٢٠ دقيقة من رياضة تحبها.',
       tip: 'حتى ١٠ دقائق من المشي السريع تخفف حدة الرغبة لدى كثيرين.' },
     { t: 'هوية جديدة تتشكل',
       body: 'ثلاثة أسابيع. لم تعد «شخصاً يحاول الإقلاع»، بل شخصاً لا يستخدم النيكوتين. هذا التحول في الهوية من أقوى عوامل الاستمرار.',
       feel: 'الرغبات نادرة نسبياً، وقد تأتي في مواقف غير متوقعة.',
-      act: 'اكتب جملة فخر لنفسك وشاركها مع من يدعمك.',
+      act: 'اكتب جملة فخر لنفسك وشاركها مع اللي يدعمك.',
       tip: 'قل «أنا لا أستخدم النيكوتين» بدلاً من «أنا أحاول التوقف».' },
     { t: 'خدعة الظرف الواحد',
       body: 'مستقبلات النيكوتين ما زالت تتعافى، وظرف واحد قادر على إيقاظ الرغبة بسرعة. معظم الانتكاسات تبدأ بـ«مرة واحدة فقط».',
       feel: 'قد تظن أنك تستطيع الاستخدام «باعتدال».',
-      act: 'جدّد عهدك اليوم: لا لظرف واحد، مهما كانت المناسبة.',
+      act: 'جدّد وعدك اليوم: لا لظرف واحد، مهما كانت المناسبة.',
       tip: 'احفظ جملة رفض جاهزة: «شكراً، أنا لا أستخدمه».' },
     { t: 'ذهن أصفى',
       body: 'يستمر الدماغ في استعادة توازنه، وكثيرون يصفون هذه المرحلة بصفاء ذهني وتحسّن في الذاكرة اليومية وسرعة البديهة.',
       feel: 'ذهن أهدأ وأقل تشتتاً.',
-      act: 'العب جولة «لمس هادئ» في «نجدة» وحاول تحطيم رقمك.',
+      act: 'تعلّم شي صغير جديد اليوم — دماغك يحب التحدي.',
       tip: 'الدماغ يحب الجديد: تعلّم شيئاً صغيراً اليوم.' },
     { t: 'جيب حر وبال حر',
       body: 'لم تعد تتفقد جيبك قبل الخروج، ولا تقلق من نفاد العلبة في السفر أو الاجتماعات. هذه حرية لا تُقاس بالمال.',
@@ -1094,17 +1193,17 @@
     { t: 'طاقة مستقرة',
       body: 'تختفي فجوات الخمول التي كانت تأتي مع انخفاض النيكوتين في الدم، وتصبح طاقتك أكثر انتظاماً خلال اليوم.',
       feel: 'صباحات أسهل لدى كثيرين.',
-      act: 'اشرب لترين من الماء اليوم مع شرائح الليمون أو النعناع.',
+      act: 'اشرب لترين ماي اليوم مع شرايح ليمون أو نعناع.',
       tip: 'انتظام مواعيد النوم والأكل يثبّت طاقتك.' },
     { t: 'مناعة اجتماعية',
       body: 'صار بإمكانك الجلوس في المجالس والمناسبات دون أن تربطها بالنيكوتين. كل مناسبة تمر بنجاح تبني مناعة سلوكية جديدة.',
       feel: 'رغبة عابرة حين ترى غيرك يستخدم.',
-      act: 'راجع خططك في «خططي للمواقف» وتأكد من جاهزيتها للمناسبات.',
+      act: 'راجع خططك للمواقف، وتأكد إنها جاهزة للمناسبات.',
       tip: 'اجلس بجانب من لا يستخدم، وأمسك كوباً بيدك.' },
     { t: 'صوت الإدمان',
       body: 'حتى بعد أسابيع قد يحاول عقلك المساومة: «أنت تستحق»، «مناسبة خاصة». تمييز هذا الصوت هو مهارتك الأهم للمستقبل.',
       feel: 'أفكار مساومة نادرة لكنها مقنعة.',
-      act: 'اكتب أقوى جملة مساومة يقولها لك عقلك، ثم اكتب ردك عليها.',
+      act: 'اكتب أقوى جملة يقنعك فيها عقلك بالظرف، واكتب ردك عليها.',
       tip: 'الرغبة فكرة، والفكرة ليست أمراً يجب تنفيذه.' },
     { t: 'أربعة أسابيع',
       body: 'تجاوزت معظم أعراض الانسحاب، والرغبات صارت عابرة. مستقبلات الدماغ تواصل التعافي خلال الأسابيع القادمة، فاستمر.',
@@ -1114,12 +1213,12 @@
     { t: 'ليلة التتويج',
       body: 'بكرة تكمّل ٣٠ يوماً. عديت أصعب مراحل الانسحاب وغيّرت عاداتك، ودماغك يواصل التعافي في الأسابيع الجاية.',
       feel: 'حماس، وربما رهبة من «ما بعد التحدي».',
-      act: 'جهّز مكافأتك الشخصية للاحتفال غداً.',
+      act: 'جهّز مكافأتك عشان تحتفل فيها بكرة.',
       tip: 'النقاء ليس تحدياً ينتهي بل حياة تستمر.' },
     { t: 'تاج النقاء', ms: '٣٠ يوماً',
       body: 'مبارك! ٣٠ يوماً بلا نيكوتين. جسدك ولثتك يتعافيان، وعاداتك تغيّرت، وأثبتّ لنفسك أنك أقوى من الإدمان. ينتقل نَقَاء الآن إلى «ما بعد الثلاثين».',
       feel: 'فخر مستحق.',
-      act: 'احتفل بانتصارك، وشارك بطاقة إنجازك من «أنا».',
+      act: 'احتفل بإنجازك، وشارك بطاقة إنجازك من «أنا».',
       tip: 'استمر في استخدام «نجدة» متى احتجت؛ الحرية تُحرس.' }
   ].map((d, i) => Object.assign({ day: i + 1 }, d));
 
@@ -1206,14 +1305,14 @@
   ];
   /* ---------- Plan engine: content for the gradual path ---------- */
   const GRADUAL_DAYS = {
-    1: { body: 'اليوم تبدأ حصتك المخفّضة. يحصل جسدك على نيكوتين أقل مما اعتاد، فيبدأ التكيّف تدريجياً دون صدمة الانسحاب الكاملة.', act: 'ضع حصة اليوم في علبة واحدة، واترك الباقي في البيت أو أعطه لشخص آخر.' },
-    2: { body: 'قد تشعر برغبة أكثر من المعتاد بين الأظرف؛ هذا جسدك يتعلّم فترات أطول دون نيكوتين.', act: 'باعد بين كل ظرفين ساعة على الأقل، واستخدم «نجدة» في الفجوات.' },
-    3: { body: 'ثلاثة أيام من التخفيض. كل ظرف لم تستخدمه يعني نيكوتيناً أقل يصل إلى مستقبلات دماغك، فتبدأ حساسيتها بالانخفاض ببطء.', act: 'سجّل كل ظرف فور استخدامه — الصدق مع العدّاد هو أساس التدرّج.' },
-    4: { act: 'اختر موقفاً واحداً لن تستخدم فيه الظرف أبداً — السيارة مثلاً — والتزم به.' },
-    7: { body: 'أسبوع من التدرّج. من الغد تنخفض حصتك إلى النصف — جسدك صار مستعداً للخطوة التالية.', act: 'راجع أسبوعك: كم مرة تجاوزت الحصة؟ وما الموقف الأصعب؟' },
-    15: { body: 'تبدأ اليوم ربع حصتك الأصلية. قد تشتد الرغبات قليلاً مع التخفيض، وهي علامة على تكيّف جسدك.', act: 'احذف ظرف ما بعد الأكل تماماً، وضع مكانه تنظيف الأسنان أو علكة.' },
-    22: { body: 'أقل من عُشر حصتك الأصلية. أنت على بُعد أيام من الصفر.', act: 'حدّد الآن آخر ظرف ستستخدمه قبل يوم الصفر (اليوم ٢٨)، وأخبر شخصاً يدعمك.' },
-    28: { body: 'يوم الصفر! اليوم تتوقف تماماً. خلال نحو ٧٢ ساعة يغادر النيكوتين جسدك، وقد تشعر بأعراض انسحاب — أخف عادةً بعد التدرّج.', act: 'تخلّص من أي علبة متبقية، وجهّز بدائلك، وافتح «نجدة» عند أول رغبة.' },
+    1: { body: 'اليوم تبدأ حصتك المخفّضة. يحصل جسدك على نيكوتين أقل مما اعتاد، فيبدأ التكيّف تدريجياً دون صدمة الانسحاب الكاملة.', act: 'حط حصة اليوم في علبة وحدة، وخلّ الباقي في البيت أو عند أحد.' },
+    2: { body: 'قد تشعر برغبة أكثر من المعتاد بين الأظرف؛ هذا جسدك يتعلّم فترات أطول دون نيكوتين.', act: 'خلّ بين كل ظرفين ساعة على الأقل، واستخدم «نجدة» بينها.' },
+    3: { body: 'ثلاثة أيام من التخفيض. كل ظرف لم تستخدمه يعني نيكوتيناً أقل يصل إلى مستقبلات دماغك، فتبدأ حساسيتها بالانخفاض ببطء.', act: 'سجّل كل ظرف أول ما تستخدمه — صدقك مع العدّاد هو أساس التدرّج.' },
+    4: { act: 'اختر موقف واحد ما تستخدم فيه الظرف أبداً — السيارة مثلاً — والتزم فيه.' },
+    7: { body: 'أسبوع من التدرّج. من الغد تنخفض حصتك إلى النصف — جسدك صار مستعداً للخطوة التالية.', act: 'راجع أسبوعك: كم مرة زدت عن الحصة؟ ووش أصعب موقف؟' },
+    15: { body: 'تبدأ اليوم ربع حصتك الأصلية. قد تشتد الرغبات قليلاً مع التخفيض، وهي علامة على تكيّف جسدك.', act: 'شيل ظرف ما بعد الأكل كله، وبداله فرّش أسنانك أو امضغ علك.' },
+    22: { body: 'أقل من عُشر حصتك الأصلية. أنت على بُعد أيام من الصفر.', act: 'حدّد الحين آخر ظرف بتستخدمه قبل يوم الصفر (اليوم ٢٨)، وعلّم أحد يدعمك.' },
+    28: { body: 'يوم الصفر! اليوم تتوقف تماماً. خلال نحو ٧٢ ساعة يغادر النيكوتين جسدك، وقد تشعر بأعراض انسحاب — أخف عادةً بعد التدرّج.', act: 'تخلّص من أي علبة باقية، وجهّز بدائلك، وافتح «نجدة» أول ما تجيك رغبة.' },
     29: { body: 'يومك الثاني بلا نيكوتين. الرغبات قد تبلغ ذروتها الآن ثم تبدأ بالانحسار.' },
     30: { body: 'مبارك! أتممت التدرّج ووصلت إلى الصفر. جسدك يتعافى، وعاداتك تغيّرت. ينتقل نَقَاء الآن إلى «ما بعد الثلاثين» لحماية إنجازك.' }
   };
@@ -1379,12 +1478,12 @@
     state.askedMissed = k0; save(false);
     let used = 0;
     openSheet(`
-      <div class="row"><span class="ibox">${ic('calendar')}</span><div class="grow"><h2 class="h2">سؤال سريع عن أمس</h2><p class="xs muted" style="margin:0">لم تسجّل مراجعة أمس — لا بأس</p></div></div>
-      <p class="body">أمس، هل استعملت ظرفاً؟</p>
-      <div class="grid-2"><button class="btn soft" id="md-no">${ic('shield-check', 'sm')} لا، كان نقياً</button><button class="btn soft-sand" id="md-yes">نعم</button></div>
+      <div class="row"><span class="ibox">${ic('calendar')}</span><div class="grow"><h2 class="h2">سؤال سريع عن أمس</h2><p class="xs muted" style="margin:0">ما سجّلت مراجعة أمس — عادي</p></div></div>
+      <p class="body">أمس، استخدمت ظرف؟</p>
+      <div class="grid-2"><button class="btn soft" id="md-no">${ic('shield-check', 'sm')} لا، كان نظيف</button><button class="btn soft-sand" id="md-yes">نعم</button></div>
       <div id="md-count" class="col" hidden>
         <div class="row" style="justify-content:center;gap:18px"><button class="icon-btn" id="md-minus">${ic('minus', 'sm')}</button><span class="h1 num" id="md-n">١</span><button class="icon-btn" id="md-plus">${ic('plus', 'sm')}</button></div>
-        <p class="xs muted center" style="margin:0">لن يُصفَّر عدّادك. نسجّلها بصدق ونكمل.</p>
+        <p class="xs muted center" style="margin:0">عدّادك ما بيتصفّر. نسجّلها بصدق ونكمّل.</p>
         <button class="btn sand block" id="md-save">حفظ وأكمل</button>
       </div>`, body => {
       const done = () => { closeSheet(); rerender(); };
@@ -1416,10 +1515,10 @@
       $('#ev-save', body).disabled = !(o.mood && o.craving != null);
     };
     openSheet(`
-      <div class="row"><span class="ibox">${ic('moon-star')}</span><div class="grow"><h2 class="h2">مراجعة المساء</h2><p class="xs muted" style="margin:0">دقيقة واحدة تجعل خطتك أذكى</p></div></div>
+      <div class="row"><span class="ibox">${ic('moon-star')}</span><div class="grow"><h2 class="h2">مراجعة المساء</h2><p class="xs muted" style="margin:0">دقيقة وحدة تخلي خطتك أذكى</p></div></div>
       <p class="xs muted" style="margin:0">كيف كان مزاجك اليوم؟</p>
       <div class="grid-4" style="grid-template-columns:repeat(5,1fr)" id="ev-mood"></div>
-      <p class="xs muted" style="margin:0">وأقوى رغبة مرّت بك؟</p>
+      <p class="xs muted" style="margin:0">وأقوى رغبة مرّت عليك؟</p>
       <div class="grid-4" id="ev-crave"></div>
       <p class="xs muted" style="margin:0">${T ? 'كم ظرف استخدمت اليوم؟' : 'استخدمت ظرف اليوم؟'}</p>
       <div id="ev-use"></div>
@@ -1627,7 +1726,7 @@
   /* =========================================================
      HAPTICS / TOAST / CONFETTI / TOOLTIP
      ========================================================= */
-  const buzz = (p = 10) => { try { if (state.haptics && navigator.vibrate) navigator.vibrate(p); } catch (e) {} };
+  const buzz = (p = 10) => { try { if (navigator.userActivation && !navigator.userActivation.hasBeenActive) return; if (state.haptics && navigator.vibrate) navigator.vibrate(p); } catch (e) {} };
   let toastT;
   function toast(msg, icon = 'circle-check') {
     $('#toast-ic').innerHTML = ic(icon, 'sm');
@@ -1673,7 +1772,7 @@
     const pref = state.theme === 'auto' ? (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark') : state.theme;
     document.documentElement.dataset.theme = pref;
     const meta = $('meta[name="theme-color"]');
-    if (meta) meta.content = pref === 'light' ? '#F3F0E8' : '#0A0F0D';
+    if (meta) meta.content = pref === 'light' ? '#F2F2F7' : '#000000';
   }
 
   /* =========================================================
@@ -1697,11 +1796,11 @@
       if (d < 4) {
         const n = d === 0 ? 3 : (r() < .35 ? 3 : 2);
         for (let i = 0; i < n; i++) {
-          const spread = n === 3 ? (i - 1) * .62 : (i === 0 ? -.44 : .44);
-          grow(x2, y2, a + spread + (r() - .5) * .25, len * (.7 + r() * .08), w * .64, d + 1);
+          const spread = n === 3 ? (i - 1) * .8 : (i === 0 ? -.56 : .56);
+          grow(x2, y2, a + spread + (r() - .5) * .25, len * (.74 + r() * .08), w * .64, d + 1);
         }
       }
-    })(180, 176, -Math.PI / 2, 34, 7.5, 0);
+    })(180, 176, -Math.PI / 2, 36, 8, 0);
     const pt = (b, t) => ({ x: (1 - t) * (1 - t) * b.x + 2 * (1 - t) * t * b.cx + t * t * b.x2, y: (1 - t) * (1 - t) * b.y + 2 * (1 - t) * t * b.cy + t * t * b.y2 });
     const spots = [];
     br.forEach(b => {
@@ -1729,93 +1828,194 @@
     for (let i = 1; i < stops.length; i++) if (p <= stops[i][0]) { const [p0, c0] = stops[i - 1], [p1, c1] = stops[i]; return lerpHex(c0, c1, (p - p0) / (p1 - p0)); }
     return stops[stops.length - 1][1];
   }
+  /* ---------- Motion helpers ---------- */
+  let counting = false, animateHero = true, justArrived = false;
+  function countUp(el, to) {
+    if (!el || to == null || reduceMotion() || to < 2) return;
+    counting = true;
+    const t0 = performance.now(), dur = Math.min(1100, 500 + to * 25);
+    const step = t => {
+      const k = clamp((t - t0) / dur, 0, 1), e = 1 - Math.pow(1 - k, 3);
+      el.textContent = nf(Math.round(to * e));
+      if (k < 1) requestAnimationFrame(step); else counting = false;
+    };
+    el.textContent = nf(0);
+    requestAnimationFrame(step);
+  }
+  const CHECK_SVG = '<svg viewBox="0 0 52 52" aria-hidden="true"><circle class="dc-c" cx="26" cy="26" r="23"/><path class="dc-p" d="M15 27 l7 7 l15 -15"/></svg>';
+
+  /* Full-screen celebration for milestones */
+  function celebrate(b) {
+    const el = document.createElement('div');
+    el.className = 'celebrate';
+    el.setAttribute('role', 'dialog');
+    el.innerHTML = `<div class="cel-rays"></div>
+      <div class="cel-body">
+        <div class="cel-medal">${ic(b.icon, 'xl')}</div>
+        <p class="cel-kicker">محطة جديدة</p>
+        <h2 class="cel-title">${b.t}</h2>
+        <p class="cel-text">${b.d}</p>
+        <p class="cel-sub">${ic('sprout', 'xs')} تفتّحت زهرة جديدة على شجرتك</p>
+        <button class="btn cel-btn">كمّل</button>
+      </div>`;
+    document.body.appendChild(el);
+    requestAnimationFrame(() => el.classList.add('on'));
+    const close = () => { el.classList.remove('on'); setTimeout(() => el.remove(), 380); };
+    el.querySelector('.cel-btn').onclick = close;
+    confetti(); buzz([20, 40, 20]);
+  }
+
+  /* Sheet: animated close + drag-to-dismiss from the grabber */
+  let closeT = null, dragSuppress = false;
+  function initSheetDrag() {
+    const sh = $('.sheet');
+    let y0 = null, dy = 0, drag = false;
+    sh.addEventListener('pointerdown', e => {
+      const fromGrab = !!e.target.closest('.sheet-grab');
+      if (!fromGrab && (e.pointerType !== 'mouse' || sh.scrollTop > 0)) return;
+      if (e.target.closest('input,textarea,select,.switch')) return;
+      y0 = e.clientY; dy = 0; drag = false;
+    });
+    window.addEventListener('pointermove', e => {
+      if (y0 == null) return;
+      dy = e.clientY - y0;
+      if (!drag && dy > 8) { drag = true; sh.style.transition = 'none'; }
+      if (drag) { sh.style.transform = `translateY(${Math.max(0, dy)}px)`; $('.sheet-backdrop').style.opacity = String(clamp(1 - dy / 400, .2, 1)); }
+    });
+    const end = () => {
+      if (y0 == null) return;
+      if (drag) {
+        sh.style.transition = 'transform .32s var(--ease)';
+        $('.sheet-backdrop').style.opacity = '';
+        if (dy > 110) closeSheet(); else sh.style.transform = '';
+        dragSuppress = true; setTimeout(() => { dragSuppress = false; }, 60);
+      }
+      y0 = null; drag = false;
+    };
+    window.addEventListener('pointerup', end);
+    window.addEventListener('pointercancel', end);
+    document.addEventListener('click', e => { if (dragSuppress) { e.stopPropagation(); e.preventDefault(); } }, true);
+  }
+  /* Sky follows the real time of day: hour, top colour, bottom colour, daylight */
+  const SKY_KEYS = [
+    [0, '#0B1430', '#1E2A52', 0], [5, '#0E1A3A', '#26305E', 0], [6, '#3A4A7A', '#F2A07B', .55], [8, '#3C8DC4', '#A9D6EE', 1],
+    [12, '#2F86C9', '#8CC8EE', 1], [16, '#4F84B5', '#F3C78E', 1], [18, '#4B4E86', '#F08A5D', .6], [19.5, '#26305E', '#9A5F7A', .25],
+    [21, '#0E1A3A', '#26305E', 0], [24, '#0B1430', '#1E2A52', 0]
+  ];
+  function skyAt(h) {
+    for (let i = 1; i < SKY_KEYS.length; i++) if (h <= SKY_KEYS[i][0]) {
+      const a = SKY_KEYS[i - 1], b = SKY_KEYS[i], t = (h - a[0]) / (b[0] - a[0]);
+      return { top: lerpHex(a[1], b[1], t), bot: lerpHex(a[2], b[2], t), dl: a[3] + (b[3] - a[3]) * t };
+    }
+    return { top: SKY_KEYS[0][1], bot: SKY_KEYS[0][2], dl: 0 };
+  }
+  let justFruit = 0;
   function sceneSVG(m, opts = {}) {
     if (!TREE) buildTree();
-    const light = (opts.theme || document.documentElement.dataset.theme) === 'light';
-    const p = clamp(m.pd / 30, 0, 1), pd = Math.max(.25, p);
-    const HERO = light ? {
-      skyTop: ramp([[0, '#2B6A8E'], [1, '#3F8DB0']], p), skyBot: ramp([[0, '#E7B48C'], [1, '#F6D3A6']], p), sun: '#FFE6BF',
-      hills: '#7DB59A', ground: '#5C9C7E', trunk: '#6B4E3A', leaves: ['#11997C', '#6FD0B0'], bloss: '#FF8A7A', fruit: '#FFB020',
-      pot: '#2E4A55', potFill: '#F6F1E9', soil: '#6B4E3A', seed: '#FFB46B'
-    } : {
-      skyTop: ramp([[0, '#0A1430'], [1, '#16294A']], p), skyBot: ramp([[0, '#2D3463'], [.6, '#6B4E6E'], [1, '#C9866A']], pd), sun: '#FFB46B',
-      hills: ramp([[0, '#1A3340'], [1, '#24504A']], p), ground: ramp([[0, '#132A31'], [1, '#1D4038']], p), trunk: '#8A6A55',
-      leaves: ['#30D5B5', '#9BE7D3'], bloss: '#FF8A7A', fruit: '#FFB020', pot: '#C9D3DD', potFill: '#1F2C3A', soil: '#4A3A30', seed: '#FFB46B'
-    };
-    const P = opts.hero ? HERO : light ? {
-      skyTop: '#CFE6EE', skyBot: '#FCE3CC', sun: '#F6B98A', hills: '#BFDCCB', ground: '#9CCBB0', trunk: '#8A6448',
-      leaves: ['#2E9C85', '#6CC3A8'], bloss: '#F29A86', fruit: '#E8955A',
-      pot: '#56636A', potFill: '#F4EEE5', soil: '#7A5A40', seed: '#E8955A'
-    } : {
-      skyTop: '#121A2B', skyBot: ramp([[0, '#1E2A44'], [.5, '#3A3F63'], [1, '#C98F7A']], pd), sun: '#F4B27E',
-      hills: ramp([[0, '#1F2E3D'], [1, '#2A4A4A']], p), ground: ramp([[0, '#18242F'], [1, '#22413C']], p), trunk: '#8A6A55',
-      leaves: ['#5EC4B1', '#8FDCCB'], bloss: '#F29A86', fruit: '#F4B27E',
-      pot: '#A3AFBB', potFill: '#253141', soil: '#4A3A30', seed: '#F4B27E'
-    };
+    const now = new Date(), hour = opts.hour != null ? opts.hour : now.getHours() + now.getMinutes() / 60;
+    const sky = skyAt(hour), dl = sky.dl, st = !!opts.static;
+    const mix = (night, day) => lerpHex(night, day, dl);
     const D = m.prep ? 0 : Math.min(m.pd, 30);
+    const potStroke = mix('#8FA3B5', '#3B4F59');
     let s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" preserveAspectRatio="${opts.align || 'xMidYMid'} slice" role="img" aria-label="علبتك القديمة تُنبت شجرة: ورقة لكل يوم بلا نيكوتين">
       <defs>
-        <linearGradient id="skyG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${P.skyTop}"/><stop offset="1" stop-color="${P.skyBot}"/></linearGradient>
-        <radialGradient id="sunG"><stop offset="0" stop-color="${P.sun}" stop-opacity=".75"/><stop offset="1" stop-color="${P.sun}" stop-opacity="0"/></radialGradient>
+        <linearGradient id="skyG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${sky.top}"/><stop offset="1" stop-color="${sky.bot}"/></linearGradient>
+        <radialGradient id="sunG"><stop offset="0" stop-color="#FFF4D6" stop-opacity=".9"/><stop offset=".4" stop-color="#FFD9A0" stop-opacity=".35"/><stop offset="1" stop-color="#FFD9A0" stop-opacity="0"/></radialGradient>
+        <linearGradient id="hillF" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${mix('#2A4560', '#A8D2BF')}"/><stop offset="1" stop-color="${mix('#1E3348', '#86BCA4')}"/></linearGradient>
+        <linearGradient id="hillM" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${mix('#20384C', '#7DBA99')}"/><stop offset="1" stop-color="${mix('#172B3B', '#5FA383')}"/></linearGradient>
+        <linearGradient id="hillN" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${mix('#183142', '#5FA585')}"/><stop offset="1" stop-color="${mix('#10222E', '#3F8466')}"/></linearGradient>
+        <linearGradient id="potG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${mix('#3A4B5C', '#FFFDF8')}"/><stop offset=".6" stop-color="${mix('#2C3A48', '#EFE8DC')}"/><stop offset="1" stop-color="${mix('#222E3A', '#D6CDBF')}"/></linearGradient>
+        <radialGradient id="soilG" cx=".5" cy=".4"><stop offset="0" stop-color="#7A5A42"/><stop offset="1" stop-color="#4E3828"/></radialGradient>
+        <linearGradient id="leafA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3FD3A8"/><stop offset="1" stop-color="#0E8566"/></linearGradient>
+        <linearGradient id="leafB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9BEBCF"/><stop offset="1" stop-color="#34AE8A"/></linearGradient>
+        <radialGradient id="fruitG" cx=".35" cy=".3"><stop offset="0" stop-color="#FFE29A"/><stop offset=".55" stop-color="#FFB547"/><stop offset="1" stop-color="#E9822A"/></radialGradient>
+        <radialGradient id="auraG"><stop offset="0" stop-color="#5FE0B8" stop-opacity=".28"/><stop offset="1" stop-color="#5FE0B8" stop-opacity="0"/></radialGradient>
       </defs>
       <rect width="360" height="240" fill="url(#skyG)"/>`;
-    if (!light) {
-      const starO = clamp(1 - p * 1.4, 0, 1) * .8;
-      if (starO > 0) s += `<g opacity="${starO.toFixed(2)}" fill="#DCE4F0">` + TREE.stars.map(t => `<circle class="${opts.static ? '' : 'twinkle'}" style="animation-delay:${t.d}s" cx="${t.x.toFixed(1)}" cy="${t.y.toFixed(1)}" r="${t.r.toFixed(2)}"/>`).join('') + '</g>';
+    // stars + moon at night
+    if (dl < .45) {
+      const so = (1 - dl / .45) * .9;
+      s += `<g opacity="${so.toFixed(2)}" fill="#E8EEFA">` + TREE.stars.map(t => `<circle class="${st ? '' : 'twinkle'}" style="animation-delay:${t.d}s" cx="${t.x.toFixed(1)}" cy="${t.y.toFixed(1)}" r="${t.r.toFixed(2)}"/>`).join('') + '</g>';
+      s += `<g opacity="${so.toFixed(2)}"><circle cx="66" cy="56" r="26" fill="url(#sunG)" opacity=".5"/><circle cx="66" cy="56" r="11" fill="#F3F0E6"/><circle cx="71" cy="52" r="10" fill="${sky.top}"/></g>`;
     }
-    const sunY = light ? 96 : 206 - pd * 116, sunX = opts.hero ? 76 : 292;
-    s += `<circle cx="${sunX}" cy="${sunY.toFixed(1)}" r="54" fill="url(#sunG)"/>
-      <circle cx="${sunX}" cy="${sunY.toFixed(1)}" r="13" fill="${P.sun}" opacity="${light ? 1 : (.5 + p * .5).toFixed(2)}"/>
-      <path d="M0,192 Q60,164 130,182 T260,172 T360,180 V240 H0Z" fill="${P.hills}"/>
-      <path d="M0,212 Q90,198 180,206 T360,203 V240 H0Z" fill="${P.ground}"/>`;
-    // the old tin, drawn as a pot the tree grows from (abstract, no brand, no pouches)
-    const sw = 'stroke="' + P.pot + '" stroke-width="2.2" stroke-linejoin="round"';
-    const potO = m.free ? .4 : 1;
-    s += `<g opacity="${potO}">`;
-    if (!m.prep) s += `<g transform="translate(250 190) rotate(-16)"><ellipse rx="12" ry="25" fill="${P.potFill}" ${sw}/><ellipse rx="7" ry="16" fill="none" stroke="${P.pot}" stroke-width="1.2" opacity=".55"/></g>`;
-    s += `<path d="M134,176 L137,202 A43,8 0 0 0 223,202 L226,176" fill="${P.potFill}" ${sw}/>
-      <path d="M135.4,188 A44.6,8.4 0 0 0 224.6,188" fill="none" stroke="${P.pot}" stroke-width="1.2" opacity=".45"/>`;
+    // sun travels from right (morning) to left (evening)
+    if (dl > 0) {
+      const t = clamp((hour - 6) / 13, 0, 1), sx = 310 - t * 260, sy = 205 - Math.sin(Math.PI * t) * 150;
+      const sc = lerpHex('#FFB46B', '#FFF1C9', clamp(Math.sin(Math.PI * t) * 1.6, 0, 1));
+      s += `<g opacity="${clamp(dl * 1.3, 0, 1).toFixed(2)}"><circle class="${st ? '' : 'sun-glow'}" cx="${sx.toFixed(1)}" cy="${sy.toFixed(1)}" r="62" fill="url(#sunG)"/><circle cx="${sx.toFixed(1)}" cy="${sy.toFixed(1)}" r="14" fill="${sc}"/></g>`;
+    }
+    // clouds
+    const cloud = (x, y, k, o) => `<g class="${st ? '' : 'cloud'}" style="animation-delay:-${(x / 9).toFixed(1)}s" opacity="${o}" fill="#FFFFFF"><ellipse cx="${x}" cy="${y}" rx="${22 * k}" ry="${8 * k}"/><ellipse cx="${x - 12 * k}" cy="${y + 2 * k}" rx="${12 * k}" ry="${7 * k}"/><ellipse cx="${x + 10 * k}" cy="${y - 4 * k}" rx="${13 * k}" ry="${9 * k}"/></g>`;
+    const co = (.15 + dl * .55).toFixed(2);
+    s += cloud(118, 56, 1, co) + cloud(40, 96, .75, (co * .8).toFixed(2)) + cloud(206, 120, .6, (co * .7).toFixed(2));
+    // layered hills
+    s += `<path d="M0,178 Q70,150 150,170 T300,160 T360,166 V240 H0Z" fill="url(#hillF)"/>
+      <path d="M0,196 Q80,174 170,190 T360,186 V240 H0Z" fill="url(#hillM)"/>
+      <path d="M0,214 Q90,200 180,207 T360,204 V240 H0Z" fill="url(#hillN)"/>`;
+    // grass
+    s += `<g stroke="${mix('#2A5A4A', '#2F7D5F')}" stroke-width="1.4" stroke-linecap="round" fill="none" opacity=".8">${[[118, 210], [126, 212], [236, 209], [244, 211], [96, 213], [266, 212]].map(([x, y]) => `<path d="M${x},${y} q-2,-6 -4,-9 M${x},${y} q1,-7 2,-10 M${x},${y} q3,-5 6,-7"/>`).join('')}</g>`;
+    // pot (the old tin), shadow first
+    const potO = m.free ? .45 : 1;
+    s += `<ellipse cx="182" cy="208" rx="54" ry="6" fill="#000" opacity="${(.12 + dl * .08).toFixed(2)}"/><g opacity="${potO}">`;
+    if (!m.prep) s += `<g transform="translate(252 192) rotate(-16)"><ellipse rx="12" ry="25" fill="url(#potG)" stroke="${potStroke}" stroke-width="1.6"/><ellipse rx="7" ry="16" fill="none" stroke="${potStroke}" stroke-width="1" opacity=".45"/></g>`;
+    s += `<path d="M134,176 L137,202 A43,8 0 0 0 223,202 L226,176" fill="url(#potG)" stroke="${potStroke}" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M135.4,186 A44.6,8.4 0 0 0 224.6,186" fill="none" stroke="${potStroke}" stroke-width="1" opacity=".35"/>
+      <path d="M140,182 L142,198" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity="${(.15 + dl * .35).toFixed(2)}"/>`;
     if (m.prep) {
-      s += `<path d="M132,176 L132,170 A48,9.5 0 0 1 228,170 L228,176 A48,9.5 0 0 1 132,176Z" fill="${P.potFill}" ${sw}/>
-        <ellipse cx="180" cy="170" rx="48" ry="9.5" fill="${P.potFill}" ${sw}/>
-        <ellipse cx="180" cy="170" rx="30" ry="5.5" fill="none" stroke="${P.pot}" stroke-width="1.2" opacity=".55"/>
-        <circle class="${opts.static ? '' : 'bud'}" cx="180" cy="163" r="10" fill="${P.seed}" opacity=".28"/>
-        <ellipse cx="180" cy="163" rx="4.5" ry="3.4" fill="${P.seed}"/>`;
+      s += `<path d="M132,176 L132,170 A48,9.5 0 0 1 228,170 L228,176 A48,9.5 0 0 1 132,176Z" fill="url(#potG)" stroke="${potStroke}" stroke-width="1.6"/>
+        <ellipse cx="180" cy="170" rx="48" ry="9.5" fill="url(#potG)" stroke="${potStroke}" stroke-width="1.6"/>
+        <ellipse cx="180" cy="170" rx="30" ry="5.5" fill="none" stroke="${potStroke}" stroke-width="1" opacity=".45"/>
+        <circle class="${st ? '' : 'bud'}" cx="180" cy="162" r="12" fill="#FFB547" opacity=".3"/>
+        <ellipse cx="180" cy="162" rx="5" ry="3.8" fill="url(#fruitG)"/>`;
     } else {
-      s += `<ellipse cx="180" cy="176" rx="46" ry="9" fill="${P.soil}" ${sw}/>`;
+      s += `<ellipse cx="180" cy="176" rx="46" ry="9" fill="url(#soilG)" stroke="${potStroke}" stroke-width="1.6"/>`;
       const crack = clamp((m.pd - 10) / 12, 0, 1);
-      if (crack > 0) s += `<path d="M152,180 l4,7 l-3,6 l5,8" stroke="${P.pot}" stroke-width="1.7" fill="none" stroke-linecap="round" opacity="${crack.toFixed(2)}"/>`;
-      if (m.pd >= 18) s += `<path d="M207,180 l-3,8 l4,6 l-2,9" stroke="${P.pot}" stroke-width="1.7" fill="none" stroke-linecap="round" opacity="${clamp((m.pd - 18) / 8, 0, 1).toFixed(2)}"/>`;
+      if (crack > 0) s += `<path d="M152,180 l4,7 l-3,6 l5,8" stroke="${potStroke}" stroke-width="1.4" fill="none" stroke-linecap="round" opacity="${crack.toFixed(2)}"/>`;
+      if (m.pd >= 18) s += `<path d="M207,180 l-3,8 l4,6 l-2,9" stroke="${potStroke}" stroke-width="1.4" fill="none" stroke-linecap="round" opacity="${clamp((m.pd - 18) / 8, 0, 1).toFixed(2)}"/>`;
     }
     s += '</g>';
-    if (m.free) s += `<path d="M168,200 q-12,9 -30,10 M192,201 q12,8 30,9 M180,203 q3,8 -4,12" stroke="${P.trunk}" stroke-width="2.4" fill="none" stroke-linecap="round"/>`;
+    if (m.free) s += `<path d="M168,200 q-12,9 -30,10 M192,201 q12,8 30,9 M180,203 q3,8 -4,12" stroke="#6B4E3A" stroke-width="2.4" fill="none" stroke-linecap="round"/>`;
     if (!m.prep) {
-      // tree
       const b0 = TREE.br[0];
+      const f0 = Math.max(.28, clamp(D / Math.max(.01, b0.en), 0, 1));
+      const tip = { x: (1 - f0) * (1 - f0) * b0.x + 2 * (1 - f0) * f0 * b0.cx + f0 * f0 * b0.x2, y: (1 - f0) * (1 - f0) * b0.y + 2 * (1 - f0) * f0 * b0.cy + f0 * f0 * b0.y2 };
+      const count = Math.min(30, m.day) + (m.free ? Math.min(40, Math.floor(m.pd - 30)) : 0);
+      const pos = [];
+      for (let k = 1; k <= count; k++) {
+        let L = TREE.leaf[k]; if (!L) continue;
+        if (L.avail > D + .25) L = { x: tip.x + (k % 2 ? -8 : 8), y: tip.y + 2 - Math.floor((k - 1) / 2) * 6, rot: k % 2 ? -50 : 50 };
+        pos.push([k, L]);
+      }
+      s += `<g class="${st ? '' : 'sway'}">`;
+      if (pos.length > 6) {
+        const cx = pos.reduce((a, [, L]) => a + L.x, 0) / pos.length, cy = pos.reduce((a, [, L]) => a + L.y, 0) / pos.length;
+        s += `<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${(26 + pos.length * 1.6).toFixed(1)}" fill="url(#auraG)"/>`;
+      }
+      // branches: shadow stroke + highlight stroke for depth
       s += '<g stroke-linecap="round" fill="none">';
       TREE.br.forEach((b, i) => {
         let f = clamp((D - b.st) / Math.max(.01, b.en - b.st), 0, 1);
         if (i === 0) f = Math.max(.28, f);
         if (f <= 0) return;
-        s += `<path d="M${b.x.toFixed(1)},${b.y.toFixed(1)} Q${b.cx.toFixed(1)},${b.cy.toFixed(1)} ${b.x2.toFixed(1)},${b.y2.toFixed(1)}" pathLength="1" stroke-dasharray="1 1" stroke-dashoffset="${(1 - f).toFixed(3)}" stroke="${P.trunk}" stroke-width="${Math.max(1.2, b.w * (0.5 + 0.5 * Math.min(1, D / 10))).toFixed(2)}"/>`;
+        const w = Math.max(1.3, b.w * (0.5 + 0.5 * Math.min(1, D / 10)));
+        const d = `M${b.x.toFixed(1)},${b.y.toFixed(1)} Q${b.cx.toFixed(1)},${b.cy.toFixed(1)} ${b.x2.toFixed(1)},${b.y2.toFixed(1)}`;
+        s += `<path d="${d}" pathLength="1" stroke-dasharray="1 1" stroke-dashoffset="${(1 - f).toFixed(3)}" stroke="#5A3F2E" stroke-width="${w.toFixed(2)}"/>`;
+        if (w > 2.2) s += `<path d="${d}" pathLength="1" stroke-dasharray="1 1" stroke-dashoffset="${(1 - f).toFixed(3)}" stroke="#9A7255" stroke-width="${(w * .38).toFixed(2)}" transform="translate(-.7 0)" opacity=".8"/>`;
       });
       s += '</g>';
-      const f0 = Math.max(.28, clamp(D / Math.max(.01, b0.en), 0, 1));
-      const tip = { x: (1 - f0) * (1 - f0) * b0.x + 2 * (1 - f0) * f0 * b0.cx + f0 * f0 * b0.x2, y: (1 - f0) * (1 - f0) * b0.y + 2 * (1 - f0) * f0 * b0.cy + f0 * f0 * b0.y2 };
-      const count = Math.min(30, m.day) + (m.free ? Math.min(40, Math.floor(m.pd - 30)) : 0);
-      for (let k = 1; k <= count; k++) {
-        let L = TREE.leaf[k]; if (!L) continue;
-        if (L.avail > D + .25) L = { x: tip.x + (k % 2 ? -7 : 7), y: tip.y + 2 - Math.floor((k - 1) / 2) * 5, rot: k % 2 ? 35 : -35 };
-        const isBud = !m.free && k === m.day, sc = isBud ? .78 : 1;
-        s += `<ellipse class="${isBud && !opts.static ? 'bud' : ''}" cx="${L.x.toFixed(1)}" cy="${L.y.toFixed(1)}" rx="${(7.2 * sc).toFixed(1)}" ry="${(3.6 * sc).toFixed(1)}" transform="rotate(${L.rot} ${L.x.toFixed(1)} ${L.y.toFixed(1)})" fill="${P.leaves[k % 2]}"/>`;
-        if (k <= 30 && state.completedChallenges[k]) s += `<circle cx="${(L.x + 4.5).toFixed(1)}" cy="${(L.y + 3.5).toFixed(1)}" r="2.8" fill="${P.fruit}"/>`;
-      }
+      pos.forEach(([k, L]) => {
+        const bud = !m.free && k === m.day, sc = bud ? .95 : 1.3;
+        s += `<g transform="translate(${L.x.toFixed(1)} ${L.y.toFixed(1)}) rotate(${L.rot + 90}) scale(${sc})"><g class="${bud && !st ? 'bud' : ''}"><path d="M0,-7.5 C5.2,-4.5 5.2,4 0,8 C-5.2,4 -5.2,-4.5 0,-7.5Z" fill="url(#leaf${k % 2 ? 'A' : 'B'})"/><path d="M0,-6 L0,6.5" stroke="#FFFFFF" stroke-width=".7" opacity=".35"/></g></g>`;
+        if (k <= 30 && state.completedChallenges[k]) s += `<g class="${!st && k === justFruit ? 'fruit-pop' : ''}" transform="translate(${(L.x + 5).toFixed(1)} ${(L.y + 4).toFixed(1)})"><circle r="3.4" fill="url(#fruitG)"/><circle cx="-1" cy="-1.2" r=".9" fill="#FFF7DD" opacity=".9"/></g>`;
+      });
       DAYS.filter(d => d.ms && d.day < m.day + (m.free ? 1 : 0)).forEach(d => {
         const L = TREE.leaf[d.day + 40] || TREE.leaf[d.day]; if (!L || L.avail > D + .25) return;
         const x = L.x, y = L.y - 3;
-        s += `<g fill="${P.bloss}">${[0, 72, 144, 216, 288].map(a => `<circle cx="${(x + Math.cos(a * Math.PI / 180) * 3.2).toFixed(1)}" cy="${(y + Math.sin(a * Math.PI / 180) * 3.2).toFixed(1)}" r="2.6"/>`).join('')}<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="1.8" fill="${P.fruit}"/></g>`;
+        s += `<g>${[0, 72, 144, 216, 288].map(a => `<ellipse cx="${(x + Math.cos(a * Math.PI / 180) * 3.4).toFixed(1)}" cy="${(y + Math.sin(a * Math.PI / 180) * 3.4).toFixed(1)}" rx="2.9" ry="2.3" transform="rotate(${a} ${(x + Math.cos(a * Math.PI / 180) * 3.4).toFixed(1)} ${(y + Math.sin(a * Math.PI / 180) * 3.4).toFixed(1)})" fill="#FFB3A7"/>`).join('')}<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2" fill="#FFD27A"/></g>`;
       });
+      s += '</g>';
     }
+    if (dl < .35 && !st) s += '<g fill="#FFE9A8">' + [[110, 150], [252, 140], [150, 110], [220, 120], [80, 175], [285, 168]].map(([x, y], i) => `<circle class="firefly" style="animation-delay:${i * .9}s" cx="${x}" cy="${y}" r="1.5"/>`).join('') + '</g>';
     s += '</svg>';
     return s;
   }
@@ -1854,6 +2054,7 @@
       v.classList.remove('enter');
     });
     $$('.tab').forEach(b => b.dataset.tab === tab ? b.setAttribute('aria-current', 'page') : b.removeAttribute('aria-current'));
+    if (tab === 'today') animateHero = true;
     RENDER[tab]();
     const v = $('#view-' + tab);
     void v.offsetWidth; v.classList.add('enter');
@@ -1884,7 +2085,7 @@
     }
     const noun = state.useNRT ? 'أظرف' : 'نيكوتين';
     const hrs = m.gradual ? (m.free ? m.cleanH : m.H) : m.H;
-    const lbl = m.gradual && !m.free ? 'في خطة التدرّج منذ' : 'بلا ' + noun + ' منذ';
+    const lbl = m.gradual && !m.free ? 'في خطة التدرّج من' : 'بدون ' + noun + ' من';
     if (hrs < 1) return { lbl, big: nf(Math.max(1, Math.floor(hrs * 60))), unit: 'دقيقة' };
     if (hrs < 72) return { lbl, big: nf(Math.floor(hrs)), unit: hourUnit(Math.floor(hrs)) };
     const dd = Math.floor(hrs / 24);
@@ -1957,7 +2158,7 @@
     html += `<section class="card plan">
       <div class="row between" style="margin-bottom:12px"><h2 class="h3">${title}</h2><span class="chip ${doneN === tasks.length ? 'sage' : ''} num">${ar(doneN)} من ${ar(tasks.length)}</span></div>`;
     if (nxt) {
-      html += `<div class="next-task">
+      html += `<div class="next-task ${justArrived ? 'arriving' : ''}">
         <div class="xs sage bold">${ic('play', 'xs')} مهمتك التالية — ${nxt.when || 'الآن'}</div>
         <p class="h3" style="margin:6px 0 12px;line-height:1.7">${nxt.t}</p>
         <button class="btn primary block" data-action="taskGo" data-id="${nxt.id}">${nxt.act ? nxt.btn : ic('check', 'sm') + ' تم'}</button>
@@ -1965,7 +2166,7 @@
     } else {
       html += `<div class="next-task center">
         <span class="ibox" style="margin:0 auto 8px;width:48px;height:48px;border-radius:16px">${ic('circle-check', 'lg')}</span>
-        <p class="h3" style="margin:0">${m.prep ? 'جاهز ليوم إقلاعك' : 'أكملت خطة اليوم'}</p>
+        <p class="h3" style="margin:0">${m.prep ? 'جاهز ليوم إقلاعك' : 'خلّصت خطة اليوم'}</p>
         <p class="small muted" style="margin:4px 0 0">${m.prep ? 'تبدأ رحلتك ' + fmtDate(m.st, { weekday: 'long', hour: 'numeric', minute: '2-digit' }) : !m.free && m.day < 30 ? 'غداً: ' + planTasks(m.day + 1)[0].t : 'ارتح الآن. خطة بكرة تنتظرك.'}</p>
       </div>`;
     }
@@ -1981,18 +2182,22 @@
     if (m.prep) {
       html += `<div class="mini-links"><button data-action="quitNow">${ic('zap', 'xs')} أنا جاهز — ابدأ الآن</button></div>`;
     } else if (!m.free) {
-      html += `<div class="mini-links"><button data-action="openDay" data-day="${m.day}">${ic('book-open', 'xs')} عن يومك</button>${m.day <= 14 ? `<button data-action="symptoms">${ic('activity', 'xs')} هل ما أشعر به طبيعي؟</button>` : ''}</div>`;
+      html += `<div class="mini-links"><button data-action="openDay" data-day="${m.day}">${ic('book-open', 'xs')} عن يومك</button>${m.day <= 14 ? `<button data-action="symptoms">${ic('activity', 'xs')} اللي أحس فيه طبيعي؟</button>` : ''}</div>`;
     }
     html += `</section>`;
 
     if (!m.prep && !m.logTaper) {
-      html += `<button class="link-btn" data-action="usedPouch">استخدمت ظرفاً؟ سجّله بدون تصفير</button>`;
+      html += `<button class="link-btn" data-action="usedPouch">استخدمت ظرف؟ سجّله بدون ما يتصفّر عدّادك</button>`;
     }
 
     $('#view-today').innerHTML = html;
     lastDay = m.day; lastPrep = m.prep;
+    justArrived = false;
     updateLive(m);
+    if (animateHero) { animateHero = false; countUp($('[data-live="big"]'), toNum(cp.big)); }
+    if (justFruit) setTimeout(() => { justFruit = 0; }, 1500);
   };
+  const toNum = t => { const v = Number(String(t).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[^0-9]/g, '')); return Number.isFinite(v) && v > 0 ? v : null; };
   function backupDue(m) { return !m.prep && m.pd >= 3 && Date.now() - (state.lastBackup || 0) > 7 * 864e5; }
   const dayUnit = n => n <= 2 ? 'يوم' : (n % 100 >= 3 && n % 100 <= 10) ? 'أيام' : 'يوماً';
   const afterIdx = m => clamp(Math.floor((m.pd - 30) / 7), 0, AFTER30.length - 1);
@@ -2006,7 +2211,7 @@
       $('#us-trig', body).innerHTML = TRIGGERS.map(t => `<button class="opt" data-trig="${t.id}" aria-pressed="${trig === t.id}">${ic(t.icon, 'sm')}<span>${t.t}</span></button>`).join('');
     };
     openSheet(`
-      <div class="row"><span class="ibox sand">${ic('hand-heart')}</span><div class="grow"><h2 class="h2">لا بأس — سجّلها بصدق</h2><p class="xs muted" style="margin:0">لن يُصفَّر عدّادك ولن تُمسح خطتك</p></div></div>
+      <div class="row"><span class="ibox sand">${ic('hand-heart')}</span><div class="grow"><h2 class="h2">عادي — سجّلها بصدق</h2><p class="xs muted" style="margin:0">عدّادك ما بيتصفّر وخطتك ما بتنمسح</p></div></div>
       <div id="us-form" class="col" style="gap:14px">
         <div class="row" style="justify-content:space-between"><span class="small">كم ظرفاً؟</span><div class="row" style="gap:14px"><button class="icon-btn sm" id="us-minus">${ic('minus', 'xs')}</button><b class="h2 num" id="us-n">١</b><button class="icon-btn sm" id="us-plus">${ic('plus', 'xs')}</button></div></div>
         <p class="xs muted" style="margin:0">في أي موقف؟</p>
@@ -2029,10 +2234,10 @@
         $('#us-form', body).hidden = true;
         const plan = $('#us-plan', body); plan.hidden = false;
         plan.innerHTML = `
-          <div class="callout sage small" style="line-height:1.85">التعثّر معلومة لا فشل. هذه خطتك للـ٢٤ ساعة القادمة:</div>
-          ${['تخلّص الآن من أي علبة متبقية معك', 'اشرب ماءً وامشِ ١٠ دقائق لتهدأ', 'عند الرغبة التالية افتح «نجدة» قبل أي قرار'].map((t, i) => `<div class="row small"><span class="ibox sm">${ar(i + 1)}</span><span>${t}</span></div>`).join('')}
+          <div class="callout sage small" style="line-height:1.85">التعثّر معلومة مو فشل. هذي خطتك للـ٢٤ ساعة الجاية:</div>
+          ${['تخلّص الحين من أي علبة باقية معك', 'اشرب ماي وامشِ ١٠ دقايق عشان تهدأ', 'الرغبة الجاية افتح «نجدة» قبل أي قرار'].map((t, i) => `<div class="row small"><span class="ibox sm">${ar(i + 1)}</span><span>${t}</span></div>`).join('')}
           ${T ? `<button class="btn soft block" data-action="shieldNew">${ic('shield', 'sm')} اكتب خطة لموقف «${T.t}»</button>` : ''}
-          <button class="btn primary block" data-action="closeSheet">رجوع إلى خطتي</button>`;
+          <button class="btn primary block" data-action="closeSheet">ارجع لخطتي</button>`;
       };
     }, () => rerender());
   }
@@ -2055,7 +2260,7 @@
   }
   function openSymptoms() {
     const m = metrics();
-    openSheet(`<div class="row"><span class="ibox">${ic('activity')}</span><h2 class="h2 grow">هل ما أشعر به طبيعي؟</h2></div>${symptomsHTML(m.prep ? 1 : m.day)}
+    openSheet(`<div class="row"><span class="ibox">${ic('activity')}</span><h2 class="h2 grow">اللي تحس فيه طبيعي؟</h2></div>${symptomsHTML(m.prep ? 1 : m.day)}
       <button class="btn block" data-action="support">${ic('hand-heart', 'sm')} الأعراض شديدة؟ اعرف خيارات الدعم الدوائي</button>
       <button class="btn primary block" data-action="closeSheet">فهمت</button>`);
   }
@@ -2220,7 +2425,7 @@
             ${nx ? `<div class="bar thin"><i style="width:${pct}%"></i></div>` : ''}
           </div></div>`;
       }).join('') + `</div>
-      <button class="btn ghost block sm" style="margin-top:6px" data-action="jBody">${showAllBody ? 'عرض أقل' : 'كل التغيّرات حتى عام كامل'} ${ic(showAllBody ? 'chevron-down' : 'chevron-left', 'xs')}</button>
+      <button class="btn ghost block sm" style="margin-top:6px" data-action="jBody">${showAllBody ? 'عرض أقل' : 'كل التغيّرات لين سنة كاملة'} ${ic(showAllBody ? 'chevron-down' : 'chevron-left', 'xs')}</button>
       <p class="xs muted" style="margin:8px 0 0">${ic('info', 'xs')} الأزمنة تقريبية وتختلف بين الأشخاص.</p>
     </section>`;
 
@@ -2314,15 +2519,15 @@
     const m = metrics();
     const last = state.cravings.slice().sort((a, b) => b.ts - a.ts)[0];
     $('#view-sos').innerHTML = `
-      <header class="topbar"><div><p class="eyebrow">الرغبة تبلغ ذروتها ثم تنحسر خلال دقائق</p><h1 class="h1">نجدة</h1></div></header>
+      <header class="topbar"><div><p class="eyebrow">الرغبة توصل قمّتها وتخف خلال دقايق</p><h1 class="h1">نجدة</h1></div></header>
       <section class="card sos-hero">
-        <h2 class="h2">هل تشعر برغبة الآن؟</h2>
-        <p class="small muted" style="margin:6px auto 0;max-width:300px">لا تقاومها وحدك. ثلاث دقائق من التنفّس، وسترى الرغبة تنحسر.</p>
+        <h2 class="h2">جتك رغبة الحين؟</h2>
+        <p class="small muted" style="margin:6px auto 0;max-width:300px">لا تقاومها لحالك. ٣ دقايق تنفّس، وبتشوفها تخف.</p>
         <button class="sos-orb" data-action="sessionStart" aria-label="ابدأ جلسة ٣ دقائق">
-          ${ic('wind', 'xl')}<span class="h3">ابدأ ٣ دقائق</span><span class="xs ink2">تنفّس معي</span>
+          ${ic('wind', 'xl')}<span class="h3">ابدأ ٣ دقايق</span><span class="xs ink2">تنفّس معي</span>
         </button>
         <div class="row wrap" style="justify-content:center;gap:8px">
-          <span class="chip sage">${ic('shield-check', 'xs')} ${m.won ? 'تجاوزت ' + wavesW(m.won) : 'لم تسجّل رغبات بعد'}</span>
+          <span class="chip sage">${ic('shield-check', 'xs')} ${m.won ? 'عدّيت ' + wavesW(m.won) : 'ما سجّلت رغبات للحين'}</span>
           ${last ? `<span class="chip">${ic('clock', 'xs')} آخر رغبة قبل ${fmtDur((m.now - last.ts) / 36e5)}</span>` : ''}
         </div>
       </section>
@@ -2330,16 +2535,16 @@
       ${supporterButton()}
 
       <section class="card">
-        <div class="card-head"><span class="ibox">${ic('hand-heart')}</span><div class="grow"><h2 class="h3">بدائل فورية للفم واليد</h2><p class="xs muted" style="margin:0">اختر واحداً وطبّقه الآن</p></div></div>
+        <div class="card-head"><span class="ibox">${ic('hand-heart')}</span><div class="grow"><h2 class="h3">بدائل فورية للفم واليد</h2><p class="xs muted" style="margin:0">اختر واحد وطبّقه الحين</p></div></div>
         <div class="grid-4">${ALTS.map((a, i) => `<button class="opt" data-action="alt" data-idx="${i}" aria-pressed="false">${ic(a.icon)}<span>${a.t}</span></button>`).join('')}</div>
         <div id="alt-box" class="callout sage small" style="margin-top:12px;line-height:1.8" hidden></div>
       </section>
 
       <details class="more more-card"><summary>المزيد ${ic('chevron-down', 'xs')}</summary>
         <div class="col" style="margin-top:12px">
-          <button class="btn block" data-action="symptoms">${ic('activity', 'sm')} هل ما أشعر به طبيعي؟</button>
+          <button class="btn block" data-action="symptoms">${ic('activity', 'sm')} اللي أحس فيه طبيعي؟</button>
           ${supportCallout()}
-          <button class="btn block" data-action="logCraving">${ic('pen-line', 'sm')} سجّل رغبة مرّت بك</button>
+          <button class="btn block" data-action="logCraving">${ic('pen-line', 'sm')} سجّل رغبة مرّت عليك</button>
         </div>
       </details>`;
   };
@@ -2454,10 +2659,10 @@
 
       <section class="card tight"><p class="xs muted" style="margin:0 0 10px">محطاتك</p><div class="ms-row">${BADGES.map(b => { const on = b.ok(m); return `<button class="ms ${on ? 'on' : ''}" data-action="openBadge" data-id="${b.id}"><span class="medal">${ic(on ? b.icon : 'lock', on ? '' : 'sm')}</span>${b.t}</button>`; }).join('')}</div></section>
 
-      <p class="group-title">لماذا أترك</p>
+      <p class="group-title">ليش أترك</p>
       <div class="list">
         ${row('openReasons', 'heart', 'أسبابي', state.reasons.length ? state.reasons.map(esc).slice(0, 2).join('، ') + (state.reasons.length > 2 ? '…' : '') : 'أضف أسبابك', 'sand')}
-        ${row('openLetter', 'mail', 'رسالتي لنفسي', (state.letter || '').trim() ? 'تظهر لك في جلسة النجدة' : 'اكتبها وأنت قوي لتقرأها وقت الرغبة')}
+        ${row('openLetter', 'mail', 'رسالتي لنفسي', (state.letter || '').trim() ? 'تطلع لك في جلسة النجدة' : 'اكتبها وأنت قوي عشان تقراها وقت الرغبة')}
         ${row('supporter', 'users', 'شخصي الداعم', state.supporter && state.supporter.name ? esc(state.supporter.name) : 'رسالة جاهزة له وقت الرغبة')}
       </div>
 
@@ -2513,7 +2718,7 @@
   function updateLive(m) {
     if (currentTab !== 'today') return;
     const set = (k, v) => { const el = $(`[data-live="${k}"]`); if (el && el.textContent !== v) el.textContent = v; };
-    const cp = counterParts(m); set('big', cp.big); set('unit', cp.unit); set('lbl', cp.lbl);
+    const cp = counterParts(m); if (!counting) set('big', cp.big); set('unit', cp.unit); set('lbl', cp.lbl);
     const pr = $('[data-live="prog"]'); if (pr) pr.style.width = Math.max(2, clamp(m.pd / 30 * 100, 0, 100)) + '%';
     const ns = nextStop(m);
     set('next', !m.prep && ns ? ns.t + ' بعد ' + fmtDur(ns.h - m.H) : '');
@@ -2531,20 +2736,11 @@
   }
 
   function checkCelebrations(m) {
-    if (!state.onboarded || m.prep || !$('#sheet-layer').hidden || !$('#session').hidden || !$('#onb').hidden) return;
+    if (!state.onboarded || m.prep || !$('#sheet-layer').hidden || !$('#session').hidden || !$('#onb').hidden || $('.celebrate')) return;
     const newly = BADGES.filter(b => b.ok(m) && !state.badgesSeen.includes(b.id));
     if (!newly.length) return;
     state.badgesSeen.push(...newly.map(b => b.id)); save();
-    const b = newly[newly.length - 1];
-    openSheet(`<div class="center col" style="align-items:center;gap:12px;padding:10px 0">
-      <div class="welcome-logo" style="margin:0">${ic(b.icon, 'xl')}</div>
-      <span class="chip sand">محطة جديدة</span>
-      <h2 class="h1">${b.t}</h2>
-      <p class="body">${b.d}</p>
-      <p class="small muted" style="margin:0">${ic('sprout', 'xs')} تفتّحت زهرة جديدة على شجرتك</p>
-      <button class="btn primary block" data-action="closeSheet">كمّل</button></div>`);
-    if (['d7', 'd14', 'd30'].includes(b.id)) confetti();
-    buzz([20, 40, 20]);
+    celebrate(newly[newly.length - 1]);
   }
 
   /* =========================================================
@@ -2553,7 +2749,9 @@
   let sheetClose = null;
   function openSheet(html, onMount, onClose) {
     const layer = $('#sheet-layer');
+    clearTimeout(closeT); layer.classList.remove('closing'); $('.sheet').style.transform = ''; $('.sheet').style.transition = '';
     $('#sheet-body').innerHTML = html;
+    $('.sheet').scrollTop = 0;
     layer.hidden = false;
     document.body.classList.add('sheet-open');
     document.body.style.overflow = 'hidden';
@@ -2562,9 +2760,12 @@
     const f = $('#sheet-body').querySelector('[autofocus]'); if (f) setTimeout(() => f.focus(), 350);
   }
   function closeSheet() {
-    $('#sheet-layer').hidden = true;
+    const layer = $('#sheet-layer');
+    if (layer.hidden || layer.classList.contains('closing')) return;
     document.body.classList.remove('sheet-open');
     document.body.style.overflow = '';
+    layer.classList.add('closing');
+    closeT = setTimeout(() => { layer.hidden = true; layer.classList.remove('closing'); $('.sheet').style.transform = ''; }, reduceMotion() ? 0 : 250);
     const cb = sheetClose; sheetClose = null; if (cb) cb();
   }
 
@@ -2650,7 +2851,7 @@
     const o = { outcome: opts.outcome || 'won', trigger: null, intensity: 2 };
     const draw = body => {
       $('#oc-out', body).innerHTML = `
-        <button class="opt" data-out="won" aria-pressed="${o.outcome === 'won'}">${ic('shield-check', 'lg')}<span>تجاوزتها</span></button>
+        <button class="opt" data-out="won" aria-pressed="${o.outcome === 'won'}">${ic('shield-check', 'lg')}<span>عدّيتها</span></button>
         <button class="opt rose" data-out="slip" aria-pressed="${o.outcome === 'slip'}">${ic('rotate-ccw', 'lg')}<span>تعثّرت</span></button>`;
       $('#oc-trig', body).innerHTML = TRIGGERS.map(t => `<button class="opt" data-trig="${t.id}" aria-pressed="${o.trigger === t.id}">${ic(t.icon, 'sm')}<span>${t.t}</span></button>`).join('');
       $('#oc-int', body).innerHTML = [1, 2, 3].map(v => `<button data-int="${v}" aria-pressed="${o.intensity === v}">${INTENSITY[v]}</button>`).join('');
@@ -2659,17 +2860,17 @@
       $('#oc-save', body).textContent = o.outcome === 'won' ? 'حفظ' : 'احفظ الدرس وواصل';
     };
     openSheet(`
-      <h2 class="h2">${opts.title || 'كيف انتهت الرغبة؟'}</h2>
+      <h2 class="h2">${opts.title || 'كيف خلصت الرغبة؟'}</h2>
       <div class="grid-2" id="oc-out"></div>
-      <p class="xs muted" style="margin:0">ما الذي أثارها؟</p>
+      <p class="xs muted" style="margin:0">وش اللي جابها؟</p>
       <div class="grid-3" id="oc-trig"></div>
-      <p class="xs muted" style="margin:0">شدتها</p>
+      <p class="xs muted" style="margin:0">قوّتها</p>
       <div class="seg" id="oc-int"></div>
       <div id="oc-slip" class="col" hidden>
-        <div class="callout sand small" style="line-height:1.85">${ic('hand-heart', 'xs')} التعثّر لا يمحو ما بنيته. لن نصفّر عدّادك — سنحسب ظرفاً واحداً فقط ونتعلّم منه.</div>
-        <textarea class="input" id="oc-lesson" rows="3" maxlength="300" placeholder="ما الذي ستفعله بشكل مختلف في المرة القادمة؟"></textarea>
+        <div class="callout sand small" style="line-height:1.85">${ic('hand-heart', 'xs')} التعثّر ما يمسح اللي بنيته. ما بنصفّر عدّادك — بنحسب ظرف واحد بس ونتعلّم منه.</div>
+        <textarea class="input" id="oc-lesson" rows="3" maxlength="300" placeholder="وش بتسوي غير المرة الجاية؟"></textarea>
       </div>
-      <input class="input" id="oc-note" maxlength="120" placeholder="ملاحظة (اختياري): كيف تجاوزتها؟" />
+      <input class="input" id="oc-note" maxlength="120" placeholder="ملاحظة (اختياري): كيف عدّيتها؟" />
       <button id="oc-save"></button>`, body => {
       draw(body);
       body.addEventListener('click', e => {
@@ -2684,7 +2885,7 @@
         if (o.outcome === 'slip') {
           state.slips.push({ ts, lesson: $('#oc-lesson', body).value.trim(), pouches: 1 });
           toast('حُفظ الدرس — رحلتك مستمرة', 'hand-heart');
-        } else { toast('أحسنت! تجاوزت الرغبة', 'shield-check'); buzz([15, 30, 15]); }
+        } else { toast('كفو! عدّيت الرغبة', 'shield-check'); buzz([15, 30, 15]); }
         save(); closeSheet(); if (opts.after) opts.after(); rerender();
       };
     });
@@ -2711,7 +2912,7 @@
     $('#ss-timer').textContent = ar(pad2(Math.floor(s / 60)) + ':' + pad2(s % 60));
     const t = SESSION_LEN - sess.left;
     drawWave(t);
-    $('#ss-phase').textContent = t < 35 ? 'الرغبة ترتفع — تنفّس معها، لا تقاومها' : t < 70 ? 'أنت عند الذروة — هذا أقصى ما ستصل إليه' : sess.left > 0 ? 'الرغبة تنحسر — استمر' : 'تجاوزتها.';
+    $('#ss-phase').textContent = t < 35 ? 'الرغبة تزيد — تنفّس معها ولا تقاومها' : t < 70 ? 'أنت في القمّة — أكثر من كذا ما بتزيد' : sess.left > 0 ? 'الرغبة تخف — كمّل' : 'عدّيتها.';
     if (sess.left <= 0) { clearInterval(sess.timer); sess.timer = null; finishSession(true); }
   }
   function drawWave(t) {
@@ -2740,7 +2941,7 @@
   function finishSession(auto) {
     breathStop();
     clearInterval(sess.timer); sess.timer = null;
-    openOutcome({ title: auto ? 'مرّت ٣ دقائق. كيف تشعر الآن؟' : 'كيف انتهت الرغبة؟', src: 'sos', after: closeSession });
+    openOutcome({ title: auto ? 'مرّت ٣ دقايق. كيفك الحين؟' : 'كيف انتهت الرغبة؟', src: 'sos', after: closeSession });
   }
   function closeSession() {
     breathStop(); clearInterval(sess.timer); sess.timer = null;
@@ -2844,12 +3045,12 @@
       body = `<div class="welcome-hero">
           <div class="welcome-logo">${ic('leaf', 'xl')}</div>
           <h1 class="h1" style="font-size:30px">نَقَاء</h1>
-          <p class="body" style="max-width:320px;margin:8px auto 0">خطة واضحة يوماً بيوم للتحرر من أظرف النيكوتين في ٣٠ يوماً — بلا لوم.</p>
+          <p class="body" style="max-width:320px;margin:8px auto 0">خطة واضحة يوم بيوم تتحرر فيها من أظرف النيكوتين خلال ٣٠ يوم — بدون لوم.</p>
         </div>
         <div class="card col" style="gap:16px">
-          <div class="feature"><span class="ibox">${ic('list-checks')}</span><div><div class="h3">خطتك كل يوم</div><div class="small muted">٤ خطوات قصيرة مربوطة بأوقاتك ومواقفك — تعرف دائماً وش تسوي الحين.</div></div></div>
-          <div class="feature"><span class="ibox sand">${ic('wind')}</span><div><div class="h3">نجدة في ٣ دقائق</div><div class="small muted">تنفّس موجَّه وتذكير بأسبابك حين تشتد الرغبة.</div></div></div>
-          <div class="feature"><span class="ibox">${ic('sprout')}</span><div><div class="h3">علبتك القديمة تُنبت شجرة</div><div class="small muted">ورقة لكل يوم بلا نيكوتين، حتى تكسر جذورها العلبة في اليوم ٣٠.</div></div></div>
+          <div class="feature"><span class="ibox">${ic('list-checks')}</span><div><div class="h3">خطتك كل يوم</div><div class="small muted">خطوة وحدة واضحة كل مرة، مربوطة بأوقاتك ومواقفك — دايم تعرف وش تسوي الحين.</div></div></div>
+          <div class="feature"><span class="ibox sand">${ic('wind')}</span><div><div class="h3">نجدة في ٣ دقائق</div><div class="small muted">تنفّس معك وتذكير بأسبابك لما تشتد الرغبة.</div></div></div>
+          <div class="feature"><span class="ibox">${ic('sprout')}</span><div><div class="h3">علبتك القديمة تُنبت شجرة</div><div class="small muted">ورقة لكل يوم بدون نيكوتين، لين تكسر جذورها العلبة في اليوم ٣٠.</div></div></div>
         </div>
         <div class="field"><label for="o-name">وش نناديك؟ (اختياري)</label><input class="input" id="o-name" maxlength="24" value="${esc(D.name)}" placeholder="اسمك" /></div>
         <button class="opt inline" style="justify-content:flex-start" data-action="onbAge" aria-pressed="${!!D.age18}">${ic(D.age18 ? 'circle-check' : 'circle-alert', 'sm')} عمري ١٨ سنة أو أكثر</button>
@@ -2858,7 +3059,7 @@
     } else if (name === 'path') {
       const dep = depScore(D), rec = dep.level === 'high' ? 'gradual' : 'cold_turkey';
       const recChip = v => v === rec ? ' <span class="chip sage" style="margin-inline-start:6px">مناسب لك</span>' : '';
-      body = `<div><h2 class="h1">اختر طريقك</h2><p class="body">كلا المسارين خطة ٣٠ يوماً للوصول إلى صفر أظرف.</p></div>
+      body = `<div><h2 class="h1">اختر طريقك</h2><p class="body">الطريقين خطة ٣٠ يوم توصلك لصفر أظرف.</p></div>
         <div class="callout ${dep.level === 'high' ? 'sand' : 'sage'} small" style="line-height:1.8">${ic('gauge', 'xs')} حسب إجاباتك، اعتمادك على النيكوتين <b>${DEP_T[dep.level]}</b>.${dep.level === 'high' ? ' التدرّج مع بدائل النيكوتين الطبية يرفع فرصك.' : dep.level === 'mid' ? ' القطع مع تحضير جيد مناسب لك، والتدرّج خيار ممتاز أيضاً.' : ' القطع الفوري مناسب لك غالباً.'}</div>
         <button class="path-card" data-action="onbMode" data-v="cold_turkey" aria-pressed="${D.quitMode === 'cold_turkey'}">
           <span class="ibox">${ic('zap')}</span><div class="grow"><div class="h3">القطع الفوري${recChip('cold_turkey')}</div><p class="small muted" style="margin:4px 0 0;line-height:1.8">توقف تام من يوم إقلاعك. أصعب في الأيام الثلاثة الأولى، وأسرع في التخلص من النيكوتين.</p></div></button>
@@ -2866,7 +3067,7 @@
           <span class="ibox sand">${ic('trending-down')}</span><div class="grow"><div class="h3">التدرّج الذكي${recChip('gradual')}</div><p class="small muted" style="margin:4px 0 0;line-height:1.8">عدد الأظرف وتركيزها ينزلون كل أسبوع: ٧٥٪ ← ٥٠٪ ← ٢٥٪ ← ١٠٪، ثم صفر من اليوم ٢٨.</p></div></button>
         <button class="opt inline" style="justify-content:flex-start;text-align:right;line-height:1.7" data-action="onbNRT" aria-pressed="${!!D.useNRT}">${ic(D.useNRT ? 'circle-check' : 'pill', 'sm')} <span>سأستخدم بدائل النيكوتين الطبية (علكة/لصقة) بإشراف الصيدلي${dep.level === 'high' ? ' — <b>موصى به لك</b>' : ''}</span></button>`;
     } else if (name === 'usage') {
-      body = `<div><h2 class="h1">استهلاكك الحالي</h2><p class="body">نحسب منها خطتك وتوفيرك، ومدى اعتمادك.</p></div>
+      body = `<div><h2 class="h1">استخدامك الحالي</h2><p class="body">منها نحسب خطتك وتوفيرك ومدى اعتمادك.</p></div>
         <div class="field"><label>متى أول ظرف بعد ما تصحى؟</label><div class="grid-2">${TTFU.map((t, i) => `<button class="opt inline" data-action="onbTTFU" data-v="${i}" aria-pressed="${(D.ttfu ?? 1) === i}">${t}</button>`).join('')}</div></div>
         <button class="opt inline" style="justify-content:flex-start" data-action="onbNight" aria-pressed="${!!D.night}">${ic(D.night ? 'circle-check' : 'moon-star', 'sm')} أحياناً أصحى بالليل أو أنام والظرف معي</button>
         <div class="grid-2">
@@ -2909,7 +3110,7 @@
     } else if (name === 'quit') {
       const g = D.quitMode === 'gradual';
       const opt = (v, t, d, rec) => `<button class="path-card ${rec ? '' : ''}" style="padding:12px 14px" data-action="onbQuit" data-v="${v}" aria-pressed="${D.quitChoice === v}"><div class="grow"><div class="h3">${t}${rec ? ' <span class="chip sage" style="margin-inline-start:6px">موصى به</span>' : ''}</div><p class="xs muted" style="margin:2px 0 0">${d}</p></div></button>`;
-      body = `<div><h2 class="h1">${g ? 'متى تبدأ خطة التدرّج؟' : 'متى يوم إقلاعك؟'}</h2><p class="body">يوم محدد مع تحضير بسيط يرفع فرص نجاحك.</p></div>
+      body = `<div><h2 class="h1">${g ? 'متى تبدأ خطة التدرّج؟' : 'متى يوم إقلاعك؟'}</h2><p class="body">يوم محدد مع تحضير بسيط يرفع فرصك.</p></div>
         <div class="col" style="gap:8px">
           ${opt('d3', 'بعد ٣ أيام', '٣ أيام تحضير مريحة: بدائل، دعم، وخطط لمواقفك', true)}
           ${opt('d1', 'غداً', 'يوم تحضير واحد')}
@@ -2923,7 +3124,7 @@
       const g = D.quitMode === 'gradual';
       const ctx = planCtx({ gradual: g, triggers: D.triggers, reasons: D.reasons, daily: D.dailyPouches });
       const first = prepDays ? prepTasks(ctx).slice(0, 3) : planTasks(1, ctx).slice(0, 3);
-      body = `<div><h2 class="h1">هذه خطتك</h2><p class="body">${esc(D.name) ? esc(D.name) + '، ' : ''}كل ما عليك هو الخطوة التالية.</p></div>
+      body = `<div><h2 class="h1">هذي خطتك</h2><p class="body">${esc(D.name) ? esc(D.name) + '، ' : ''}كل اللي عليك الخطوة الجاية بس.</p></div>
         <div class="card col" style="gap:0;padding:6px 16px">
           ${prepDays ? `<div class="plan-row"><span class="ibox sm">${ic('calendar', 'sm')}</span><div class="grow"><div class="small bold">التحضير — ${daysW(prepDays)}</div><div class="xs muted">بدائل، شخص داعم، وخطط لمواقفك</div></div></div>` : ''}
           <div class="plan-row"><span class="ibox sm sand">${ic('flag', 'sm')}</span><div class="grow"><div class="small bold">${g ? 'بداية التدرّج' : 'يوم الإقلاع'}</div><div class="xs muted">${st > now ? fmtDate(st, { weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: '2-digit' }) : 'بدأ — أنت في الخطة الآن'}</div></div></div>
@@ -2971,42 +3172,50 @@
      ========================================================= */
   async function shareCard() {
     const m = metrics();
-    toast('جارٍ تجهيز البطاقة…', 'sparkles');
+    toast('جاري تجهيز البطاقة…', 'sparkles');
     try {
       const W = 1080, H = 1350;
       const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
       const ctx = cv.getContext('2d');
-      const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#0E1714'); g.addColorStop(1, '#0A0F0D');
-      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-      const svg = sceneSVG(m, { static: true, theme: 'dark' });
+      const rr = (x, y, w, h, r) => { ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(x, y, w, h, r); else ctx.rect(x, y, w, h); };
+      ctx.fillStyle = '#F2F2F7'; ctx.fillRect(0, 0, W, H);
+      // sky illustration fills the top
       const img = new Image();
-      await new Promise((res, rej) => { img.onload = res; img.onerror = rej; img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg); });
-      const r = 48, sx = 70, sy = 70, sw = W - 140, sh = sw * 240 / 360;
-      ctx.save(); ctx.beginPath(); ctx.roundRect ? ctx.roundRect(sx, sy, sw, sh, r) : ctx.rect(sx, sy, sw, sh); ctx.clip(); ctx.drawImage(img, sx, sy, sw, sh); ctx.restore();
+      await new Promise((res, rej) => { img.onload = res; img.onerror = rej; img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(sceneSVG(m, { static: true, align: 'xMidYMax' })); });
+      const sx = 48, sy = 48, sw = W - 96, sh = 860;
+      ctx.save(); rr(sx, sy, sw, sh, 64); ctx.clip();
+      const scale = Math.max(sw / 360, sh / 240), dw = 360 * scale, dh = 240 * scale;
+      ctx.drawImage(img, sx + (sw - dw) / 2, sy + sh - dh, dw, dh);
+      ctx.restore();
       try { await document.fonts.ready; } catch (e) {}
-      ctx.direction = 'rtl'; ctx.textAlign = 'center';
-      ctx.fillStyle = '#ECE8E1'; ctx.font = '700 140px "Readex Pro", sans-serif';
-      ctx.fillText(nf(m.days), W / 2, sy + sh + 190);
-      ctx.fillStyle = '#B7C0BB'; ctx.font = '500 46px "Readex Pro", sans-serif';
-      ctx.fillText(m.days === 1 ? 'يوم من النقاء' : m.days === 2 ? 'يومان من النقاء' : (m.days % 100 >= 3 && m.days % 100 <= 10 ? 'أيام' : 'يوماً') + ' من النقاء', W / 2, sy + sh + 260);
-      const stats = [[nf(m.saved, 0) + ' ' + state.currency, 'وفّرتها'], [nf(Math.floor(m.avoided)), 'ظرف تجنّبته'], [nf(m.won), 'رغبة تجاوزتها']];
-      stats.forEach((s, i) => {
-        const cx = W - 70 - (sw / 3) * i - sw / 6, y = sy + sh + 400;
-        ctx.fillStyle = 'rgba(236,232,225,.06)'; ctx.beginPath(); ctx.roundRect ? ctx.roundRect(cx - sw / 6 + 12, y - 90, sw / 3 - 24, 170, 32) : ctx.rect(cx - sw / 6 + 12, y - 90, sw / 3 - 24, 170); ctx.fill();
-        ctx.fillStyle = i === 0 ? '#EBD3AA' : '#BFDCCD'; ctx.font = '700 50px "Readex Pro", sans-serif'; ctx.fillText(s[0], cx, y);
-        ctx.fillStyle = '#86918B'; ctx.font = '400 32px "Readex Pro", sans-serif'; ctx.fillText(s[1], cx, y + 52);
+      ctx.direction = 'rtl'; ctx.textAlign = 'right'; ctx.fillStyle = '#FFFFFF';
+      ctx.shadowColor = 'rgba(0,0,0,.18)'; ctx.shadowBlur = 24;
+      const cp = counterParts(m);
+      ctx.font = '600 40px "Readex Pro", system-ui, sans-serif'; ctx.fillText(cp.lbl, sx + sw - 60, sy + 100);
+      ctx.font = '200 260px "Readex Pro", system-ui, sans-serif'; ctx.fillText(cp.big, sx + sw - 50, sy + 340);
+      ctx.font = '500 54px "Readex Pro", system-ui, sans-serif'; ctx.fillText(cp.unit, sx + sw - 60, sy + 420);
+      ctx.shadowBlur = 0;
+      // stats panel
+      const py = sy + sh + 40, ph = 260;
+      ctx.fillStyle = '#FFFFFF'; rr(sx, py, sw, ph, 48); ctx.fill();
+      const stats = [[nf(m.saved, 0) + ' ' + state.currency, 'وفّرتها', '#B35000'], [nf(Math.floor(m.avoided)), 'ظرف تجنّبته', '#0B0B0C'], [nf(m.won), 'رغبة عديتها', '#007A68']];
+      ctx.textAlign = 'center';
+      stats.forEach((st, i) => {
+        const cx = sx + sw - (sw / 3) * i - sw / 6;
+        ctx.fillStyle = st[2]; ctx.font = '700 64px "Readex Pro", system-ui, sans-serif'; ctx.fillText(st[0], cx, py + 130);
+        ctx.fillStyle = '#6E6E73'; ctx.font = '400 34px "Readex Pro", system-ui, sans-serif'; ctx.fillText(st[1], cx, py + 190);
+        if (i) { ctx.fillStyle = 'rgba(60,60,67,.13)'; ctx.fillRect(sx + sw - (sw / 3) * i, py + 60, 2, ph - 120); }
       });
-      ctx.fillStyle = '#8AB9A3'; ctx.font = '700 54px "Readex Pro", sans-serif'; ctx.fillText('نَقَاء', W / 2, H - 110);
-      ctx.fillStyle = '#86918B'; ctx.font = '400 30px "Readex Pro", sans-serif'; ctx.fillText('رحلتي للتحرر من أظرف النيكوتين', W / 2, H - 62);
+      ctx.fillStyle = '#007A68'; ctx.font = '800 56px "Readex Pro", system-ui, sans-serif'; ctx.fillText('نَقَاء', W / 2, H - 70);
       const blob = await new Promise(res => cv.toBlob(res, 'image/png'));
       const file = new File([blob], 'naqa-progress.png', { type: 'image/png' });
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        await navigator.share({ files: [file], title: 'نَقَاء', text: `${nf(m.days)} ${m.days > 10 ? 'يوماً' : 'أيام'} من النقاء` });
+        await navigator.share({ files: [file], title: 'نَقَاء', text: cp.lbl + ' ' + cp.big + ' ' + cp.unit });
       } else {
         const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'naqa-progress.png'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 2000);
-        toast('حُفظت البطاقة على جهازك', 'download');
+        toast('انحفظت البطاقة على جهازك', 'download');
       }
-    } catch (e) { if (e && e.name !== 'AbortError') toast('تعذّر إنشاء البطاقة', 'circle-alert'); }
+    } catch (e) { if (e && e.name !== 'AbortError') toast('ما قدرنا نجهّز البطاقة', 'circle-alert'); }
   }
 
   /* =========================================================
@@ -3018,9 +3227,18 @@
     const done = isTaskDone(scope, t);
     const open = { sessionStart, evening: openEvening, support: openSupport, openLetter, supporter: openSupporter, reminders: openReminders, shieldNew: () => openShieldEditor(-1) };
     if (t.act && (!done || t.id === 'pm' || primary)) { open[t.act](); return; }
-    setTask(scope, id, !done); save();
-    if (!done) { buzz([12, 24, 12]); toast(id === 'ch' ? 'أحسنت! ثمرة جديدة على شجرتك' : 'تم — خطوة أقرب', id === 'ch' ? 'sparkles' : 'check'); }
-    RENDER.today();
+    const commit = () => {
+      setTask(scope, id, !done); save();
+      if (!done && id === 'ch') justFruit = m.day;
+      if (!done) { buzz([12, 24, 12]); toast(id === 'ch' ? 'أحسنت! ثمرة جديدة على شجرتك' : 'تم — خطوة أقرب', id === 'ch' ? 'sparkles' : 'check'); }
+      RENDER.today();
+    };
+    const card = primary && !done ? $('.next-task') : null;
+    if (card && !reduceMotion()) {
+      card.classList.add('leaving'); card.insertAdjacentHTML('beforeend', `<div class="done-check">${CHECK_SVG}</div>`);
+      buzz(10); justArrived = true; setTimeout(commit, 560); return;
+    }
+    commit();
   }
   const ACTIONS = {
     tab: el => { buzz(6); go(el.dataset.tab); },
@@ -3078,7 +3296,7 @@
       const box = $('#alt-box'); box.hidden = false; box.innerHTML = `${ic(a.icon, 'xs')} ${a.d}`; buzz();
     },
     openReasons, openLetter,
-    logCraving: () => openOutcome({ src: 'manual', title: 'سجّل رغبة مرّت بك' }),
+    logCraving: () => openOutcome({ src: 'manual', title: 'سجّل رغبة مرّت عليك' }),
     shieldEdit: el => openShieldEditor(+el.dataset.idx),
     shieldQuick: el => { state.shields.push({ when: el.dataset.w, then: SHIELD_THEN[0] }); save(); openShieldEditor(state.shields.length - 1); },
     shieldDel: el => { state.shields.splice(+el.dataset.idx, 1); save(); rerender(); toast('حُذفت الخطة', 'trash-2'); },
@@ -3188,6 +3406,8 @@
      ========================================================= */
   hydrate();
   applyTheme();
+  initSheetDrag();
+  setTimeout(() => { const l = $('#launch'); if (l) { l.classList.add('out'); setTimeout(() => l.remove(), 450); } }, 500);
   go('today', { keepScroll: true });
   if (!state.onboarded) openOnb('welcome'); else setTimeout(missedDayCheck, 900);
   setInterval(tick, 1000);
