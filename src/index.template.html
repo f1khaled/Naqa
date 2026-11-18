@@ -32,57 +32,57 @@
     }
     :root, [data-theme="dark"] {
       color-scheme: dark;
-      --bg: #0A0F0D;
-      --glow-1: rgba(138, 185, 163, .13);
-      --glow-2: rgba(217, 185, 133, .07);
-      --surface: #121A17;
-      --surface-2: #18221E;
-      --surface-3: #212D28;
-      --glass: rgba(16, 23, 20, .82);
-      --line: rgba(236, 232, 225, .07);
-      --line-2: rgba(236, 232, 225, .14);
-      --ink: #ECE8E1;
-      --ink-2: #B7C0BB;
-      --ink-3: #86918B;
-      --sage: #8AB9A3;
+      --bg: #0F1513;
+      --glow-1: rgba(134, 184, 160, .06);
+      --glow-2: rgba(0, 0, 0, 0);
+      --surface: #141B18;
+      --surface-2: #1B2420;
+      --surface-3: #232D29;
+      --glass: rgba(20, 27, 24, .92);
+      --line: rgba(230, 233, 228, .06);
+      --line-2: rgba(230, 233, 228, .12);
+      --ink: #E6E9E4;
+      --ink-2: #A9B3AD;
+      --ink-3: #8E9993;
+      --sage: #86B8A0;
       --sage-2: #6FA58C;
-      --sage-ink: #BFDCCD;
-      --sage-soft: rgba(138, 185, 163, .13);
-      --sand: #D9B985;
-      --sand-ink: #EBD3AA;
-      --sand-soft: rgba(217, 185, 133, .13);
-      --rose: #E59B8E;
-      --rose-soft: rgba(229, 155, 142, .12);
-      --on-accent: #0A0F0D;
-      --shadow: 0 22px 44px -24px rgba(0, 0, 0, .7);
-      --grain-o: .05;
+      --sage-ink: #A9CDBA;
+      --sage-soft: rgba(134, 184, 160, .12);
+      --sand: #D8B27A;
+      --sand-ink: #E2C496;
+      --sand-soft: rgba(216, 178, 122, .12);
+      --rose: #D99488;
+      --rose-soft: rgba(217, 148, 136, .12);
+      --on-accent: #0E1412;
+      --shadow: none;
+      --grain-o: .025;
     }
     [data-theme="light"] {
       color-scheme: light;
-      --bg: #F3F0E8;
-      --glow-1: rgba(63, 122, 98, .10);
-      --glow-2: rgba(166, 119, 58, .08);
+      --bg: #F4F2EC;
+      --glow-1: rgba(58, 114, 89, .05);
+      --glow-2: rgba(0, 0, 0, 0);
       --surface: #FFFFFF;
-      --surface-2: #F6F3EC;
-      --surface-3: #ECE7DC;
-      --glass: rgba(255, 255, 255, .86);
-      --line: rgba(24, 33, 29, .08);
-      --line-2: rgba(24, 33, 29, .15);
-      --ink: #18211D;
-      --ink-2: #46514C;
-      --ink-3: #69746E;
-      --sage: #3F7A62;
-      --sage-2: #356A55;
-      --sage-ink: #2C5E49;
-      --sage-soft: rgba(63, 122, 98, .10);
-      --sand: #A6773A;
-      --sand-ink: #845D2A;
-      --sand-soft: rgba(166, 119, 58, .12);
-      --rose: #B4584A;
-      --rose-soft: rgba(180, 88, 74, .10);
+      --surface-2: #F8F6F1;
+      --surface-3: #EDEAE2;
+      --glass: rgba(255, 255, 255, .94);
+      --line: rgba(28, 37, 33, .07);
+      --line-2: rgba(28, 37, 33, .13);
+      --ink: #1C2521;
+      --ink-2: #4A5550;
+      --ink-3: #5F6A64;
+      --sage: #3A7259;
+      --sage-2: #2F5F49;
+      --sage-ink: #2F5F49;
+      --sage-soft: rgba(58, 114, 89, .09);
+      --sand: #8E6427;
+      --sand-ink: #7A5520;
+      --sand-soft: rgba(142, 100, 39, .10);
+      --rose: #A65446;
+      --rose-soft: rgba(166, 84, 70, .09);
       --on-accent: #FFFFFF;
-      --shadow: 0 18px 36px -24px rgba(40, 50, 45, .35);
-      --grain-o: .035;
+      --shadow: 0 1px 2px rgba(28, 37, 33, .05);
+      --grain-o: 0;
     }
 
     /* =========================================================
@@ -177,8 +177,7 @@
     .logo {
       width: 40px; height: 40px; border-radius: 14px;
       display: grid; place-items: center;
-      background: linear-gradient(145deg, var(--sage-soft), var(--sand-soft));
-      border: 1px solid var(--line-2);
+      background: var(--sage-soft);
       color: var(--sage-ink);
     }
     .eyebrow { font-size: 12px; color: var(--ink-3); margin: 0; }
@@ -233,7 +232,8 @@
     .btn.ghost { background: transparent; }
     .btn.block { width: 100%; }
     .btn.sm { min-height: 36px; padding: 0 13px; font-size: 13px; border-radius: 12px; }
-    .btn.grad { background: linear-gradient(90deg, var(--sand), var(--sage)); color: var(--on-accent); border-color: transparent; }
+    .btn.grad { background: var(--sage); color: var(--on-accent); border-color: transparent; }
+    .btn:disabled { opacity: 1; background: var(--surface-3); color: var(--ink-3); border-color: transparent; }
     .icon-btn {
       width: 40px; height: 40px; border-radius: 99px;
       display: grid; place-items: center;
@@ -289,7 +289,7 @@
     select.input { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--ink-3) 50%), linear-gradient(135deg, var(--ink-3) 50%, transparent 50%); background-position: 18px 50%, 13px 50%; background-size: 5px 5px; background-repeat: no-repeat; padding-left: 30px; }
 
     .bar { height: 8px; border-radius: 99px; background: var(--surface-3); overflow: hidden; }
-    .bar > i { display: block; height: 100%; border-radius: 99px; background: linear-gradient(270deg, var(--sage), var(--sand)); transition: width .8s var(--ease); }
+    .bar > i { display: block; height: 100%; border-radius: 99px; background: var(--sage); transition: width .8s var(--ease); }
     .bar.thin { height: 5px; }
 
     .switch { position: relative; width: 48px; height: 28px; border-radius: 99px; background: var(--surface-3); border: 1px solid var(--line-2); transition: background .25s; flex-shrink: 0; }
@@ -301,13 +301,13 @@
        HERO / SCENE
        ========================================================= */
     .hero { padding: 0; overflow: hidden; }
-    .scene { position: relative; height: 218px; overflow: hidden; border-radius: var(--r-xl) var(--r-xl) 0 0; }
+    .scene { position: relative; aspect-ratio: 360 / 240; height: auto; overflow: hidden; border-radius: var(--r-xl) var(--r-xl) 0 0; }
     .scene > svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
     .scene-fade { position: absolute; inset: auto 0 0 0; height: 60px; background: linear-gradient(0deg, var(--surface), transparent); pointer-events: none; }
     .scene-badge { position: absolute; top: 14px; right: 14px; }
     .scene-badge2 { position: absolute; top: 14px; left: 14px; }
     .glass-chip { background: rgba(10, 15, 13, .45); color: #F2EEE7; border: 1px solid rgba(255,255,255,.14); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
-    .hero-body { padding: 4px 20px 20px; margin-top: -26px; position: relative; }
+    .hero-body { padding: 16px 20px 20px; position: relative; }
     .counter { display: flex; align-items: baseline; gap: 8px; }
     .counter .big { font-size: 54px; font-weight: 700; line-height: 1; letter-spacing: -1px; }
     .clock { font-size: 15px; color: var(--ink-2); font-weight: 500; letter-spacing: .5px; }
@@ -371,7 +371,7 @@
     .node:active:not(:disabled) { transform: translate(-50%, -50%) scale(.93); }
     .node.done { background: var(--sage); color: var(--on-accent); border-color: transparent; }
     .node.ms { width: 60px; height: 60px; }
-    .node.ms.done { background: linear-gradient(145deg, var(--sand), var(--sage)); }
+    .node.ms.done { background: var(--sand); }
     .node.current { background: var(--surface); color: var(--ink); border: 3px solid var(--sage); animation: nodePulse 2.6s ease-in-out infinite; width: 62px; height: 62px; font-size: 19px; }
     .node.locked { opacity: .55; }
     .node .tick { position: absolute; bottom: -3px; left: -3px; width: 22px; height: 22px; border-radius: 50%; background: var(--sand); color: var(--on-accent); display: grid; place-items: center; border: 2px solid var(--surface); }
@@ -394,8 +394,8 @@
       background: var(--surface); border: 1px solid var(--line);
     }
     .badge .medal { width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center; background: var(--surface-3); color: var(--ink-3); position: relative; }
-    .badge.on .medal { background: radial-gradient(circle at 35% 30%, var(--sand-ink), var(--sand) 55%, #8f6a35); color: #2B2013; box-shadow: 0 8px 22px -10px var(--sand); }
-    .badge.on.sage-m .medal { background: radial-gradient(circle at 35% 30%, var(--sage-ink), var(--sage) 55%, #3E6655); color: #0F1F18; box-shadow: 0 8px 22px -10px var(--sage); }
+    .badge.on .medal { background: var(--sand); color: var(--on-accent); }
+    .badge.on.sage-m .medal { background: var(--sage); color: var(--on-accent); }
     .badge .medal .lk { position: absolute; bottom: -2px; left: -2px; width: 20px; height: 20px; border-radius: 50%; background: var(--surface-2); display: grid; place-items: center; border: 1px solid var(--line-2); }
     .badge .nm { font-size: 12px; font-weight: 600; line-height: 1.4; }
     .badge:not(.on) .nm { color: var(--ink-3); }
@@ -409,8 +409,8 @@
       width: 176px; height: 176px; border-radius: 50%;
       margin: 18px auto 14px;
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
-      background: radial-gradient(circle at 35% 30%, rgba(191,220,205,.35), rgba(111,165,140,.25) 45%, rgba(217,185,133,.16));
-      border: 1px solid rgba(138,185,163,.45);
+      background: var(--sage-soft);
+      border: 1px solid var(--sage);
       color: var(--ink);
       transition: transform .2s var(--ease);
     }
@@ -438,9 +438,9 @@
     .breath-orb {
       width: 120px; height: 120px; border-radius: 50%;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      background: radial-gradient(circle at 35% 30%, rgba(191,220,205,.55), rgba(111,165,140,.35) 50%, rgba(217,185,133,.25));
-      border: 1px solid rgba(138,185,163,.55);
-      box-shadow: 0 0 60px -10px var(--sage);
+      background: var(--sage-soft);
+      border: 1px solid var(--sage);
+      box-shadow: 0 0 40px -18px var(--sage);
       transition-property: transform; transition-timing-function: ease-in-out; transition-duration: 1s;
     }
     .breath-orb .ph { font-size: 15px; font-weight: 700; color: var(--ink); }
@@ -502,7 +502,7 @@
       backdrop-filter: blur(24px) saturate(150%); -webkit-backdrop-filter: blur(24px) saturate(150%);
       border: 1px solid var(--line-2);
       border-radius: 24px;
-      box-shadow: 0 20px 44px -18px rgba(0,0,0,.6);
+      box-shadow: 0 10px 30px -18px rgba(0,0,0,.5);
     }
     .tab { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; height: 100%; font-size: 11.5px; font-weight: 600; color: var(--ink-3); transition: color .2s; }
     .tab .ic { width: 22px; height: 22px; transition: transform .25s var(--ease); }
@@ -511,16 +511,16 @@
     .tab-sos .sos-core {
       width: 54px; height: 54px; margin-top: -30px; border-radius: 50%;
       display: grid; place-items: center;
-      background: linear-gradient(145deg, var(--sage), var(--sand));
+      background: var(--sage);
       color: var(--on-accent);
-      box-shadow: 0 10px 24px -8px var(--sage), 0 0 0 5px var(--bg);
+      box-shadow: 0 0 0 5px var(--bg);
     }
     .tab-sos .sos-core .ic { color: var(--on-accent) !important; }
 
     /* =========================================================
        SHEETS, ONBOARDING, TOAST
        ========================================================= */
-    .sheet-layer { position: fixed; inset: 0; z-index: 70; display: flex; align-items: flex-end; justify-content: center; }
+    .sheet-layer { position: fixed; inset: 0; z-index: 88; display: flex; align-items: flex-end; justify-content: center; }
     .sheet-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.55); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); animation: fadeIn .25s both; }
     .sheet {
       position: relative; width: 100%; max-width: 480px; max-height: 90vh; max-height: 90dvh; overflow-y: auto;
@@ -546,7 +546,7 @@
     .path-card[aria-pressed="true"] { border-color: var(--sage); background: var(--sage-soft); }
     .path-card.sandy[aria-pressed="true"] { border-color: var(--sand); background: var(--sand-soft); }
     .welcome-hero { text-align: center; padding-top: 18px; }
-    .welcome-logo { width: 84px; height: 84px; margin: 0 auto 16px; border-radius: 28px; display: grid; place-items: center; background: linear-gradient(145deg, var(--sage), var(--sand)); color: var(--on-accent); box-shadow: 0 18px 40px -16px var(--sage); }
+    .welcome-logo { width: 84px; height: 84px; margin: 0 auto 16px; border-radius: 28px; display: grid; place-items: center; background: var(--sage-soft); color: var(--sage-ink); }
     .feature { display: flex; gap: 12px; align-items: flex-start; text-align: right; }
 
     #toast {
@@ -556,7 +556,7 @@
       max-width: calc(100% - 32px);
       display: flex; align-items: center; gap: 8px;
       padding: 10px 16px; border-radius: 99px;
-      background: var(--ink); color: var(--bg);
+      background: var(--surface-2); color: var(--ink); border: 1px solid var(--line-2);
       font-size: 13px; font-weight: 600;
       box-shadow: 0 14px 30px -12px rgba(0,0,0,.5);
       transition: transform .4s var(--ease), visibility 0s .4s;
@@ -564,6 +564,30 @@
     #toast.on { transform: translate(-50%, 0); visibility: visible; transition: transform .4s var(--ease); }
     #confetti { position: fixed; inset: 0; z-index: 96; pointer-events: none; width: 100%; height: 100%; }
 
+    .strip { display: grid; grid-template-columns: repeat(3, 1fr); width: 100%; text-align: center; padding: 14px 6px; }
+    .strip > div + div { border-inline-start: 1px solid var(--line); }
+    .strip .v { font-size: 18px; font-weight: 700; line-height: 1.3; }
+    .strip .v small { font-size: 11.5px; font-weight: 500; color: var(--ink-3); }
+    .strip .l { font-size: 12px; color: var(--ink-3); }
+    #float-words { position: absolute; inset: 0; pointer-events: none; }
+    .float-word {
+      position: absolute; left: 26.7%; top: 80%;
+      transform: translate(-50%, -50%);
+      font-size: 13.5px; font-weight: 600; white-space: nowrap;
+      color: #EEF1EC; background: rgba(15, 21, 19, .55);
+      border: 1px solid rgba(255, 255, 255, .12);
+      padding: 4px 12px; border-radius: 99px;
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      animation: wordRise 5.2s ease-in-out forwards;
+    }
+    [data-theme="light"] .float-word { color: var(--ink); background: rgba(255, 255, 255, .82); border-color: var(--line-2); }
+    @keyframes wordRise {
+      0% { opacity: 0; left: 26.7%; top: 80%; transform: translate(-50%, -50%) scale(.7); }
+      15% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      78% { opacity: 1; }
+      100% { opacity: 0; left: 46%; top: 26%; transform: translate(-50%, -50%) scale(.96); }
+    }
+    @media (prefers-reduced-motion: reduce) { .float-word { animation: none !important; left: 50%; top: 18%; opacity: 1; } }
     .empty { text-align: center; padding: 26px 18px; }
     .empty .ibox { margin: 0 auto 12px; width: 56px; height: 56px; border-radius: 20px; }
 
@@ -902,6 +926,17 @@
     'الهدوء الذي تبحث عنه في الظرف… موجود في نفَسك.',
     'كل «لا» صغيرة اليوم هي «نعم» كبيرة لنفسك غداً.'
   ];
+  const AFTER30 = [
+    { t: 'احرس الحدود', d: 'لا «ظرف واحد» في المناسبات. جهّز جملة رفض، وحدّد مسبقاً ماذا ستفعل إن عُرض عليك.' },
+    { t: 'خطة الطوارئ', d: 'أضف في «درع المواقف» خططاً لمواقف نادرة لكنها خطرة: سفر، خبر سيئ، سهر طويل.' },
+    { t: 'استثمر التوفير', d: 'حوّل مبلغ الأظرف الشهري إلى شيء ملموس: ادخار، هدية لمن تحب، أو نشاط جديد.' },
+    { t: 'نم جيداً', d: 'الإرهاق من أكثر أسباب الانتكاس. ثبّت موعد نومك هذا الأسبوع.' },
+    { t: 'اعرف صوت المساومة', d: 'لاحظ أفكار «أستحق» و«مرة واحدة فقط». اكتب ردك عليها قبل أن تحتاجه.' },
+    { t: 'حركة يومية', d: '٢٠ دقيقة مشي يومياً تخفف التوتر وتحمي مزاجك.' },
+    { t: 'ساعد غيرك', d: 'شارك تجربتك مع صديق يريد الإقلاع؛ مساعدة الآخرين تثبّت التزامك.' },
+    { t: 'راجع رحلتك', d: 'اقرأ دروس التعثّر ورسالتك لنفسك. ما الذي تغيّر فيك منذ البداية؟' },
+    { t: 'عتبة الأشهر الثلاثة', d: 'بعد قرابة ثلاثة أشهر يقل خطر الانتكاس كثيراً. استمر في الحذر بلا خوف.' }
+  ];
   const BREATHS = {
     '478': { t: '٤-٧-٨', d: 'شهيق ٤ • حبس ٧ • زفير ٨', ph: [['شهيق', 4, 1.32], ['احبس', 7, 1.32], ['زفير', 8, .86]] },
     box: { t: 'الصندوق', d: 'شهيق ٤ • حبس ٤ • زفير ٤ • حبس ٤', ph: [['شهيق', 4, 1.32], ['احبس', 4, 1.32], ['زفير', 4, .86], ['احبس', 4, .86]] },
@@ -965,7 +1000,7 @@
       shields: [], cravings: [], checkins: {}, slips: [], history: [],
       legacyWins: 0,
       stats: { breathCycles: 0, games: 0, bestGame: 0 },
-      theme: 'dark', haptics: true, breathPattern: '478',
+      theme: 'dark', haptics: true, breathPattern: '478', showCan: true,
       celebrated: 0, badgesSeen: [],
       firebaseConfig: { apiKey: '', databaseURL: '', projectId: '', email: '', uid: '', idToken: '', refreshToken: '' },
       updatedAt: Date.now()
@@ -1100,8 +1135,8 @@
     const c = $('#confetti'), ctx = c.getContext('2d');
     const dpr = window.devicePixelRatio || 1;
     c.width = innerWidth * dpr; c.height = innerHeight * dpr; ctx.scale(dpr, dpr);
-    const cols = ['#8AB9A3', '#D9B985', '#ECE8E1', '#BFDCCD', '#EBD3AA'];
-    const P = Array.from({ length: 110 }, () => ({
+    const cols = ['#86B8A0', '#D8B27A', '#A9CDBA'];
+    const P = Array.from({ length: 70 }, () => ({
       x: innerWidth / 2 + (Math.random() - .5) * 80, y: innerHeight * .35,
       vx: (Math.random() - .5) * 9, vy: -Math.random() * 9 - 3,
       r: 3 + Math.random() * 4, c: cols[(Math.random() * cols.length) | 0], a: Math.random() * 6, va: (Math.random() - .5) * .3
@@ -1188,59 +1223,118 @@
   }
   function sceneSVG(m, opts = {}) {
     if (!TREE) buildTree();
+    const light = (opts.theme || document.documentElement.dataset.theme) === 'light';
     const p = clamp(m.D / 30, 0, 1);
-    const skyTop = ramp([[0, '#0B1622'], [.35, '#1B2440'], [.65, '#2E4A6B'], [1, '#4F86A6']], p);
-    const skyBot = ramp([[0, '#1A2A33'], [.35, '#5E4A5C'], [.65, '#C98E68'], [1, '#F0D2A0']], p);
-    const ground = ramp([[0, '#13201A'], [1, '#2E5442']], p);
-    const hills = ramp([[0, '#1A2B24'], [1, '#4C7D66']], p);
-    const trunk = ramp([[0, '#3A2C22'], [1, '#5E4230']], p);
-    const sunY = 214 - p * 150;
+    const P = light ? {
+      skyTop: '#DDE7E0', skyBot: ramp([[0, '#ECE8DC'], [1, '#F3EAD6']], p),
+      hills: '#CADBCF', ground: '#B5CCBC', trunk: '#7A5E44', leaves: ['#3A7259', '#5E9479'],
+      can: '#5F6A64', canFill: '#EEF2EC', canIn: '#C9D4CC', sun: '#E9D3A6', bloss: '#C9974F', fruit: '#B07A30'
+    } : {
+      skyTop: ramp([[0, '#0F1A17'], [.5, '#15241E'], [1, '#253C33']], p),
+      skyBot: ramp([[0, '#182722'], [.5, '#33504A'], [1, '#9E8E6C']], p),
+      hills: ramp([[0, '#17241F'], [1, '#2C463B']], p), ground: ramp([[0, '#131E19'], [1, '#22382F']], p),
+      trunk: '#5A4836', leaves: ['#86B8A0', '#A9CDBA'],
+      can: '#8E9993', canFill: '#141F1A', canIn: '#0C1210', sun: '#E2C496', bloss: '#E2C496', fruit: '#D8B27A'
+    };
     const D = Math.min(m.D, 30);
-    let s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" preserveAspectRatio="xMidYMid slice" role="img" aria-label="شجرة النقاء: تنمو ورقة مع كل يوم">
+    let s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" preserveAspectRatio="xMidYMid slice" role="img" aria-label="شجرة النقاء: تنمو ورقة مع كل يوم، وعلبة قديمة تبهت وتنبت منها نبتة">
       <defs>
-        <linearGradient id="skyG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${skyTop}"/><stop offset="1" stop-color="${skyBot}"/></linearGradient>
-        <radialGradient id="sunG"><stop offset="0" stop-color="#FFE7B8" stop-opacity=".95"/><stop offset=".35" stop-color="#F6C98A" stop-opacity=".45"/><stop offset="1" stop-color="#F6C98A" stop-opacity="0"/></radialGradient>
+        <linearGradient id="skyG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${P.skyTop}"/><stop offset="1" stop-color="${P.skyBot}"/></linearGradient>
+        <radialGradient id="sunG"><stop offset="0" stop-color="${P.sun}" stop-opacity=".8"/><stop offset="1" stop-color="${P.sun}" stop-opacity="0"/></radialGradient>
       </defs>
       <rect width="360" height="240" fill="url(#skyG)"/>`;
-    const starO = clamp(1 - p * 1.6, 0, 1);
-    if (starO > 0) {
-      s += `<g opacity="${starO.toFixed(2)}" fill="#F4EFE6">` + TREE.stars.map(t => `<circle class="${opts.static ? '' : 'twinkle'}" style="animation-delay:${t.d}s" cx="${t.x.toFixed(1)}" cy="${t.y.toFixed(1)}" r="${t.r.toFixed(2)}"/>`).join('') + '</g>';
-      s += `<g opacity="${starO.toFixed(2)}"><circle cx="118" cy="64" r="12" fill="#EDE6D6"/><circle cx="124" cy="59" r="11" fill="${skyTop}"/></g>`;
+    if (!light) {
+      const starO = clamp(1 - p * 1.6, 0, 1);
+      if (starO > 0) s += `<g opacity="${(starO * .8).toFixed(2)}" fill="#E6E9E4">` + TREE.stars.map(t => `<circle class="${opts.static ? '' : 'twinkle'}" style="animation-delay:${t.d}s" cx="${t.x.toFixed(1)}" cy="${t.y.toFixed(1)}" r="${t.r.toFixed(2)}"/>`).join('') + '</g>';
     }
-    s += `<circle cx="282" cy="${sunY.toFixed(1)}" r="70" fill="url(#sunG)" opacity="${(.25 + p * .75).toFixed(2)}"/>
-      <circle cx="282" cy="${sunY.toFixed(1)}" r="15" fill="#FBE3B4" opacity="${(.35 + p * .65).toFixed(2)}"/>
-      <path d="M0,192 Q60,160 130,180 T260,170 T360,178 V240 H0Z" fill="${hills}" opacity=".75"/>
-      <path d="M0,214 Q90,196 180,206 T360,203 V240 H0Z" fill="${ground}"/>`;
-    // branches
+    const sunY = light ? 62 : 214 - p * 150;
+    s += `<circle cx="284" cy="${sunY.toFixed(1)}" r="60" fill="url(#sunG)" opacity="${light ? .9 : (.15 + p * .6).toFixed(2)}"/>
+      <circle cx="284" cy="${sunY.toFixed(1)}" r="13" fill="${P.sun}" opacity="${light ? .9 : (.25 + p * .6).toFixed(2)}"/>
+      <path d="M0,192 Q60,162 130,180 T260,170 T360,178 V240 H0Z" fill="${P.hills}"/>
+      <path d="M0,214 Q90,196 180,206 T360,203 V240 H0Z" fill="${P.ground}"/>`;
+    // the old tin: abstract line-art, no brand, no pouches. Lid opens over the first week, the tin fades, a sprout grows from it
+    if (state.showCan !== false) {
+      const lid = clamp(m.D / 7, 0, 1) * 58;
+      const fade = m.free ? .32 : 1 - .6 * p;
+      const sprout = clamp((m.D - 4) / 14, 0, 1);
+      s += `<g opacity="${fade.toFixed(2)}" stroke="${P.can}" stroke-width="1.4" stroke-linejoin="round">
+        <path d="M76,199 L76,208 A20,5 0 0 0 116,208 L116,199" fill="${P.canFill}"/>
+        <ellipse cx="96" cy="199" rx="20" ry="5" fill="${lid > 2 ? P.canIn : P.canFill}"/>
+        <g transform="rotate(${(-lid).toFixed(1)} 75 197.5)">
+          <path d="M75,197.5 L75,194.5 A21,5.2 0 0 1 117,194.5 L117,197.5" fill="${P.canFill}"/>
+          <ellipse cx="96" cy="194.5" rx="21" ry="5.2" fill="${P.canFill}"/>
+          <ellipse cx="96" cy="194.5" rx="13" ry="3" fill="none" opacity=".5"/>
+        </g></g>`;
+      if (sprout > 0) {
+        const h = 4 + sprout * 20, tx = 97, ty = 199 - h;
+        s += `<g><path d="M96,199 Q94,${(199 - h * .5).toFixed(1)} ${tx},${ty.toFixed(1)}" stroke="${P.leaves[0]}" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+          <ellipse cx="${(tx - 4).toFixed(1)}" cy="${(ty + 2).toFixed(1)}" rx="${(2 + sprout * 3).toFixed(1)}" ry="${(1 + sprout * 1.5).toFixed(1)}" transform="rotate(-30 ${(tx - 4).toFixed(1)} ${(ty + 2).toFixed(1)})" fill="${P.leaves[0]}"/>
+          <ellipse cx="${(tx + 4).toFixed(1)}" cy="${(ty + 1).toFixed(1)}" rx="${(2 + sprout * 3).toFixed(1)}" ry="${(1 + sprout * 1.5).toFixed(1)}" transform="rotate(30 ${(tx + 4).toFixed(1)} ${(ty + 1).toFixed(1)})" fill="${P.leaves[1]}"/></g>`;
+      }
+    }
     s += '<g stroke-linecap="round" fill="none">';
     TREE.br.forEach(b => {
       const f = clamp((D - b.st) / Math.max(.01, b.en - b.st), 0, 1);
       if (f <= 0) return;
-      s += `<path d="M${b.x.toFixed(1)},${b.y.toFixed(1)} Q${b.cx.toFixed(1)},${b.cy.toFixed(1)} ${b.x2.toFixed(1)},${b.y2.toFixed(1)}" pathLength="1" stroke-dasharray="1 1" stroke-dashoffset="${(1 - f).toFixed(3)}" stroke="${trunk}" stroke-width="${Math.max(1, b.w * (0.55 + 0.45 * Math.min(1, D / 10))).toFixed(2)}"/>`;
+      s += `<path d="M${b.x.toFixed(1)},${b.y.toFixed(1)} Q${b.cx.toFixed(1)},${b.cy.toFixed(1)} ${b.x2.toFixed(1)},${b.y2.toFixed(1)}" pathLength="1" stroke-dasharray="1 1" stroke-dashoffset="${(1 - f).toFixed(3)}" stroke="${P.trunk}" stroke-width="${Math.max(1, b.w * (0.55 + 0.45 * Math.min(1, D / 10))).toFixed(2)}"/>`;
     });
     s += '</g>';
-    // leaves
-    const greens = ['#7FB89A', '#9CCAB0', '#6AA585', '#B5D9C2'];
     const count = Math.min(30, m.day) + (m.free ? Math.min(40, Math.floor(m.D - 30)) : 0);
     for (let k = 1; k <= count; k++) {
       const L = TREE.leaf[k]; if (!L) continue;
       const isBud = !m.free && k === m.day;
       const sc = isBud ? .7 : 1;
-      const cls = isBud && !opts.static ? 'bud' : (!opts.static && k === m.day - 1 ? 'leaf-pop' : '');
-      s += `<ellipse class="${cls}" cx="${L.x.toFixed(1)}" cy="${L.y.toFixed(1)}" rx="${(5.4 * sc).toFixed(1)}" ry="${(2.8 * sc).toFixed(1)}" transform="rotate(${L.rot} ${L.x.toFixed(1)} ${L.y.toFixed(1)})" fill="${greens[k % 4]}"/>`;
-      if (k <= 30 && state.completedChallenges[k]) s += `<circle cx="${(L.x + 3.5).toFixed(1)}" cy="${(L.y + 3).toFixed(1)}" r="1.9" fill="#E8B96A"/>`;
+      const cls = isBud && !opts.static ? 'bud' : '';
+      s += `<ellipse class="${cls}" cx="${L.x.toFixed(1)}" cy="${L.y.toFixed(1)}" rx="${(5.4 * sc).toFixed(1)}" ry="${(2.8 * sc).toFixed(1)}" transform="rotate(${L.rot} ${L.x.toFixed(1)} ${L.y.toFixed(1)})" fill="${P.leaves[k % 2]}"/>`;
+      if (k <= 30 && state.completedChallenges[k]) s += `<circle cx="${(L.x + 3.5).toFixed(1)}" cy="${(L.y + 3).toFixed(1)}" r="1.9" fill="${P.fruit}"/>`;
     }
-    // blossoms on milestones
     DAYS.filter(d => d.ms && d.day < m.day + (m.free ? 1 : 0)).forEach(d => {
       const L = TREE.leaf[d.day + 40] || TREE.leaf[d.day]; if (!L) return;
       const x = L.x, y = L.y - 2;
-      s += `<g>${[0, 72, 144, 216, 288].map(a => `<circle cx="${(x + Math.cos(a * Math.PI / 180) * 2.6).toFixed(1)}" cy="${(y + Math.sin(a * Math.PI / 180) * 2.6).toFixed(1)}" r="2.2" fill="#F6DDB2"/>`).join('')}<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="1.5" fill="#D99A55"/></g>`;
+      s += `<g fill="${P.bloss}">${[0, 72, 144, 216, 288].map(a => `<circle cx="${(x + Math.cos(a * Math.PI / 180) * 2.6).toFixed(1)}" cy="${(y + Math.sin(a * Math.PI / 180) * 2.6).toFixed(1)}" r="2.1"/>`).join('')}</g>`;
     });
-    if (m.free && !opts.static) {
-      s += '<g fill="#FBE7B0">' + [[120, 120], [240, 110], [150, 80], [215, 150], [100, 160], [260, 140]].map(([x, y], i) => `<circle class="firefly" style="animation-delay:${i * .9}s" cx="${x}" cy="${y}" r="1.8"/>`).join('') + '</g>';
+    if (m.free && !opts.static && !light) {
+      s += `<g fill="${P.sun}">` + [[120, 120], [240, 110], [150, 80], [215, 150], [100, 160], [260, 140]].map(([x, y], i) => `<circle class="firefly" style="animation-delay:${i * .9}s" cx="${x}" cy="${y}" r="1.6"/>`).join('') + '</g>';
     }
     s += '</svg>';
     return s;
+  }
+
+  /* Words that rise from the old tin: the user's own reasons + concrete gains */
+  const pouchW = n => plural(n, ['ظرفاً واحداً', 'ظرفين', 'أظرف', 'ظرفاً']);
+  function floatWords(m) {
+    const gains = [];
+    if (m.saved >= 1) gains.push('وفّرت ' + nf(m.saved, 0) + ' ' + state.currency);
+    if (m.avoided >= 1) gains.push('تجنّبت ' + pouchW(Math.floor(m.avoided)));
+    if (m.H >= 12) gains.push('قلبك أهدأ');
+    if (m.H >= 72) gains.push('جسدك خالٍ من النيكوتين');
+    if (m.H >= 120) gains.push('لثتك تلتئم');
+    if (m.H >= 168) gains.push('نَفَسك أنقى');
+    if (m.H >= 336) gains.push('نومك يتحسّن');
+    if (m.H >= 504) gains.push('ذهنك أصفى');
+    if (m.goalPct >= 1) gains.push(nf(Math.floor(m.goalPct)) + '٪ نحو ' + (state.goalName.length > 16 ? state.goalName.slice(0, 15) + '…' : state.goalName));
+    gains.push('حريتك تعود', 'أنت أقوى من ٣ دقائق');
+    const out = [], R = state.reasons.slice();
+    // interleave: a personal reason, then a gain
+    while (R.length || gains.length) { if (R.length) out.push(R.shift()); if (gains.length) out.push(gains.shift()); }
+    return out;
+  }
+  let wordsTimer = null, wordsIdx = 0;
+  function startWords() {
+    clearInterval(wordsTimer);
+    const show = () => {
+      const box = $('#float-words');
+      if (!box || currentTab !== 'today' || document.hidden) return;
+      const list = floatWords(metrics());
+      const w = document.createElement('span');
+      w.className = 'float-word';
+      w.textContent = list[wordsIdx % list.length];
+      wordsIdx++;
+      box.replaceChildren(w);
+    };
+    if (state.showCan === false) { const b = $('#float-words'); if (b) b.replaceChildren(); return; }
+    show();
+    wordsTimer = setInterval(show, reduceMotion() ? 6000 : 5200);
   }
 
   /* =========================================================
@@ -1277,17 +1371,15 @@
 
   RENDER.today = function () {
     const m = metrics();
-    const active = previewDay || m.day;
-    const d = DAYS[active - 1];
-    const ch = chapterOf(active);
-    const done = !!state.completedChallenges[active];
+    const d = DAYS[m.day - 1];
     const ns = nextStop(m);
     const cur = state.currency;
     const todayCk = state.checkins[dateKey()];
     const streak = checkinStreak();
-    const quote = QUOTES[(Math.floor(m.now / 864e5)) % QUOTES.length];
-    const dayLeft = m.perDay > 0 ? Math.ceil(Math.max(0, state.goalPrice - m.saved) / m.perDay) : 0;
-    const eta = new Date(m.now + dayLeft * 864e5);
+    const aw = afterIdx(m);
+    const key = m.free ? 'w' + aw : String(m.day);
+    const chDone = !!state.completedChallenges[key];
+    const focus = m.free ? AFTER30[aw] : null;
 
     let html = `
       <header class="topbar">
@@ -1298,123 +1390,106 @@
             <h1 class="h2">${greeting()}</h1>
           </div>
         </div>
-        <button class="icon-btn" data-action="tab" data-tab="me" aria-label="الإعدادات">${ic('settings', 'sm')}</button>
+        <button class="icon-btn" data-action="settings" aria-label="الإعدادات">${ic('settings', 'sm')}</button>
       </header>
 
       <section class="card hero">
-        <div class="scene" id="scene">${sceneSVG(m)}<div class="scene-fade"></div>
+        <div class="scene" id="scene">${sceneSVG(m)}
           <span class="chip glass-chip scene-badge">${m.free ? ic('crown', 'xs') + ' وضع الحرية' : 'اليوم ' + ar(m.day) + ' من ٣٠'}</span>
-          <span class="chip glass-chip scene-badge2">${ic('leaf', 'xs')} ${ar(Math.min(30, m.day))} ورقة</span>
+          <div id="float-words" aria-hidden="true"></div>
         </div>
         <div class="hero-body">
-          <p class="xs muted" style="margin:0 0 4px">${m.gradual && !m.free ? 'في رحلة التدرّج منذ' : 'نقيّ منذ'}</p>
-          <div class="counter"><span class="big num" data-live="days">${nf(m.days)}</span><span class="h3 ink2" data-live="daysW">${m.days === 1 ? 'يوم' : m.days === 2 ? 'يومان' : (m.days % 100 >= 3 && m.days % 100 <= 10) ? 'أيام' : 'يوماً'}</span></div>
-          <div class="clock num" data-live="clock"></div>
+          <div class="row between" style="align-items:flex-end">
+            <div>
+              <p class="xs muted" style="margin:0 0 4px">${m.gradual && !m.free ? 'في رحلة التدرّج منذ' : 'نقيّ منذ'}</p>
+              <div class="counter"><span class="big num" data-live="days">${nf(m.days)}</span><span class="h3 ink2" data-live="daysW">${dayUnit(m.days)}</span></div>
+            </div>
+            <div class="clock num" data-live="clock"></div>
+          </div>
           <div class="bar thin" style="margin:14px 0 8px"><i data-live="prog" style="width:${Math.max(2, clamp(m.H / 720 * 100, 0, 100))}%"></i></div>
-          <div class="row between xs muted"><span>${ic('flag', 'xs')} ${m.free ? 'أتممت التحدي' : 'الفصل ' + ar(m.chapter.n) + ' · ' + m.chapter.title}</span><span data-live="next">${ns ? esc(ns.t) + ' بعد ' + fmtDur(ns.h - m.H) : ''}</span></div>
+          <div class="row between xs muted"><span>${m.free ? 'أتممت التحدي' : 'الفصل ' + ar(m.chapter.n) + ' · ' + m.chapter.title}</span><span data-live="next">${ns ? esc(ns.t) + ' بعد ' + fmtDur(ns.h - m.H) : ''}</span></div>
         </div>
       </section>
 
-      <section class="grid-2">
-        <div class="stat"><div class="row between"><span class="l">وفّرت</span><span class="ibox sm sand">${ic('wallet', 'sm')}</span></div><div class="v num"><span data-live="saved">${nf(m.saved, m.saved < 100 ? 1 : 0)}</span><small>${esc(cur)}</small></div></div>
-        <div class="stat"><div class="row between"><span class="l">ظرف تجنّبته</span><span class="ibox sm">${ic('shield-check', 'sm')}</span></div><div class="v num" data-live="avoided">${nf(Math.floor(m.avoided))}</div></div>
-        <div class="stat"><div class="row between"><span class="l">نيكوتين لم يدخل جسدك</span><span class="ibox sm">${ic('droplet', 'sm')}</span></div><div class="v num"><span data-live="mg">${nf(Math.round(m.mg))}</span><small>ملغ</small></div></div>
-        <div class="stat"><div class="row between"><span class="l">موجات عبرتها</span><span class="ibox sm sand">${ic('waves', 'sm')}</span></div><div class="v num">${nf(m.won)}</div></div>
-      </section>`;
+      <button class="card tight strip" data-action="tab" data-tab="insights" aria-label="تفاصيل التوفير والمكافأة">
+        <div><div class="v num"><span data-live="saved">${nf(m.saved, 0)}</span> <small>${esc(cur)}</small></div><div class="l">وفّرت</div></div>
+        <div><div class="v num" data-live="avoided">${nf(Math.floor(m.avoided))}</div><div class="l">ظرف تجنّبته</div></div>
+        <div><div class="v num" data-live="goalPct">${nf(Math.floor(m.goalPct))}٪</div><div class="l">نحو مكافأتك</div></div>
+      </button>`;
 
-    // Check-in
-    if (todayCk && !checkinEditing) {
-      const mood = MOODS.find(x => x.v === todayCk.mood) || MOODS[2];
-      html += `
-      <section class="card tight">
-        <div class="row">
-          <span class="ibox">${ic(mood.icon)}</span>
-          <div class="grow"><div class="h3">سجّلت حضورك اليوم</div><div class="xs muted">المزاج: ${mood.t} · الرغبة: ${CRAVE_LEVELS[todayCk.craving] || '—'}</div></div>
-          ${streak > 1 ? `<span class="chip sand">${ic('flame', 'xs')} ${daysW(streak)}</span>` : ''}
-          <button class="icon-btn sm" data-action="checkinEdit" aria-label="تعديل">${ic('pencil', 'xs')}</button>
-        </div>
-      </section>`;
-    } else {
-      const dm = checkinDraft.mood ?? (todayCk && todayCk.mood), dc = checkinDraft.craving ?? (todayCk && todayCk.craving);
-      html += `
-      <section class="card">
-        <div class="card-head"><span class="ibox sand">${ic('calendar')}</span><div class="grow"><h2 class="h3">كيف حالك اليوم؟</h2><p class="xs muted" style="margin:0">تسجيل يومي في ثوانٍ يكشف لك نمطك في «رؤى»</p></div></div>
-        <div class="grid-4" style="grid-template-columns:repeat(5,1fr)">
-          ${MOODS.map(x => `<button class="opt" data-action="ckMood" data-v="${x.v}" aria-pressed="${dm === x.v}">${ic(x.icon)}<span>${x.t}</span></button>`).join('')}
-        </div>
-        <p class="xs muted" style="margin:14px 0 8px">شدة الرغبة اليوم</p>
-        <div class="grid-4">
-          ${CRAVE_LEVELS.map((t, i) => `<button class="opt inline sand" data-action="ckCrave" data-v="${i}" aria-pressed="${dc === i}">${t}</button>`).join('')}
-        </div>
-        <button class="btn primary block" style="margin-top:14px" data-action="ckSave" ${dm && dc != null ? '' : 'disabled'}>حفظ حضور اليوم</button>
-      </section>`;
-    }
-
-    // Taper
+    // Taper (gradual mode only)
     if (m.gradual && !m.free) {
       const over = Math.max(0, m.usedToday - m.allowed);
       const dots = Array.from({ length: Math.max(m.allowed, m.usedToday) }, (_, i) => `<span class="pouch ${i < m.usedToday ? (i >= m.allowed ? 'over' : 'used') : ''}"></span>`).join('');
-      const mgRec = m.day <= 14 ? state.pouchMg : Math.max(2, Math.round(state.pouchMg / 2));
       html += `
-      <section class="card">
-        <div class="card-head"><span class="ibox sand">${ic('trending-down')}</span>
-          <div class="grow"><h2 class="h3">حصة التدرّج اليوم</h2><p class="xs muted" style="margin:0">${m.allowed ? 'الحد الأقصى ' + nf(m.allowed) + ' · بتركيز ' + nf(mgRec) + ' ملغ أو أقل' : 'يوم صفر — أنت جاهز للتوقف التام'}</p></div>
-          <span class="chip ${over ? 'rose' : 'sage'}">${over ? 'تجاوزت بـ' + nf(over) : 'متبقٍ ' + nf(Math.max(0, m.allowed - m.usedToday))}</span>
+      <section class="card tight">
+        <div class="row">
+          <span class="ibox sm sand">${ic('trending-down', 'sm')}</span>
+          <div class="grow">
+            <div class="small bold">${m.allowed ? 'حصة اليوم: ' + nf(m.usedToday) + ' من ' + nf(m.allowed) : 'يوم صفر — لا أظرف اليوم'}</div>
+            ${dots ? `<div class="pouches" style="margin-top:6px">${dots}</div>` : ''}
+          </div>
+          <button class="btn sm soft-sand" data-action="taperAdd">${ic('plus', 'xs')} ظرف</button>
+          <button class="icon-btn sm" data-action="taperUndo" ${m.usedToday ? '' : 'disabled'} aria-label="تراجع">${ic('rotate-ccw', 'xs')}</button>
         </div>
-        ${dots ? `<div class="pouches">${dots}</div>` : `<div class="callout sage small">${ic('target', 'sm')} لا أظرف اليوم. استعن بـ«نجدة» إن جاءت الرغبة.</div>`}
-        ${over ? '<p class="xs rose" style="margin:10px 0 0">لا بأس — سجّلها بصدق وغداً بداية جديدة.</p>' : ''}
-        <div class="row" style="margin-top:14px">
-          <button class="btn soft-sand grow" data-action="taperAdd">${ic('plus', 'sm')} سجّلت ظرفاً</button>
-          <button class="btn" data-action="taperUndo" ${m.usedToday ? '' : 'disabled'} aria-label="تراجع">${ic('rotate-ccw', 'sm')}</button>
-        </div>
+        ${over ? '<p class="xs rose" style="margin:8px 0 0">تجاوزت الحصة بـ' + nf(over) + ' — لا بأس، سجّلها بصدق وغداً بداية جديدة.</p>' : ''}
       </section>`;
     }
 
-    // Day card
-    html += `
+    // ONE action card: check-in → challenge → done
+    if (!todayCk || checkinEditing) {
+      const dm = checkinDraft.mood ?? (todayCk && todayCk.mood), dc = checkinDraft.craving ?? (todayCk && todayCk.craving);
+      html += `
       <section class="card">
-        <div class="row between" style="align-items:flex-start">
-          <div class="grow">
-            <span class="xs sage bold">الفصل ${ar(ch.n)} · ${ch.title}${d.ms ? ' · <span class="sand">' + d.ms + '</span>' : ''}</span>
-            <h2 class="h2" style="margin-top:4px">اليوم ${ar(active)}: ${d.t}</h2>
-          </div>
-          <div class="day-nav">
-            <button class="icon-btn sm" data-action="prevDay" ${active <= 1 ? 'disabled' : ''} aria-label="اليوم السابق">${ic('chevron-right', 'sm')}</button>
-            <button class="icon-btn sm" data-action="nextDay" ${active >= m.day ? 'disabled' : ''} aria-label="اليوم التالي">${ic('chevron-left', 'sm')}</button>
-          </div>
+        <div class="row between"><h2 class="h3">كيف حالك اليوم؟</h2><span class="xs muted">خطوة ١ من ٢</span></div>
+        <div class="grid-4" style="grid-template-columns:repeat(5,1fr);margin-top:12px">
+          ${MOODS.map(x => `<button class="opt" data-action="ckMood" data-v="${x.v}" aria-pressed="${dm === x.v}">${ic(x.icon)}<span>${x.t}</span></button>`).join('')}
         </div>
-        <p class="body" style="margin-top:10px">${d.body}</p>
-        <details class="more" style="margin-top:8px"><summary>ماذا قد تشعر به؟ ${ic('chevron-down', 'xs')}</summary><p class="body small" style="margin-top:6px">${d.feel}</p><p class="small sand" style="margin:8px 0 0">${ic('lightbulb', 'xs')} ${d.tip}</p></details>
-        <div class="callout sand" style="margin-top:14px">
-          <div class="callout-title sand">${ic('target', 'xs')} تحدي اليوم</div>
-          <p class="small" style="margin:0 0 12px;line-height:1.8">${d.act}</p>
-          <button class="btn ${done ? 'soft' : 'sand'} block sm" data-action="toggleChallenge" data-day="${active}">${ic(done ? 'circle-check' : 'check', 'sm')} ${done ? 'أنجزته — ثمرة ذهبية على شجرتك' : 'أنجزت التحدي'}</button>
+        <p class="xs muted" style="margin:14px 0 8px">والرغبة اليوم؟</p>
+        <div class="grid-4">
+          ${CRAVE_LEVELS.map((t, i) => `<button class="opt inline" data-action="ckCrave" data-v="${i}" aria-pressed="${dc === i}">${t}</button>`).join('')}
         </div>
-        ${previewDay && previewDay !== m.day ? `<button class="btn ghost block sm" style="margin-top:8px" data-action="todayDay">العودة إلى يومي الحالي</button>` : ''}
+        <button class="btn primary block" style="margin-top:14px" data-action="ckSave" ${dm && dc != null ? '' : 'disabled'}>التالي: تحدي اليوم</button>
       </section>`;
-
-    // Goal
-    html += `
+    } else {
+      const mood = MOODS.find(x => x.v === todayCk.mood) || MOODS[2];
+      const ckChip = `<button class="chip" data-action="checkinEdit" aria-label="تعديل حضور اليوم">${ic(mood.icon, 'xs')} ${mood.t}${streak > 1 ? ' · ' + daysW(streak) : ''}</button>`;
+      if (!chDone) {
+        html += `
       <section class="card">
-        <div class="card-head">
-          <span class="ibox sand">${ic('gift')}</span>
-          <div class="grow"><p class="xs muted" style="margin:0">مكافأتك</p><h2 class="h3">${esc(state.goalName)}</h2></div>
-          <button class="btn sm" data-action="editGoal">${ic('pencil', 'xs')} تعديل</button>
-        </div>
-        <div class="row between small" style="margin-bottom:8px"><span><b class="sand num" data-live="goalSaved">${nf(Math.min(m.saved, state.goalPrice), 0)}</b> <span class="muted">من ${nf(state.goalPrice)} ${esc(cur)}</span></span><b class="num" data-live="goalPct">${nf(Math.floor(m.goalPct))}٪</b></div>
-        <div class="bar"><i data-live="goalBar" style="width:${Math.max(2, m.goalPct)}%"></i></div>
-        <p class="xs muted" style="margin:10px 0 0">${m.goalPct >= 100 ? 'مبارك! جمعت قيمة مكافأتك كاملة — اشترِها بفخر.' : 'توفّر ' + nf(m.perDay, 1) + ' ' + esc(cur) + ' يومياً · تصل إليها تقريباً في ' + fmtDate(eta.getTime())}</p>
-      </section>
-
-      <section class="card quote-card">
-        <span class="quote-mark">${ic('quote', 'lg')}</span>
-        <p class="quote">${quote}</p>
+        <div class="row between"><span class="xs sand bold">${ic('target', 'xs')} ${m.free ? 'تركيز هذا الأسبوع' : 'تحدي اليوم ' + ar(m.day)}</span>${ckChip}</div>
+        <h2 class="h2" style="margin:10px 0 6px">${m.free ? focus.t : d.t}</h2>
+        <p class="body">${m.free ? focus.d : d.act}</p>
+        <button class="btn primary block" style="margin-top:14px" data-action="toggleChallenge" data-key="${key}">${ic('check', 'sm')} أنجزته</button>
+        ${m.free ? '' : `<button class="btn ghost block sm" style="margin-top:4px" data-action="openDay" data-day="${m.day}">${ic('activity', 'xs')} ماذا يحدث في جسدك اليوم؟</button>`}
       </section>`;
+      } else {
+        html += `
+      <section class="card center">
+        <div class="row between">${ckChip}<button class="chip" data-action="toggleChallenge" data-key="${key}">${ic('rotate-ccw', 'xs')} تراجع</button></div>
+        <span class="ibox" style="margin:8px auto 10px;width:52px;height:52px;border-radius:18px">${ic('circle-check', 'lg')}</span>
+        <h2 class="h2">أحسنت، أنجزت يومك</h2>
+        <p class="body" style="margin-top:4px">${QUOTES[Math.floor(m.now / 864e5) % QUOTES.length]}</p>
+        ${!m.free ? `<button class="btn ghost block sm" style="margin-top:8px" data-action="openDay" data-day="${m.day}">${ic('book-open', 'xs')} اقرأ عن اليوم ${ar(m.day)}</button>` : ''}
+        ${!m.free && m.day < 30 ? `<p class="xs muted" style="margin:6px 0 0">غداً: ${DAYS[m.day].t}</p>` : ''}
+      </section>`;
+      }
+    }
+
+    html += `
+      <button class="card tight row" style="width:100%;text-align:right" data-action="sessionStart">
+        <span class="ibox">${ic('wind')}</span>
+        <div class="grow"><div class="h3">تشعر برغبة الآن؟</div><div class="xs muted">جلسة عبور ٣ دقائق — الموجة تنكسر</div></div>
+        ${ic('chevron-left', 'sm')}
+      </button>`;
 
     $('#view-today').innerHTML = html;
     lastDay = m.day;
     updateLive(m);
+    startWords();
   };
+  const dayUnit = n => n === 1 ? 'يوم' : n === 2 ? 'يومان' : (n % 100 >= 3 && n % 100 <= 10) ? 'أيام' : 'يوماً';
+  const afterIdx = m => clamp(Math.floor((m.D - 30) / 7), 0, AFTER30.length - 1);
 
   let checkinEditing = false;
   let checkinDraft = {};
@@ -1422,6 +1497,7 @@
   /* =========================================================
      VIEW: JOURNEY
      ========================================================= */
+  let openChapter = null;
   RENDER.journey = function () {
     const m = metrics();
     let html = `
@@ -1434,50 +1510,57 @@
       </div>`;
 
     if (journeySeg === 'path') {
-      const W = 320, ROW = 86, AMP = 72;
+      if (m.free) html += freedomCard(m);
+      if (openChapter === null) openChapter = m.free ? 0 : m.chapter.n;
+      const W = 320, ROW = 82, AMP = 72;
       CHAPTERS.forEach(c => {
         const days = DAYS.filter(d => d.day >= c.from && d.day <= c.to);
         const doneN = days.filter(d => d.day < m.day || m.free).length;
         const isCur = !m.free && m.chapter.n === c.n;
+        const allDone = doneN === days.length;
+        const locked = !m.free && c.from > m.day;
+        const open = openChapter === c.n;
         html += `<section class="card">
-          <div class="chapter-head">
-            <span class="ibox ${isCur ? '' : doneN === days.length ? '' : 'sand'}">${ic(c.icon)}</span>
-            <div class="grow"><div class="xs ${isCur ? 'sage' : 'muted'} bold">الفصل ${ar(c.n)}${isCur ? ' · أنت هنا' : ''}</div><h2 class="h3">${c.title}</h2><p class="xs muted" style="margin:0">${c.desc}</p></div>
+          <button class="chapter-head" style="width:100%;text-align:right" data-action="toggleChapter" data-n="${c.n}" aria-expanded="${open}">
+            <span class="ibox ${allDone ? '' : isCur ? '' : 'sand'}">${ic(allDone ? 'circle-check' : locked ? 'lock' : c.icon)}</span>
+            <div class="grow"><div class="xs ${isCur ? 'sage' : 'muted'} bold">الفصل ${ar(c.n)}${isCur ? ' · أنت هنا' : allDone ? ' · مكتمل' : ''}</div><h2 class="h3">${c.title}</h2>${open ? `<p class="xs muted" style="margin:0">${c.desc}</p>` : ''}</div>
             <span class="xs bold num ${doneN ? 'sand' : 'muted'}">${ar(doneN)}/${ar(days.length)}</span>
-          </div>`;
+            <span class="muted" style="transition:transform .25s;${open ? 'transform:rotate(180deg)' : ''}">${ic('chevron-down', 'sm')}</span>
+          </button>`;
+        if (!open) {
+          html += `<div class="bar thin" style="margin-top:12px"><i style="width:${doneN / days.length * 100}%"></i></div></section>`;
+          return;
+        }
         const pts = days.map((d, i) => ({ d, x: W / 2 + Math.sin((d.day - 1) * .9) * AMP, y: ROW * i + ROW / 2 }));
         const pathD = arr => arr.map((p, i) => i === 0 ? `M${p.x.toFixed(1)},${p.y}` : `C${arr[i - 1].x.toFixed(1)},${arr[i - 1].y + ROW / 2} ${p.x.toFixed(1)},${p.y - ROW / 2} ${p.x.toFixed(1)},${p.y}`).join(' ');
         const progIdx = pts.filter(p => p.d.day <= m.day || m.free).length;
         html += `<div class="path-wrap" style="height:${ROW * days.length}px">
           <svg class="path-line" viewBox="0 0 ${W} ${ROW * days.length}" aria-hidden="true">
             <path d="${pathD(pts)}" fill="none" stroke="var(--line-2)" stroke-width="3" stroke-dasharray="2 9" stroke-linecap="round"/>
-            ${progIdx > 1 ? `<path d="${pathD(pts.slice(0, progIdx))}" fill="none" stroke="var(--sage)" stroke-width="4" stroke-linecap="round" opacity=".85"/>` : ''}
+            ${progIdx > 1 ? `<path d="${pathD(pts.slice(0, progIdx))}" fill="none" stroke="var(--sage)" stroke-width="3" stroke-linecap="round" opacity=".7"/>` : ''}
           </svg>`;
         pts.forEach(p => {
           const d = p.d;
-          const doneD = d.day < m.day || m.free, cur = d.day === m.day && !m.free, locked = d.day > m.day;
-          const cls = ['node', d.ms ? 'ms' : '', doneD ? 'done' : '', cur ? 'current' : '', locked ? 'locked' : ''].join(' ');
-          html += `<button class="${cls}" style="left:${p.x.toFixed(1)}px;top:${p.y}px" data-action="openDay" data-day="${d.day}" ${locked ? 'disabled' : ''} aria-label="اليوم ${ar(d.day)}${locked ? ' مقفل' : ''}">
-            ${d.ms ? `<span class="crown">${ic('star', 'xs')}</span>` : ''}
-            ${locked && !d.ms ? ic('lock', 'xs') : `<span class="num">${ar(d.day)}</span>`}
+          const doneD = d.day < m.day || m.free, cur = d.day === m.day && !m.free, lockedD = d.day > m.day;
+          const cls = ['node', d.ms ? 'ms' : '', doneD ? 'done' : '', cur ? 'current' : '', lockedD ? 'locked' : ''].join(' ');
+          html += `<button class="${cls}" style="left:${p.x.toFixed(1)}px;top:${p.y}px" data-action="openDay" data-day="${d.day}" ${lockedD ? 'disabled' : ''} aria-label="اليوم ${ar(d.day)}${lockedD ? ' مقفل' : ''}">
+            ${lockedD && !d.ms ? ic('lock', 'xs') : `<span class="num">${ar(d.day)}</span>`}
             ${state.completedChallenges[d.day] ? `<span class="tick">${ic('check', 'xs')}</span>` : ''}
           </button>`;
           const right = p.x < W / 2;
           const lx = right ? p.x + 40 : p.x - 40 - 118;
-          if (!locked || d.ms) {
-            html += `<div class="node-label" style="left:${lx.toFixed(1)}px;top:${p.y}px;text-align:${right ? 'right' : 'left'};direction:rtl">
-              ${d.ms ? `<span class="tag">${d.ms}</span>` : ''}${cur ? '<span class="tag sage" style="color:var(--sage-ink)">أنت هنا</span>' : ''}
-              ${!locked ? `<b class="clamp-2">${d.t}</b>` : '<span class="muted">محطة قادمة</span>'}</div>`;
+          if (!lockedD || d.ms) {
+            html += `<div class="node-label" style="left:${lx.toFixed(1)}px;top:${p.y}px;text-align:${right ? 'right' : 'left'}">
+              ${d.ms ? `<span class="tag">${d.ms}</span>` : ''}${cur ? '<span class="tag" style="color:var(--sage-ink)">أنت هنا</span>' : ''}
+              ${!lockedD ? `<b class="clamp-2">${d.t}</b>` : ''}</div>`;
           }
         });
         html += `</div></section>`;
       });
-      html += `<section class="card" style="border-color:${m.free ? 'var(--sand)' : 'var(--line)'}">
-        <div class="row"><span class="ibox sand">${ic('crown')}</span><div class="grow"><h2 class="h3">واحة الحرية</h2><p class="xs muted" style="margin:0">${m.free ? 'أنت فيها منذ ' + daysW(Math.floor(m.D - 30) || 1) + '. الشجرة تواصل النمو بأوراق جديدة.' : 'تُفتح بعد اليوم ٣٠، وتتابع فيها إنجازك بلا توقف.'}</p></div></div>
-      </section>`;
+      if (!m.free) html += freedomCard(m);
     } else if (journeySeg === 'body') {
       const nextI = BODY.findIndex(b => b.h > m.H);
-      html += `<section class="card"><div class="card-head"><span class="ibox">${ic('activity')}</span><div class="grow"><h2 class="h3">ماذا يحدث في جسدك؟</h2><p class="xs muted" style="margin:0">خط زمني يتحدّث تلقائياً مع كل ساعة</p></div></div>
+      html += supportCallout() + `<section class="card"><div class="card-head"><span class="ibox">${ic('activity')}</span><div class="grow"><h2 class="h3">ماذا يحدث في جسدك؟</h2><p class="xs muted" style="margin:0">خط زمني يتحدّث تلقائياً مع كل ساعة</p></div></div>
         <div class="timeline">` + BODY.map((b, i) => {
           const done = m.H >= b.h, next = i === nextI;
           const prevH = i ? BODY[i - 1].h : 0;
@@ -1504,6 +1587,39 @@
     $('#view-journey').innerHTML = html;
   };
 
+  function freedomCard(m) {
+    if (!m.free) {
+      return `<section class="card"><div class="row"><span class="ibox sand">${ic('crown')}</span><div class="grow"><h2 class="h3">بعد الثلاثين: خطة الحماية</h2><p class="xs muted" style="margin:0">خطر الانتكاس يبقى قائماً قرابة ٣ أشهر، لذا تُفتح بعد اليوم ٣٠ خطة أسبوعية من ${nf(AFTER30.length)} أسابيع لحماية إنجازك.</p></div></div></section>`;
+    }
+    const cur = afterIdx(m);
+    return `<section class="card" style="border-color:var(--sand)">
+      <div class="card-head"><span class="ibox sand">${ic('crown')}</span><div class="grow"><h2 class="h3">خطة الحماية · الأسبوع ${ar(cur + 5)}</h2><p class="xs muted" style="margin:0">حرّ منذ ${daysW(Math.max(1, m.days))}. هذه الأسابيع تثبّت ما بنيته.</p></div></div>
+      <div class="col" style="gap:8px">${AFTER30.map((a, i) => `<div class="callout ${i === cur ? 'sand' : ''}" style="padding:10px 12px;${i > cur ? 'opacity:.55' : ''}">
+        <div class="row"><span class="xs bold num ${i === cur ? 'sand' : 'muted'}" style="width:52px">أسبوع ${ar(i + 5)}</span><div class="grow small"><b>${a.t}</b>${i <= cur ? `<div class="xs ink2" style="line-height:1.7">${a.d}</div>` : ''}</div>${state.completedChallenges['w' + i] ? ic('circle-check', 'sm sage') : ''}</div></div>`).join('')}</div>
+    </section>`;
+  }
+
+  function supportCallout() {
+    return `<button class="card tight row" style="width:100%;text-align:right;background:var(--sage-soft);border-color:transparent" data-action="support">
+      <span class="ibox">${ic('hand-heart')}</span>
+      <div class="grow"><div class="h3">لست مضطراً للاعتماد على الإرادة وحدها</div><div class="xs ink2">بدائل النيكوتين الطبية والصيدلي — اعرف خياراتك</div></div>
+      ${ic('chevron-left', 'sm')}</button>`;
+  }
+  function openSupport() {
+    openSheet(`
+      <div class="row"><span class="ibox">${ic('hand-heart')}</span><h2 class="h2 grow">دعم إضافي آمن</h2></div>
+      <p class="body">بدائل النيكوتين الطبية — مثل العلكة وأقراص الاستحلاب واللصقات — وأدوية الإقلاع التي يصفها الطبيب، ثبتت فاعليتها في رفع فرص الإقلاع عن التبغ. تعطي جسدك جرعة مضبوطة تتناقص تدريجياً بدل الأظرف عالية التركيز.</p>
+      <div class="col" style="gap:8px">
+        ${[
+          ['pill', 'تحدّث مع الصيدلي إن كنت تستخدم أكثر من ١٥ ظرفاً يومياً، أو أظرفاً بتركيز ١٢ ملغ فأكثر، أو جرّبت الإقلاع سابقاً ولم تنجح.'],
+          ['heart-pulse', 'أخبر الطبيب قبل أي علاج إن كانت لديك حالة قلبية، أو كنتِ حاملاً أو مرضعاً.'],
+          ['leaf', 'يمكنك الجمع بين نَقَاء وأي خطة علاجية؛ التطبيق يدعم الجانب السلوكي والعادات.'],
+          ['circle-alert', 'إن شعرت بحزن شديد أو أفكار مقلقة أثناء الإقلاع، تواصل مع مختص أو طبيب فوراً.']
+        ].map(([i, t]) => `<div class="callout row small" style="align-items:flex-start;line-height:1.8">${ic(i, 'sm sage')}<span>${t}</span></div>`).join('')}
+      </div>
+      <button class="btn primary block" data-action="closeSheet">فهمت</button>`);
+  }
+
   /* =========================================================
      VIEW: SOS
      ========================================================= */
@@ -1518,7 +1634,7 @@
         <button class="sos-orb" data-action="sessionStart" aria-label="ابدأ جلسة العبور لمدة ٣ دقائق">
           ${ic('wind', 'xl')}<span class="h3">ابدأ ٣ دقائق</span><span class="xs ink2">جلسة العبور</span>
         </button>
-        <div class="row" style="justify-content:center;gap:8px">
+        <div class="row wrap" style="justify-content:center;gap:8px">
           <span class="chip sage">${ic('waves', 'xs')} ${m.won ? 'عبرت ' + wavesW(m.won) : 'لم تسجّل موجات بعد'}</span>
           ${last ? `<span class="chip">${ic('clock', 'xs')} آخر رغبة قبل ${fmtDur((m.now - last.ts) / 36e5)}</span>` : ''}
         </div>
@@ -1528,17 +1644,6 @@
         <div class="card-head"><span class="ibox">${ic('hand-heart')}</span><div class="grow"><h2 class="h3">بدائل فورية للفم واليد</h2><p class="xs muted" style="margin:0">اختر واحداً وطبّقه الآن</p></div></div>
         <div class="grid-4">${ALTS.map((a, i) => `<button class="opt" data-action="alt" data-idx="${i}" aria-pressed="false">${ic(a.icon)}<span>${a.t}</span></button>`).join('')}</div>
         <div id="alt-box" class="callout sage small" style="margin-top:12px;line-height:1.8" hidden></div>
-      </section>
-
-      <section class="grid-2">
-        <button class="card tight" style="text-align:right" data-action="openReasons">
-          <span class="ibox sand" style="margin-bottom:10px">${ic('heart')}</span>
-          <div class="h3">لماذا بدأت؟</div><div class="xs muted">${state.reasons.length ? plural(state.reasons.length, ['سبب واحد', 'سببان', 'أسباب', 'سبباً']) + ' تذكّرك' : 'أضف أسبابك'}</div>
-        </button>
-        <button class="card tight" style="text-align:right" data-action="openLetter">
-          <span class="ibox" style="margin-bottom:10px">${ic('mail')}</span>
-          <div class="h3">رسالتك لنفسك</div><div class="xs muted">${(state.letter || '').trim() ? 'اقرأها الآن' : 'اكتبها لوقت الشدة'}</div>
-        </button>
       </section>
 
       <button class="btn block" data-action="logCraving">${ic('pen-line', 'sm')} سجّل رغبة مرّت بك دون جلسة</button>`;
@@ -1553,20 +1658,32 @@
     const m = metrics();
     const cr = state.cravings;
     const total = cr.length;
-    let html = `<header class="topbar"><div><p class="eyebrow">كل تسجيل يجعل درعك أذكى</p><h1 class="h1">رؤى</h1></div>
-      <button class="btn sm primary" data-action="logCraving">${ic('plus', 'sm')} سجّل رغبة</button></header>`;
+    const cur = esc(state.currency);
+    let html = `<header class="topbar"><div><p class="eyebrow">مكاسبك وأنماطك في مكان واحد</p><h1 class="h1">رؤى</h1></div></header>`;
 
     const rate = (m.won + m.slipped) ? Math.round(m.won / (m.won + m.slipped) * 100) : null;
     const buckets = Array(8).fill(0);
     cr.forEach(c => { buckets[Math.floor(new Date(c.ts).getHours() / 3)]++; });
     const maxB = Math.max(...buckets);
     const peakI = maxB ? buckets.indexOf(maxB) : -1;
+    const dayLeft = m.perDay > 0 ? Math.ceil(Math.max(0, state.goalPrice - m.saved) / m.perDay) : 0;
 
     html += `<section class="grid-2">
+      <div class="stat"><span class="l">وفّرت</span><div class="v num">${nf(m.saved, m.saved < 100 ? 1 : 0)}<small>${cur}</small></div></div>
+      <div class="stat"><span class="l">ظرف تجنّبته</span><div class="v num">${nf(Math.floor(m.avoided))}</div></div>
+      <div class="stat"><span class="l">نيكوتين لم يدخل جسدك</span><div class="v num">${nf(Math.round(m.mg))}<small>ملغ</small></div></div>
       <div class="stat"><span class="l">موجات عبرتها</span><div class="v num">${nf(m.won)}</div></div>
-      <div class="stat"><span class="l">نسبة العبور</span><div class="v num">${rate == null ? '—' : nf(rate) + '٪'}</div></div>
-      <div class="stat"><span class="l">أخطر وقت</span><div class="v" style="font-size:16px">${peakI >= 0 ? BUCKET_LONG[peakI] : '—'}</div></div>
-      <div class="stat"><span class="l">أيام الحضور</span><div class="v num">${nf(m.checkinCount)}</div></div>
+    </section>
+
+    <section class="card">
+      <div class="card-head">
+        <span class="ibox sand">${ic('gift')}</span>
+        <div class="grow"><p class="xs muted" style="margin:0">مكافأتك</p><h2 class="h3">${esc(state.goalName)}</h2></div>
+        <button class="btn sm" data-action="editGoal">${ic('pencil', 'xs')} تعديل</button>
+      </div>
+      <div class="row between small" style="margin-bottom:8px"><span><b class="num">${nf(Math.min(m.saved, state.goalPrice), 0)}</b> <span class="muted">من ${nf(state.goalPrice)} ${cur}</span></span><b class="num sand">${nf(Math.floor(m.goalPct))}٪</b></div>
+      <div class="bar"><i style="width:${Math.max(2, m.goalPct)}%"></i></div>
+      <p class="xs muted" style="margin:10px 0 0">${m.goalPct >= 100 ? 'مبارك! جمعت قيمة مكافأتك كاملة — اشترِها بفخر.' : 'توفّر ' + nf(m.perDay, 1) + ' ' + cur + ' يومياً · تصل إليها تقريباً في ' + fmtDate(m.now + dayLeft * 864e5)}</p>
     </section>`;
 
     if (!total) {
@@ -1575,13 +1692,13 @@
         <button class="btn soft" data-action="logCraving">${ic('pen-line', 'sm')} سجّل أول رغبة</button></section>`;
     } else {
       html += `<section class="card">
-        <div class="card-head"><span class="ibox">${ic('clock')}</span><div class="grow"><h2 class="h3">متى تأتيك الرغبة؟</h2><p class="xs muted" style="margin:0">${nf(total)} رغبة مسجّلة موزعة على ساعات اليوم</p></div></div>
+        <div class="card-head"><span class="ibox">${ic('clock')}</span><div class="grow"><h2 class="h3">متى تأتيك الرغبة؟</h2><p class="xs muted" style="margin:0">${nf(total)} رغبة مسجّلة${rate != null ? ' · نسبة العبور ' + nf(rate) + '٪' : ''}</p></div></div>
         <div class="bars" role="img" aria-label="توزيع الرغبات على ساعات اليوم">
           ${buckets.map((v, i) => `<div class="bar-col" data-tip="${BUCKET_LONG[i]}: ${v ? nf(v) + ' رغبة' : 'لا شيء'}">
             <div class="bar-track">${i === peakI ? `<span class="bar-val num" style="bottom:${v / maxB * 100}%">${nf(v)}</span>` : ''}<div class="bar-fill ${i === peakI ? 'peak' : ''}" style="height:${maxB ? v / maxB * 100 : 0}%"></div></div>
             <span class="bar-lbl">${BUCKETS[i]}</span></div>`).join('')}
         </div>
-        ${peakI >= 0 ? `<div class="callout sand small" style="margin-top:12px;line-height:1.8">${ic('lightbulb', 'xs')} ذروة رغباتك بين <b>${BUCKET_LONG[peakI]}</b>. جهّز خطة في «درع المواقف» لهذا الوقت.</div>` : ''}
+        ${peakI >= 0 ? `<div class="callout small" style="margin-top:12px;line-height:1.8">${ic('lightbulb', 'xs')} ذروة رغباتك بين <b>${BUCKET_LONG[peakI]}</b>. جهّز خطة في «درع المواقف» لهذا الوقت.</div>` : ''}
       </section>`;
 
       const tc = {};
@@ -1589,7 +1706,7 @@
       const top = Object.entries(tc).sort((a, b) => b[1] - a[1]).slice(0, 5);
       const tmax = top.length ? top[0][1] : 1;
       html += `<section class="card">
-        <div class="card-head"><span class="ibox sand">${ic('target')}</span><div class="grow"><h2 class="h3">أكثر ما يثير رغبتك</h2></div></div>
+        <div class="card-head"><span class="ibox">${ic('target')}</span><div class="grow"><h2 class="h3">أكثر ما يثير رغبتك</h2></div></div>
         <div class="col" style="gap:12px">${top.map(([id, n]) => { const t = TRIGGERS.find(x => x.id === id) || TRIGGERS[8]; return `<div class="hbar" data-tip="${t.t}: ${nf(n)} رغبة"><span class="row" style="gap:6px">${ic(t.icon, 'xs')}${t.t}</span><span class="track"><i style="width:${n / tmax * 100}%"></i></span><b class="num xs">${nf(n)}</b></div>`; }).join('')}</div>
       </section>`;
     }
@@ -1653,9 +1770,9 @@
   RENDER.me = function () {
     const m = metrics();
     const initial = (state.name || 'ن').trim().charAt(0);
-    const cloudOn = !!(state.firebaseConfig.databaseURL && state.firebaseConfig.uid);
+    const row = (action, icon, t, s, tone = '') => `<button class="list-row" data-action="${action}"><span class="ibox sm ${tone}">${ic(icon, 'sm')}</span><div class="grow"><div class="t">${t}</div>${s ? `<div class="s">${s}</div>` : ''}</div>${ic('chevron-left', 'sm')}</button>`;
     $('#view-me').innerHTML = `
-      <header class="topbar"><h1 class="h1">أنا</h1></header>
+      <header class="topbar"><h1 class="h1">أنا</h1><button class="icon-btn" data-action="settings" aria-label="الإعدادات">${ic('settings', 'sm')}</button></header>
       <section class="card">
         <div class="row">
           <div class="welcome-logo" style="width:60px;height:60px;border-radius:22px;margin:0;font-size:24px;font-weight:700">${esc(initial)}</div>
@@ -1668,42 +1785,48 @@
         </div>
       </section>
 
-      <p class="group-title">رحلتي</p>
+      <p class="group-title">لماذا أترك</p>
       <div class="list">
-        <button class="list-row" data-action="share"><span class="ibox sm sand">${ic('share-2', 'sm')}</span><div class="grow"><div class="t">شارك بطاقة إنجازك</div><div class="s">صورة جميلة بشجرتك وأرقامك</div></div>${ic('chevron-left', 'sm muted')}</button>
-        <button class="list-row" data-action="editPlan"><span class="ibox sm">${ic('sliders-horizontal', 'sm')}</span><div class="grow"><div class="t">تعديل خطتي</div><div class="s">أسلوب الإقلاع، الاستهلاك، تاريخ البداية</div></div>${ic('chevron-left', 'sm muted')}</button>
-        <button class="list-row" data-action="openReasons"><span class="ibox sm sand">${ic('heart', 'sm')}</span><div class="grow"><div class="t">أسبابي</div><div class="s">${state.reasons.length ? state.reasons.map(esc).slice(0, 2).join('، ') + (state.reasons.length > 2 ? '…' : '') : 'لم تُضف بعد'}</div></div>${ic('chevron-left', 'sm muted')}</button>
-        <button class="list-row" data-action="openLetter"><span class="ibox sm">${ic('mail', 'sm')}</span><div class="grow"><div class="t">رسالتي لنفسي</div><div class="s">تظهر لك في لحظات الرغبة</div></div>${ic('chevron-left', 'sm muted')}</button>
-        <button class="list-row" data-action="editGoal"><span class="ibox sm sand">${ic('gift', 'sm')}</span><div class="grow"><div class="t">مكافأتي</div><div class="s">${esc(state.goalName)} · ${nf(state.goalPrice)} ${esc(state.currency)}</div></div>${ic('chevron-left', 'sm muted')}</button>
+        ${row('openReasons', 'heart', 'أسبابي', state.reasons.length ? state.reasons.map(esc).slice(0, 2).join('، ') + (state.reasons.length > 2 ? '…' : '') : 'تظهر كلمات تطير من العلبة في الشاشة الرئيسية', 'sand')}
+        ${row('openLetter', 'mail', 'رسالتي لنفسي', (state.letter || '').trim() ? 'تظهر لك في جلسة النجدة' : 'اكتبها وأنت قوي لتقرأها وقت الرغبة')}
+        ${row('editGoal', 'gift', 'مكافأتي', esc(state.goalName) + ' · ' + nf(state.goalPrice) + ' ' + esc(state.currency), 'sand')}
       </div>
 
-      <p class="group-title">التفضيلات</p>
+      <p class="group-title">خطتي</p>
       <div class="list">
+        ${row('editPlan', 'sliders-horizontal', 'تعديل خطتي', 'أسلوب الإقلاع، الاستهلاك، تاريخ البداية')}
+        ${row('support', 'hand-heart', 'دعم إضافي آمن', 'بدائل النيكوتين الطبية والصيدلي')}
+        ${row('share', 'share-2', 'شارك بطاقة إنجازك', 'صورة بشجرتك وأرقامك', 'sand')}
+      </div>
+      <p class="xs muted center" style="margin:6px 0 0">نَقَاء · الإصدار ٣٫٠</p>`;
+  };
+
+  function openSettings() {
+    const cloudOn = !!(state.firebaseConfig.databaseURL && state.firebaseConfig.uid);
+    const sw = (action, on, label) => `<button class="switch" role="switch" aria-checked="${on}" data-action="${action}" aria-label="${label}"></button>`;
+    openSheet(`
+      <div class="row"><h2 class="h2 grow">الإعدادات</h2><button class="icon-btn sm" data-action="closeSheet" aria-label="إغلاق">${ic('x', 'sm')}</button></div>
+      <div class="list" style="box-shadow:none">
         <div class="list-row"><span class="ibox sm">${ic('palette', 'sm')}</span><div class="grow"><div class="t">المظهر</div></div>
-          <div class="seg" style="width:180px">${[['dark', 'داكن'], ['light', 'فاتح'], ['auto', 'تلقائي']].map(([v, t]) => `<button data-action="theme" data-v="${v}" aria-pressed="${state.theme === v}" style="min-height:32px;font-size:12px">${t}</button>`).join('')}</div></div>
-        <div class="list-row"><span class="ibox sm">${ic('vibrate', 'sm')}</span><div class="grow"><div class="t">الاهتزاز اللمسي</div><div class="s">ارتداد خفيف مع التنفّس واللمس</div></div><button class="switch" role="switch" aria-checked="${state.haptics}" data-action="haptics" aria-label="الاهتزاز"></button></div>
-        <div class="list-row"><span class="ibox sm sand">${ic('banknote', 'sm')}</span><div class="grow"><div class="t">العملة</div></div>
-          <select class="input" style="width:110px;min-height:38px" data-change="currency">${CURRENCIES.map(c => `<option ${c === state.currency ? 'selected' : ''}>${c}</option>`).join('')}</select></div>
+          <div class="seg" style="width:176px">${[['dark', 'داكن'], ['light', 'فاتح'], ['auto', 'تلقائي']].map(([v, t]) => `<button data-action="theme" data-v="${v}" aria-pressed="${state.theme === v}" style="min-height:32px;font-size:12px">${t}</button>`).join('')}</div></div>
+        <div class="list-row"><span class="ibox sm">${ic('sprout', 'sm')}</span><div class="grow"><div class="t">العلبة والكلمات في المشهد</div><div class="s">أوقفها إن كانت تذكّرك بالرغبة</div></div>${sw('showCan', state.showCan !== false, 'العلبة')}</div>
+        <div class="list-row"><span class="ibox sm">${ic('vibrate', 'sm')}</span><div class="grow"><div class="t">الاهتزاز اللمسي</div></div>${sw('haptics', state.haptics, 'الاهتزاز')}</div>
+        <div class="list-row"><span class="ibox sm">${ic('banknote', 'sm')}</span><div class="grow"><div class="t">العملة</div></div>
+          <select class="input" style="width:104px;min-height:38px" data-change="currency" aria-label="العملة">${CURRENCIES.map(c => `<option ${c === state.currency ? 'selected' : ''}>${c}</option>`).join('')}</select></div>
       </div>
-
-      <p class="group-title">البيانات والمزامنة</p>
-      <div class="list">
-        <button class="list-row" data-action="cloud"><span class="ibox sm">${ic(cloudOn ? 'cloud-upload' : 'cloud', 'sm')}</span><div class="grow"><div class="t">المزامنة السحابية</div><div class="s">${cloudOn ? 'متصل بـ Firebase ✓' : 'اربط حسابك على Firebase'}</div></div>${ic('chevron-left', 'sm muted')}</button>
-        <button class="list-row" data-action="export"><span class="ibox sm">${ic('download', 'sm')}</span><div class="grow"><div class="t">تصدير نسخة احتياطية</div><div class="s">ملف JSON على جهازك</div></div></button>
-        <button class="list-row" data-action="import"><span class="ibox sm sand">${ic('upload', 'sm')}</span><div class="grow"><div class="t">استعادة نسخة</div></div></button>
+      <p class="group-title">البيانات</p>
+      <div class="list" style="box-shadow:none">
+        <button class="list-row" data-action="cloud"><span class="ibox sm">${ic(cloudOn ? 'cloud-upload' : 'cloud', 'sm')}</span><div class="grow"><div class="t">المزامنة السحابية</div><div class="s">${cloudOn ? 'متصل بـ Firebase ✓' : 'اختياري — اربط مشروع Firebase'}</div></div></button>
+        <button class="list-row" data-action="export"><span class="ibox sm">${ic('download', 'sm')}</span><div class="grow"><div class="t">تصدير نسخة احتياطية</div></div></button>
+        <button class="list-row" data-action="import"><span class="ibox sm">${ic('upload', 'sm')}</span><div class="grow"><div class="t">استعادة نسخة</div></div></button>
       </div>
-
       <p class="group-title">بداية جديدة</p>
-      <div class="list">
+      <div class="list" style="box-shadow:none">
         <button class="list-row" data-action="resetCounter"><span class="ibox sm rose">${ic('rotate-ccw', 'sm')}</span><div class="grow"><div class="t">إعادة ضبط العدّاد</div><div class="s">تحفظ أطول فترة ودروسك وإعداداتك</div></div></button>
         <button class="list-row" data-action="wipe"><span class="ibox sm rose">${ic('trash-2', 'sm')}</span><div class="grow"><div class="t rose">حذف كل البيانات</div></div></button>
       </div>
-
-      <section class="card flat tight" style="background:var(--surface-2)">
-        <p class="xs muted" style="margin:0;line-height:1.9">${ic('info', 'xs')} نَقَاء أداة دعم سلوكي للإقلاع عن أظرف النيكوتين، وليس بديلاً عن الاستشارة الطبية. إن كنت تعاني من أعراض شديدة أو حالة صحية، استشر طبيبك أو الصيدلي حول خيارات العلاج المساندة. بياناتك تُحفظ على جهازك فقط ما لم تفعّل المزامنة.</p>
-      </section>
-      <p class="xs muted center" style="margin:4px 0 0">نَقَاء · الإصدار ٢٫٠</p>`;
-  };
+      <p class="xs muted" style="margin:0;line-height:1.9">${ic('info', 'xs')} نَقَاء أداة دعم سلوكي وليس بديلاً عن الاستشارة الطبية. بياناتك تُحفظ على جهازك فقط ما لم تفعّل المزامنة.</p>`);
+  }
 
   /* =========================================================
      LIVE TICK
@@ -1713,17 +1836,15 @@
     if (currentTab !== 'today') return;
     const set = (k, v) => { const el = $(`[data-live="${k}"]`); if (el && el.textContent !== v) el.textContent = v; };
     set('days', nf(m.days));
+    set('daysW', dayUnit(m.days));
     const c = $('[data-live="clock"]');
     if (c) c.innerHTML = `<b>${ar(pad2(m.hh))}</b> س : <b>${ar(pad2(m.mm))}</b> د : <b>${ar(pad2(m.ss))}</b> ث`;
     const pr = $('[data-live="prog"]'); if (pr) pr.style.width = Math.max(2, clamp(m.H / 720 * 100, 0, 100)) + '%';
     const ns = nextStop(m);
     set('next', ns ? ns.t + ' بعد ' + fmtDur(ns.h - m.H) : '');
-    set('saved', nf(m.saved, m.saved < 100 ? 1 : 0));
+    set('saved', nf(m.saved, 0));
     set('avoided', nf(Math.floor(m.avoided)));
-    set('mg', nf(Math.round(m.mg)));
-    set('goalSaved', nf(Math.min(m.saved, state.goalPrice), 0));
     set('goalPct', nf(Math.floor(m.goalPct)) + '٪');
-    const gb = $('[data-live="goalBar"]'); if (gb) gb.style.width = Math.max(2, m.goalPct) + '%';
   }
   function tick() {
     const m = metrics();
@@ -1784,7 +1905,7 @@
       <div class="callout"><div class="callout-title">${ic('heart', 'xs')} ما قد تشعر به</div><p class="small ink2" style="margin:0;line-height:1.85">${d.feel}</p></div>
       <div class="callout sand"><div class="callout-title sand">${ic('target', 'xs')} التحدي ${done ? '· أُنجز ✓' : ''}</div><p class="small" style="margin:0;line-height:1.85">${d.act}</p></div>
       <p class="small sand" style="margin:0">${ic('lightbulb', 'xs')} ${d.tip}</p>
-      <button class="btn primary block" data-action="viewDay" data-day="${day}">عرضه في شاشة اليوم</button>`);
+      <button class="btn block" data-action="closeSheet">إغلاق</button>`);
   }
 
   function openBadge(id) {
@@ -1887,7 +2008,7 @@
         if (o.outcome === 'slip') {
           state.slips.push({ ts, lesson: $('#oc-lesson', body).value.trim(), pouches: 1 });
           toast('حُفظ الدرس — رحلتك مستمرة', 'hand-heart');
-        } else { toast('انتصار جديد! الموجة انكسرت', 'shield-check'); confetti(); buzz([15, 30, 15]); }
+        } else { toast('انتصار جديد! الموجة انكسرت', 'shield-check'); buzz([15, 30, 15]); }
         save(); closeSheet(); if (opts.after) opts.after(); rerender();
       };
     });
@@ -2213,6 +2334,7 @@
           <div class="field"><label for="o-per">أظرف العلبة</label><input class="input num" id="o-per" type="number" inputmode="numeric" min="5" max="50" value="${D.pouchesPerCan}" /></div>
         </div>
         <div class="field"><label for="o-cur">العملة</label><select class="input" id="o-cur">${CURRENCIES.map(c => `<option ${c === D.currency ? 'selected' : ''}>${c}</option>`).join('')}</select></div>
+        <div id="o-heavy">${heavyNote(D)}</div>
         <div class="callout sage small" id="o-calc">${ic('wallet', 'xs')} تنفق حالياً قرابة <b>${nf(D.dailyPouches * ppp * 30, 0)} ${esc(D.currency)}</b> شهرياً، وتستهلك <b>${nf(D.dailyPouches * D.pouchMg * 30)}</b> ملغ نيكوتين.</div>`;
       actions = `<button class="btn primary block" data-action="onbNext">التالي ${ic('chevron-left', 'sm')}</button>`;
     } else if (s === 3) {
@@ -2235,8 +2357,12 @@
     $('#onb-body').innerHTML = body;
     $('#onb-body').style.animation = 'none'; void $('#onb-body').offsetWidth; $('#onb-body').style.animation = '';
     $('#onb-actions').innerHTML = actions;
-    if (s === 2) $$('#o-daily,#o-mg,#o-price,#o-per,#o-cur').forEach(el => el.addEventListener('input', () => { readOnbInputs(); const ppp = D.canPrice / Math.max(1, D.pouchesPerCan); $('#o-calc').innerHTML = `${ic('wallet', 'xs')} تنفق حالياً قرابة <b>${nf(D.dailyPouches * ppp * 30, 0)} ${esc(D.currency)}</b> شهرياً، وتستهلك <b>${nf(D.dailyPouches * D.pouchMg * 30)}</b> ملغ نيكوتين.`; }));
+    if (s === 2) $$('#o-daily,#o-mg,#o-price,#o-per,#o-cur').forEach(el => el.addEventListener('input', () => { readOnbInputs(); const ppp = D.canPrice / Math.max(1, D.pouchesPerCan); $('#o-heavy').innerHTML = heavyNote(D); $('#o-calc').innerHTML = `${ic('wallet', 'xs')} تنفق حالياً قرابة <b>${nf(D.dailyPouches * ppp * 30, 0)} ${esc(D.currency)}</b> شهرياً، وتستهلك <b>${nf(D.dailyPouches * D.pouchMg * 30)}</b> ملغ نيكوتين.`; }));
     if (s === 4) $$('#o-gprice').forEach(el => el.addEventListener('change', () => { readOnbInputs(); renderOnb(); }));
+  }
+  function heavyNote(D) {
+    if (!(D.dailyPouches >= 15 || D.pouchMg >= 12)) return '';
+    return `<div class="callout sand small" style="line-height:1.8">${ic('hand-heart', 'xs')} استهلاكك مرتفع، وقد تفيدك بدائل النيكوتين الطبية مع خطتك. <button class="sand bold" style="text-decoration:underline" data-action="support">اعرف أكثر</button></div>`;
   }
   function finishOnb() {
     readOnbInputs();
@@ -2254,9 +2380,8 @@
     const first = !state.onboarded;
     state.onboarded = true;
     if (first) state.badgesSeen = BADGES.filter(b => b.ok(metrics())).map(b => b.id);
-    save(); closeOnb(); previewDay = null; go('today');
+    save(); closeOnb(); go('today');
     toast(first ? 'بدأت رحلتك. شجرتك زُرعت للتو' : 'حُفظت خطتك', first ? 'sprout' : 'circle-check');
-    if (first) confetti();
   }
 
   /* =========================================================
@@ -2271,7 +2396,7 @@
       const ctx = cv.getContext('2d');
       const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#0E1714'); g.addColorStop(1, '#0A0F0D');
       ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-      const svg = sceneSVG(m, { static: true });
+      const svg = sceneSVG(m, { static: true, theme: 'dark' });
       const img = new Image();
       await new Promise((res, rej) => { img.onload = res; img.onerror = rej; img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg); });
       const r = 48, sx = 70, sy = 70, sw = W - 140, sh = sw * 240 / 360;
@@ -2308,15 +2433,15 @@
   const ACTIONS = {
     tab: el => { buzz(6); go(el.dataset.tab); },
     closeSheet,
-    prevDay: () => { const m = metrics(); const cur = previewDay || m.day; if (cur > 1) { previewDay = cur - 1; RENDER.today(); } },
-    nextDay: () => { const m = metrics(); const cur = previewDay || m.day; if (cur < m.day) { previewDay = cur + 1 === m.day ? null : cur + 1; RENDER.today(); } },
-    todayDay: () => { previewDay = null; RENDER.today(); },
-    viewDay: el => { const d = +el.dataset.day; previewDay = d === metrics().day ? null : d; closeSheet(); go('today'); },
     toggleChallenge: el => {
-      const d = +el.dataset.day; state.completedChallenges[d] = !state.completedChallenges[d]; save();
-      if (state.completedChallenges[d]) { toast('أحسنت! ثمرة ذهبية جديدة على شجرتك', 'sparkles'); confetti(); buzz([15, 30, 15]); }
+      const k = el.dataset.key; state.completedChallenges[k] = !state.completedChallenges[k]; save();
+      if (state.completedChallenges[k]) { toast('أحسنت! ثمرة ذهبية جديدة على شجرتك', 'sparkles'); buzz([15, 30, 15]); }
       RENDER.today();
     },
+    settings: () => openSettings(),
+    support: () => openSupport(),
+    showCan: () => { state.showCan = state.showCan === false; save(false); openSettings(); if (currentTab === 'today') RENDER.today(); },
+    toggleChapter: el => { const n = +el.dataset.n; openChapter = openChapter === n ? -1 : n; RENDER.journey(); },
     ckMood: el => { checkinDraft.mood = +el.dataset.v; buzz(); RENDER.today(); },
     ckCrave: el => { checkinDraft.craving = +el.dataset.v; buzz(); RENDER.today(); },
     ckSave: () => {
@@ -2355,8 +2480,8 @@
     sessionWon: () => finishSession(false),
     breathPattern: el => { state.breathPattern = el.dataset.v; save(false); renderBreath(); breathStart(); },
     gameStart,
-    theme: el => { state.theme = el.dataset.v; save(false); applyTheme(); RENDER.me(); },
-    haptics: () => { state.haptics = !state.haptics; save(false); buzz(20); RENDER.me(); },
+    theme: el => { state.theme = el.dataset.v; save(false); applyTheme(); openSettings(); rerender(); },
+    haptics: () => { state.haptics = !state.haptics; save(false); buzz(20); openSettings(); },
     share: shareCard,
     cloud: openCloud,
     export: () => {
