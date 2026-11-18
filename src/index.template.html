@@ -648,6 +648,8 @@
     .has-dot::after { content: ""; position: absolute; top: 6px; right: 6px; width: 9px; height: 9px; border-radius: 50%; background: var(--sand); border: 2px solid var(--surface-2); }
     .more-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-xl); padding: 14px 18px; }
     .more-card > summary { width: 100%; justify-content: center; }
+    .done-weeks { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-start; }
+    .done-week { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 99px; background: var(--sage-soft); color: var(--sage-ink); font-size: 13px; font-weight: 600; }
     .empty { text-align: center; padding: 26px 18px; }
     .empty .ibox { margin: 0 auto 12px; width: 56px; height: 56px; border-radius: 20px; }
 
@@ -2317,104 +2319,131 @@
   RENDER.journey = function () {
     const m = metrics();
     const done = m.prep ? 0 : Math.min(30, Math.floor(m.pd));
-    const nm = nextMilestone(m);
     let html = `<header class="topbar"><h1 class="h1">رحلتك</h1></header>`;
 
-    // ---- 1. Hero: one number + one bar ----
+    // ---- 1. Where am I? one number, one bar ----
     if (m.prep) {
-      const cp = counterParts(m), pt = prepTasks(), pd = pt.filter(t => isTaskDone('prep', t)).length;
+      const cp = counterParts(m), pt = prepTasks(), pdn = pt.filter(t => isTaskDone('prep', t)).length;
       html += `<section class="card">
         <p class="xs muted" style="margin:0">${cp.lbl}</p>
         <div class="j-big num">${cp.big} <small>${cp.unit}</small></div>
-        <p class="small ink2" style="margin:6px 0 0">${ic('calendar', 'xs')} ${fmtDate(m.st, { weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: '2-digit' })}</p>
-        <div class="bar thin" style="margin-top:12px"><i style="width:${Math.max(3, pd / pt.length * 100)}%"></i></div>
-        <p class="xs muted" style="margin:6px 0 0">التحضير: ${ar(pd)} من ${ar(pt.length)} — كمّلها من «اليوم»</p>
+        <p class="small ink2" style="margin:6px 0 12px">${ic('calendar', 'xs')} ${fmtDate(m.st, { weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: '2-digit' })}</p>
+        <div class="bar"><i style="width:${Math.max(3, pdn / pt.length * 100)}%"></i></div>
+        <p class="xs muted" style="margin:8px 0 0">التحضير: ${ar(pdn)} من ${ar(pt.length)} — كمّلها من «اليوم»</p>
       </section>`;
     } else if (m.free) {
       const aw = afterIdx(m), f = AFTER30[aw], fd = !!state.completedChallenges['w' + aw];
       html += `<section class="card">
         <p class="xs muted" style="margin:0">خطة الحماية بعد الثلاثين</p>
         <div class="j-big num">${ar(aw + 5)} <small>من ١٣ أسبوعاً</small></div>
-        <div class="cells" style="grid-template-columns:repeat(${AFTER30.length},1fr)">${AFTER30.map((_, i) => `<span class="cell ${i < aw ? 'done' : i === aw ? 'cur' : ''}"></span>`).join('')}</div>
+        <div class="bar" style="margin-top:12px"><i style="width:${((aw + 1) / AFTER30.length) * 100}%"></i></div>
         <div class="callout sand" style="margin-top:14px">
-          <div class="callout-title sand">${ic('target', 'xs')} تركيز هذا الأسبوع ${fd ? '— أنجزته ✓' : ''}</div>
+          <div class="callout-title sand">${ic('target', 'xs')} تركيز هذا الأسبوع${fd ? ' — أنجزته ✓' : ''}</div>
           <p class="small" style="margin:0;line-height:1.8"><b>${f.t}:</b> ${f.d}</p>
         </div>
-      </section>
-      <section class="card tight"><div class="wk-row" style="border:0;padding:4px 2px"><span class="ibox sm">${ic('crown', 'sm')}</span><div class="grow"><div class="small bold">خلّصت خطة الثلاثين يوماً</div><div class="xs muted">كل المحطات الخمس تحققت</div></div>${ic('circle-check', 'sm sage')}</div></section>`;
+      </section>`;
     } else {
-      const ch = m.chapter;
       html += `<section class="card">
         <div class="row between" style="align-items:flex-end">
-          <div><div class="j-big num">${nf(done)} <small>/ ٣٠ يوماً</small></div><p class="small ink2" style="margin:6px 0 0">الأسبوع ${ar(ch.n)} — ${ch.title}</p></div>
+          <div><div class="j-big num">${nf(done)} <small>/ ٣٠ يوماً</small></div><p class="small ink2" style="margin:6px 0 0">الأسبوع ${ar(m.chapter.n)} — ${m.chapter.title}</p></div>
           ${m.logTaper ? `<span class="chip sand">${ic('trending-down', 'xs')} حصة اليوم ${nf(m.allowed)}</span>` : ''}
         </div>
-        <div class="cells" aria-label="تقدمك في ٣٠ يوماً">${DAYS.map(d => {
-          const msB = BADGES.find(b => msDay(b.id, m) === d.day);
-          const cls = ['cell', d.day <= done ? 'done' : d.day === m.day ? 'cur' : '', [8, 15, 22].includes(d.day) ? 'wk' : '', msB ? 'ms' : '', msB && msB.ok(m) ? 'ms-on' : ''].join(' ');
-          return `<span class="${cls}"></span>`;
-        }).join('')}</div>
-        <div class="row between xs muted" style="margin-top:8px"><span>${ic('star', 'xs sand')} المحطات</span><span>${nm ? 'التالي: ' + nm.b.t + ' بعد ' + fmtDur(Math.max(.02, nm.left)) : 'كل المحطات تحققت'}</span></div>
+        <div class="bar" style="margin-top:14px"><i style="width:${Math.max(2, done / 30 * 100)}%"></i></div>
       </section>`;
     }
 
-    // ---- 2. Coming up: next milestone + next body change ----
-    const hx = m.cleanH, nb = BODY.find(b => b.h > hx);
-    const rows = [];
-    if (nm && !m.free) rows.push(`<div class="up-row"><span class="ibox sm sand">${ic(nm.b.icon, 'sm')}</span><div class="grow"><div class="small bold">${nm.b.t}</div><div class="xs muted">محطة في خطتك</div></div><span class="xs bold sand">بعد ${fmtDur(Math.max(.02, nm.left))}</span></div>`);
-    if (nb) rows.push(`<div class="up-row"><span class="ibox sm">${ic(nb.icon, 'sm')}</span><div class="grow"><div class="small bold">${nb.t}</div><div class="xs muted">${m.gradual && hx <= 0 ? 'يبدأ العدّ من يوم الصفر (اليوم ٢٨)' : 'تغيّر في جسدك'}</div></div><span class="xs bold sage">${m.gradual && hx <= 0 ? 'بعد يوم الصفر' : 'بعد ' + fmtDur(nb.h - hx)}</span></div>`);
-    if (rows.length && !m.prep) html += `<section class="card tight"><p class="xs muted" style="margin:0 0 4px">الجاي قريب</p>${rows.join('')}</section>`;
-
-    // ---- 3. Current week, then the others as single rows ----
+    // ---- 2. This week: day tiles + the selected day ----
     if (!m.free) {
-      const curN = m.prep ? 1 : m.chapter.n;
-      if (openWeek === null) openWeek = curN;
-      if (selDay === null || selDay < 1) selDay = m.prep ? 1 : m.day;
-      const weekCard = c => {
-        const days = DAYS.filter(d => d.day >= c.from && d.day <= c.to);
-        const goal = m.gradual ? WEEK_GOALS[c.n - 1].g(allowance(c.from), targetMg(c.from)) : WEEK_GOALS[c.n - 1].c;
-        const sel = days.find(d => d.day === selDay) || days.find(d => d.day === m.day) || days[0];
-        const sc = dayContent(sel.day, m.gradual);
-        return `<section class="card" style="${c.n === curN && !m.prep ? 'border-color:var(--sage)' : ''}">
-          <div class="row between"><h2 class="h3">الأسبوع ${ar(c.n)} — ${c.title}</h2>${c.n === curN && !m.prep ? '<span class="chip sage">أنت هنا</span>' : `<button class="icon-btn sm" data-action="jWeek" data-n="${c.n}" aria-label="طي">${ic('chevron-down', 'xs')}</button>`}</div>
-          <p class="xs ink2" style="margin:4px 0 0">${ic('target', 'xs')} ${goal}</p>
-          <div class="tiles" style="--n:${days.length}">${days.map(d => {
-            const dn = !m.prep && d.day < m.day, cur = !m.prep && d.day === m.day;
-            return `<button class="tile ${dn ? 'done' : ''} ${cur ? 'cur' : ''} ${d.day === sel.day ? 'sel' : ''}" data-action="jDay" data-day="${d.day}" aria-label="اليوم ${ar(d.day)}">
-              ${d.ms ? `<span class="st">${ic('star', 'xs')}</span>` : ''}<span class="num">${ar(d.day)}</span><small>${cur ? 'اليوم' : dn ? '✓' : ''}</small></button>`;
-          }).join('')}</div>
-          <button class="day-peek" data-action="openDay" data-day="${sel.day}">
-            <div class="grow"><div class="xs ${sel.day === m.day && !m.prep ? 'sage' : 'muted'} bold">اليوم ${ar(sel.day)}${sel.ms ? ' — ' + sel.ms : ''}${sel.day > m.day || m.prep ? ' — نظرة مسبقة' : ''}</div>
-              <div class="small bold" style="margin-top:2px">${sel.t}</div>
-              <div class="xs ink2 clamp-2" style="margin-top:2px">${ic('target', 'xs')} ${sc.act}</div></div>
-            ${ic('chevron-left', 'sm')}
-          </button>
-        </section>`;
-      };
-      const open = CHAPTERS.find(c => c.n === openWeek) || CHAPTERS[curN - 1];
-      html += weekCard(open);
-      html += `<section class="card" style="padding:0">` + CHAPTERS.filter(c => c !== open).map(c => {
-        const days = DAYS.filter(d => d.day >= c.from && d.day <= c.to);
-        const dn = m.prep ? 0 : days.filter(d => d.day < m.day).length;
-        const all = dn === days.length;
-        return `<button class="wk-row" data-action="jWeek" data-n="${c.n}">
-          <span class="num xs bold ${all ? 'sage' : 'muted'}" style="width:54px">الأسبوع ${ar(c.n)}</span>
-          <span class="grow small bold">${c.title}</span>
-          ${all ? `<span class="xs sage bold">${ic('circle-check', 'sm')}</span>` : c.n === curN && !m.prep ? `<span class="chip sage">أنت هنا</span>` : `<span class="xs muted">${ar(c.from)}–${ar(c.to)}</span>`}
-          ${ic('chevron-left', 'sm muted')}
-        </button>`;
-      }).join('') + `<div class="wk-row" style="border-bottom:0"><span class="ibox sm sand">${ic('crown', 'sm')}</span><span class="grow"><span class="small bold">بعد الثلاثين: خطة الحماية</span><span class="xs muted" style="display:block">٩ أسابيع تحرس إنجازك من الانتكاس</span></span></div></section>`;
+      const c = m.prep ? CHAPTERS[0] : m.chapter;
+      const days = DAYS.filter(d => d.day >= c.from && d.day <= c.to);
+      if (selDay === null || selDay < c.from || selDay > c.to) selDay = m.prep ? 1 : m.day;
+      const sel = days.find(d => d.day === selDay) || days[0];
+      const sc = dayContent(sel.day, m.gradual);
+      const goal = m.gradual ? WEEK_GOALS[c.n - 1].g(allowance(c.from), targetMg(c.from)) : WEEK_GOALS[c.n - 1].c;
+      html += `<section class="card">
+        <h2 class="h3">${m.prep ? 'أسبوعك الأول' : 'أيام هذا الأسبوع'}</h2>
+        <p class="xs ink2" style="margin:4px 0 0">${ic('target', 'xs')} ${goal}</p>
+        <div class="tiles" style="--n:${days.length}">${days.map(d => {
+          const dn = !m.prep && d.day < m.day, cur = !m.prep && d.day === m.day;
+          return `<button class="tile ${dn ? 'done' : ''} ${cur ? 'cur' : ''} ${d.day === sel.day ? 'sel' : ''}" data-action="jDay" data-day="${d.day}" aria-label="اليوم ${ar(d.day)}">
+            ${d.ms ? `<span class="st">${ic('star', 'xs')}</span>` : ''}<span class="num">${ar(d.day)}</span><small>${cur ? 'اليوم' : dn ? '✓' : ''}</small></button>`;
+        }).join('')}</div>
+        <button class="day-peek" data-action="openDay" data-day="${sel.day}">
+          <div class="grow"><div class="xs ${sel.day === m.day && !m.prep ? 'sage' : 'muted'} bold">اليوم ${ar(sel.day)}${sel.ms ? ' — ' + sel.ms : ''}${sel.day > m.day || m.prep ? ' — نظرة مسبقة' : ''}</div>
+            <div class="small bold" style="margin-top:2px">${sel.t}</div>
+            <div class="xs ink2 clamp-2" style="margin-top:2px">${sc.act}</div></div>
+          ${ic('chevron-left', 'sm')}
+        </button>
+      </section>`;
     }
 
-    // ---- 4. Body changes (moved here from its own tab) ----
+    // ---- 3. What's next: one list, ordered by time ----
+    const hx = m.cleanH, items = [];
+    const nm = nextMilestone(m);
+    if (nm && !m.free && !m.prep) items.push({ h: Math.max(.02, nm.left), icon: nm.b.icon, tone: 'sand', t: 'محطة ' + nm.b.t, s: 'في خطتك' });
+    const nb = BODY.find(b => b.h > hx);
+    if (nb) {
+      const pending = m.gradual && hx <= 0;
+      items.push({ h: pending ? (27 * 24 - m.pd * 24) + nb.h : nb.h - hx, icon: nb.icon, tone: '', t: nb.t, s: pending ? 'يبدأ بعد يوم الصفر (اليوم ٢٨)' : 'تغيّر في جسدك' });
+    }
+    if (!m.free) {
+      const curN = m.prep ? 1 : m.chapter.n;
+      CHAPTERS.filter(c => c.n > curN).forEach(c => items.push({ h: m.prep ? m.prepH + (c.from - 1) * 24 : ((c.from - 1) - m.pd) * 24, icon: c.icon, tone: '', t: 'الأسبوع ' + ar(c.n) + ' — ' + c.title, s: ar(c.from) + '–' + ar(c.to), week: c.n }));
+      items.push({ h: m.prep ? m.prepH + 720 : (30 - m.pd) * 24, icon: 'crown', tone: 'sand', t: 'بعد الثلاثين: خطة الحماية', s: '٩ أسابيع تحرس إنجازك' });
+    } else {
+      const aw = afterIdx(m);
+      if (aw + 1 < AFTER30.length) items.push({ h: (37 + aw * 7 - m.pd) * 24, icon: 'target', tone: '', t: 'الأسبوع ' + ar(aw + 6) + ' — ' + AFTER30[aw + 1].t, s: 'تركيز الأسبوع الجاي' });
+    }
+    items.sort((a, b) => a.h - b.h);
+    html += `<section class="card" style="padding:6px 16px">
+      <p class="xs muted" style="margin:10px 0 2px">الجاي</p>
+      ${items.map(it => `<${it.week ? 'button' : 'div'} class="up-row" ${it.week ? `data-action="jWeek" data-n="${it.week}" style="width:100%;text-align:right"` : ''}>
+        <span class="ibox sm ${it.tone}">${ic(it.icon, 'sm')}</span>
+        <div class="grow"><div class="small bold">${it.t}</div><div class="xs muted">${it.s}</div></div>
+        <span class="xs bold ${it.tone === 'sand' ? 'sand' : 'sage'}" style="white-space:nowrap">بعد ${fmtDur(Math.max(.02, it.h))}</span>
+        ${it.week ? ic('chevron-left', 'sm muted') : ''}
+      </${it.week ? 'button' : 'div'}>`).join('')}
+    </section>`;
+
+    // ---- 4. Finished weeks: one small line each ----
+    const finished = m.prep ? [] : CHAPTERS.filter(c => m.free || c.to < m.day);
+    if (finished.length) {
+      html += `<div class="done-weeks">${finished.map(c => `<button class="done-week" data-action="jWeek" data-n="${c.n}">${ic('circle-check', 'xs')} الأسبوع ${ar(c.n)} — ${c.title}</button>`).join('')}</div>`;
+    }
+
+    // ---- 5. Full body timeline lives in a sheet ----
+    html += `<button class="btn block" data-action="jBody">${ic('activity', 'sm')} كل تغيّرات جسدك <span class="xs muted" style="font-weight:400">(${ar(BODY.filter(b => hx >= b.h).length)} من ${ar(BODY.length)} تحقّق)</span></button>`;
+
+    $('#view-journey').innerHTML = html;
+  };
+
+  function openWeekSheet(n) {
+    const m = metrics(), c = CHAPTERS[n - 1];
+    const days = DAYS.filter(d => d.day >= c.from && d.day <= c.to);
+    const goal = m.gradual ? WEEK_GOALS[n - 1].g(allowance(c.from), targetMg(c.from)) : WEEK_GOALS[n - 1].c;
+    openSheet(`
+      <div><p class="xs muted" style="margin:0">الأيام ${ar(c.from)}–${ar(c.to)}</p><h2 class="h2">الأسبوع ${ar(n)} — ${c.title}</h2>
+      <p class="small ink2" style="margin:4px 0 0">${ic('target', 'xs')} ${goal}</p></div>
+      <div class="list" style="box-shadow:none">${days.map(d => {
+        const dn = !m.prep && (d.day < m.day || m.free);
+        return `<button class="list-row" data-action="openDay" data-day="${d.day}">
+          <span class="num small bold ${dn ? 'sage' : 'muted'}" style="width:24px">${ar(d.day)}</span>
+          <div class="grow"><div class="t" style="font-size:15px;font-weight:600">${d.t}</div><div class="s clamp-2">${dayContent(d.day, m.gradual).act}</div></div>
+          ${dn ? ic('circle-check', 'sm sage') : ic('chevron-left', 'sm muted')}
+        </button>`;
+      }).join('')}</div>
+      <button class="btn block" data-action="closeSheet">إغلاق</button>`);
+  }
+
+  function openBodySheet() {
+    const m = metrics(), hx = m.cleanH;
     const nextI = BODY.findIndex(b => b.h > hx);
-    const list = showAllBody ? BODY.map((b, i) => i) : [nextI - 1, nextI, nextI + 1].filter(i => i >= 0 && i < BODY.length);
-    html += `<section class="card">
-      <div class="row between"><h2 class="h3">${ic('activity', 'sm sage')} تغيّرات جسدك</h2><span class="xs muted">${ar(BODY.filter(b => hx >= b.h).length)} من ${ar(BODY.length)} تحقّق</span></div>
-      ${state.useNRT ? `<p class="xs ink2" style="margin:6px 0 0">${ic('pill', 'xs')} مع بدائل النيكوتين: هذا يخص توقفك عن الأظرف. اتبع جدول الصيدلي لتخفيض البدائل.</p>` : ''}
-      ${m.gradual && hx <= 0 ? `<p class="xs ink2" style="margin:6px 0 0">${ic('info', 'xs')} في التدرّج يبدأ هذا العدّ من يوم الصفر (اليوم ٢٨). كل ظرف تخفّضه قبلها يعني نيكوتيناً أقل.</p>` : ''}
-      <div class="timeline" style="margin-top:12px">` + list.map(i => {
-        const b = BODY[i], dn = hx >= b.h, nx = i === nextI && hx > 0;
+    openSheet(`
+      <div class="row"><span class="ibox">${ic('activity')}</span><h2 class="h2 grow">تغيّرات جسدك</h2></div>
+      ${state.useNRT ? `<p class="xs ink2" style="margin:0">${ic('pill', 'xs')} مع بدائل النيكوتين: هذا يخص توقفك عن الأظرف. اتبع جدول الصيدلي لتخفيض البدائل.</p>` : ''}
+      ${m.gradual && hx <= 0 ? `<p class="xs ink2" style="margin:0">${ic('info', 'xs')} في التدرّج يبدأ هذا العدّ من يوم الصفر (اليوم ٢٨). كل ظرف تخفّضه قبلها يعني نيكوتين أقل.</p>` : ''}
+      <div class="timeline">` + BODY.map((b, i) => {
+        const dn = hx >= b.h, nx = i === nextI && hx > 0;
         const prevH = i ? BODY[i - 1].h : 0;
         const pct = dn ? 100 : nx ? clamp((hx - prevH) / (b.h - prevH) * 100, 2, 100) : 0;
         return `<div class="tl-item ${dn ? 'done' : nx ? 'next' : ''}">
@@ -2425,12 +2454,9 @@
             ${nx ? `<div class="bar thin"><i style="width:${pct}%"></i></div>` : ''}
           </div></div>`;
       }).join('') + `</div>
-      <button class="btn ghost block sm" style="margin-top:6px" data-action="jBody">${showAllBody ? 'عرض أقل' : 'كل التغيّرات لين سنة كاملة'} ${ic(showAllBody ? 'chevron-down' : 'chevron-left', 'xs')}</button>
-      <p class="xs muted" style="margin:8px 0 0">${ic('info', 'xs')} الأزمنة تقريبية وتختلف بين الأشخاص.</p>
-    </section>`;
-
-    $('#view-journey').innerHTML = html;
-  };
+      <p class="xs muted" style="margin:0">${ic('info', 'xs')} الأزمنة تقريبية وتختلف بين الأشخاص.</p>
+      <button class="btn block" data-action="closeSheet">إغلاق</button>`);
+  }
 
   function freedomCard(m) {
     if (!m.free) {
@@ -3255,9 +3281,9 @@
     supporter: () => openSupporter(),
     meSeg: el => { meSeg = el.dataset.v; RENDER.me(); },
     support: () => openSupport(),
-    jWeek: el => { const n = +el.dataset.n; const c = CHAPTERS[n - 1], m = metrics(); openWeek = n; selDay = (!m.prep && m.day >= c.from && m.day <= c.to) ? m.day : c.from; RENDER.journey(); },
+    jWeek: el => openWeekSheet(+el.dataset.n),
     jDay: el => { selDay = +el.dataset.day; buzz(6); RENDER.journey(); },
-    jBody: () => { showAllBody = !showAllBody; RENDER.journey(); },
+    jBody: () => openBodySheet(),
     toggleChapter: el => { const n = +el.dataset.n; openChapter = openChapter === n ? -1 : n; RENDER.journey(); },
     ckMood: el => { checkinDraft.mood = +el.dataset.v; buzz(); RENDER.today(); },
     ckCrave: el => { checkinDraft.craving = +el.dataset.v; buzz(); RENDER.today(); },
