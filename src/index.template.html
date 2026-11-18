@@ -1,0 +1,2453 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>نَقَاء — رفيقك للتحرر من أظرف النيكوتين</title>
+  <meta name="description" content="نَقَاء: رفيق هادئ وتفاعلي يساعدك على التحرر من أظرف النيكوتين خلال ٣٠ يوماً — شجرة تنمو مع كل يوم، أدوات نجدة للرغبة، ورؤى تكشف أنماطك." />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="نَقَاء" />
+  <meta name="theme-color" content="#0A0F0D" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Readex+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =========================================================
+       DESIGN TOKENS
+       ========================================================= */
+    :root {
+      --font: 'Readex Pro', 'Tajawal', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      --font-serif: 'Amiri', 'Noto Naskh Arabic', 'Times New Roman', serif;
+      --r-xl: 28px; --r-lg: 22px; --r-md: 16px; --r-sm: 12px;
+      --safe-t: env(safe-area-inset-top, 0px);
+      --safe-b: env(safe-area-inset-bottom, 0px);
+      --ease: cubic-bezier(.2, .8, .2, 1);
+      --tabbar-h: 74px;
+    }
+    :root, [data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #0A0F0D;
+      --glow-1: rgba(138, 185, 163, .13);
+      --glow-2: rgba(217, 185, 133, .07);
+      --surface: #121A17;
+      --surface-2: #18221E;
+      --surface-3: #212D28;
+      --glass: rgba(16, 23, 20, .82);
+      --line: rgba(236, 232, 225, .07);
+      --line-2: rgba(236, 232, 225, .14);
+      --ink: #ECE8E1;
+      --ink-2: #B7C0BB;
+      --ink-3: #86918B;
+      --sage: #8AB9A3;
+      --sage-2: #6FA58C;
+      --sage-ink: #BFDCCD;
+      --sage-soft: rgba(138, 185, 163, .13);
+      --sand: #D9B985;
+      --sand-ink: #EBD3AA;
+      --sand-soft: rgba(217, 185, 133, .13);
+      --rose: #E59B8E;
+      --rose-soft: rgba(229, 155, 142, .12);
+      --on-accent: #0A0F0D;
+      --shadow: 0 22px 44px -24px rgba(0, 0, 0, .7);
+      --grain-o: .05;
+    }
+    [data-theme="light"] {
+      color-scheme: light;
+      --bg: #F3F0E8;
+      --glow-1: rgba(63, 122, 98, .10);
+      --glow-2: rgba(166, 119, 58, .08);
+      --surface: #FFFFFF;
+      --surface-2: #F6F3EC;
+      --surface-3: #ECE7DC;
+      --glass: rgba(255, 255, 255, .86);
+      --line: rgba(24, 33, 29, .08);
+      --line-2: rgba(24, 33, 29, .15);
+      --ink: #18211D;
+      --ink-2: #46514C;
+      --ink-3: #69746E;
+      --sage: #3F7A62;
+      --sage-2: #356A55;
+      --sage-ink: #2C5E49;
+      --sage-soft: rgba(63, 122, 98, .10);
+      --sand: #A6773A;
+      --sand-ink: #845D2A;
+      --sand-soft: rgba(166, 119, 58, .12);
+      --rose: #B4584A;
+      --rose-soft: rgba(180, 88, 74, .10);
+      --on-accent: #FFFFFF;
+      --shadow: 0 18px 36px -24px rgba(40, 50, 45, .35);
+      --grain-o: .035;
+    }
+
+    /* =========================================================
+       BASE
+       ========================================================= */
+    *, *::before, *::after { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    [hidden] { display: none !important; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100dvh;
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(120% 60% at 50% -10%, var(--glow-1) 0%, transparent 60%),
+        radial-gradient(80% 50% at 90% 110%, var(--glow-2) 0%, transparent 60%);
+      background-attachment: fixed;
+      color: var(--ink);
+      font-family: var(--font);
+      font-size: 15px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      transition: background-color .4s var(--ease), color .4s var(--ease);
+    }
+    body::before {
+      content: "";
+      position: fixed; inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: var(--grain-o);
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    }
+    button, input, select, textarea { font: inherit; color: inherit; }
+    button { cursor: pointer; border: 0; background: none; padding: 0; }
+    button:disabled { cursor: not-allowed; opacity: .4; }
+    :focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; border-radius: 10px; }
+    ::selection { background: var(--sage-soft); }
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 99px; }
+
+    .ic { width: 20px; height: 20px; flex-shrink: 0; display: inline-block; vertical-align: middle; }
+    .ic.sm { width: 16px; height: 16px; }
+    .ic.xs { width: 14px; height: 14px; }
+    .ic.lg { width: 26px; height: 26px; }
+    .ic.xl { width: 34px; height: 34px; }
+
+    .app {
+      position: relative; z-index: 1;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: calc(var(--safe-t) + 14px) 16px calc(var(--tabbar-h) + var(--safe-b) + 28px);
+    }
+    .view { display: flex; flex-direction: column; gap: 14px; }
+    .view.enter { animation: viewIn .45s var(--ease) both; }
+    @keyframes viewIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+    /* =========================================================
+       TYPOGRAPHY & UTILITIES
+       ========================================================= */
+    .h1 { font-size: 23px; font-weight: 700; letter-spacing: -.2px; margin: 0; line-height: 1.35; }
+    .h2 { font-size: 17px; font-weight: 700; margin: 0; line-height: 1.45; }
+    .h3 { font-size: 15px; font-weight: 600; margin: 0; line-height: 1.5; }
+    .body { font-size: 14px; line-height: 1.85; color: var(--ink-2); margin: 0; }
+    .small { font-size: 13px; }
+    .xs { font-size: 12px; }
+    .muted { color: var(--ink-3); }
+    .ink2 { color: var(--ink-2); }
+    .sage { color: var(--sage-ink); }
+    .sand { color: var(--sand-ink); }
+    .rose { color: var(--rose); }
+    .bold { font-weight: 700; }
+    .num { font-variant-numeric: tabular-nums; }
+    .row { display: flex; align-items: center; gap: 10px; }
+    .row.between { justify-content: space-between; }
+    .row.wrap { flex-wrap: wrap; }
+    .col { display: flex; flex-direction: column; gap: 10px; }
+    .grow { flex: 1; min-width: 0; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .sep { height: 1px; background: var(--line); margin: 4px 0; border: 0; }
+    .center { text-align: center; }
+    .serif { font-family: var(--font-serif); }
+    .clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+    /* =========================================================
+       COMPONENTS
+       ========================================================= */
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 4px 2px 6px; }
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .logo {
+      width: 40px; height: 40px; border-radius: 14px;
+      display: grid; place-items: center;
+      background: linear-gradient(145deg, var(--sage-soft), var(--sand-soft));
+      border: 1px solid var(--line-2);
+      color: var(--sage-ink);
+    }
+    .eyebrow { font-size: 12px; color: var(--ink-3); margin: 0; }
+
+    .card {
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--r-xl);
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+    .card.tight { padding: 14px; }
+    .card.flat { box-shadow: none; }
+    .card-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .ibox {
+      width: 40px; height: 40px; border-radius: 14px;
+      display: grid; place-items: center; flex-shrink: 0;
+      background: var(--sage-soft); color: var(--sage-ink);
+    }
+    .ibox.sand { background: var(--sand-soft); color: var(--sand-ink); }
+    .ibox.rose { background: var(--rose-soft); color: var(--rose); }
+    .ibox.sm { width: 32px; height: 32px; border-radius: 11px; }
+
+    .chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 600;
+      padding: 5px 11px; border-radius: 99px;
+      background: var(--surface-2); color: var(--ink-2);
+      border: 1px solid var(--line);
+      white-space: nowrap;
+    }
+    .chip.sage { background: var(--sage-soft); color: var(--sage-ink); border-color: transparent; }
+    .chip.sand { background: var(--sand-soft); color: var(--sand-ink); border-color: transparent; }
+    .chip.rose { background: var(--rose-soft); color: var(--rose); border-color: transparent; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      min-height: 46px; padding: 0 18px;
+      border-radius: 16px;
+      font-size: 14px; font-weight: 700;
+      background: var(--surface-2); color: var(--ink);
+      border: 1px solid var(--line);
+      transition: transform .15s var(--ease), background .2s, border-color .2s, opacity .2s;
+    }
+    .btn:active:not(:disabled) { transform: scale(.97); }
+    .btn.primary { background: var(--sage); color: var(--on-accent); border-color: transparent; }
+    .btn.sand { background: var(--sand); color: var(--on-accent); border-color: transparent; }
+    .btn.soft { background: var(--sage-soft); color: var(--sage-ink); border-color: transparent; }
+    .btn.soft-sand { background: var(--sand-soft); color: var(--sand-ink); border-color: transparent; }
+    .btn.danger { background: var(--rose-soft); color: var(--rose); border-color: transparent; }
+    .btn.ghost { background: transparent; }
+    .btn.block { width: 100%; }
+    .btn.sm { min-height: 36px; padding: 0 13px; font-size: 13px; border-radius: 12px; }
+    .btn.grad { background: linear-gradient(90deg, var(--sand), var(--sage)); color: var(--on-accent); border-color: transparent; }
+    .icon-btn {
+      width: 40px; height: 40px; border-radius: 99px;
+      display: grid; place-items: center;
+      background: var(--surface-2); color: var(--ink-2);
+      border: 1px solid var(--line);
+      transition: transform .15s var(--ease), color .2s;
+    }
+    .icon-btn:active { transform: scale(.94); }
+    .icon-btn.sm { width: 34px; height: 34px; }
+
+    .seg {
+      display: grid; grid-auto-flow: column; grid-auto-columns: 1fr;
+      padding: 4px; gap: 4px;
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      border-radius: 99px;
+    }
+    .seg button {
+      min-height: 38px; border-radius: 99px;
+      font-size: 13px; font-weight: 600; color: var(--ink-3);
+      transition: background .25s var(--ease), color .25s;
+    }
+    .seg button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 4px 14px -6px rgba(0,0,0,.35); border: 1px solid var(--line); }
+
+    .opt {
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+      padding: 10px 6px; border-radius: 16px;
+      background: var(--surface-2); color: var(--ink-2);
+      border: 1px solid var(--line);
+      font-size: 12px; font-weight: 600;
+      transition: all .2s var(--ease);
+    }
+    .opt.inline { flex-direction: row; padding: 9px 12px; }
+    .opt[aria-pressed="true"] { background: var(--sage-soft); border-color: var(--sage); color: var(--sage-ink); }
+    .opt.sand[aria-pressed="true"] { background: var(--sand-soft); border-color: var(--sand); color: var(--sand-ink); }
+    .opt.rose[aria-pressed="true"] { background: var(--rose-soft); border-color: var(--rose); color: var(--rose); }
+
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field label { font-size: 13px; color: var(--ink-2); font-weight: 500; }
+    .input {
+      width: 100%; min-height: 46px;
+      padding: 10px 14px;
+      border-radius: 14px;
+      background: var(--surface-2);
+      border: 1px solid var(--line-2);
+      color: var(--ink);
+      font-size: 14px;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    textarea.input { resize: vertical; min-height: 96px; line-height: 1.8; }
+    .input:focus { outline: none; border-color: var(--sage); box-shadow: 0 0 0 3px var(--sage-soft); }
+    .input[dir="ltr"] { text-align: left; }
+    select.input { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--ink-3) 50%), linear-gradient(135deg, var(--ink-3) 50%, transparent 50%); background-position: 18px 50%, 13px 50%; background-size: 5px 5px; background-repeat: no-repeat; padding-left: 30px; }
+
+    .bar { height: 8px; border-radius: 99px; background: var(--surface-3); overflow: hidden; }
+    .bar > i { display: block; height: 100%; border-radius: 99px; background: linear-gradient(270deg, var(--sage), var(--sand)); transition: width .8s var(--ease); }
+    .bar.thin { height: 5px; }
+
+    .switch { position: relative; width: 48px; height: 28px; border-radius: 99px; background: var(--surface-3); border: 1px solid var(--line-2); transition: background .25s; flex-shrink: 0; }
+    .switch::after { content: ""; position: absolute; top: 3px; right: 3px; width: 20px; height: 20px; border-radius: 50%; background: var(--ink-3); transition: transform .25s var(--ease), background .25s; }
+    .switch[aria-checked="true"] { background: var(--sage); }
+    .switch[aria-checked="true"]::after { transform: translateX(-20px); background: var(--on-accent); }
+
+    /* =========================================================
+       HERO / SCENE
+       ========================================================= */
+    .hero { padding: 0; overflow: hidden; }
+    .scene { position: relative; height: 218px; overflow: hidden; border-radius: var(--r-xl) var(--r-xl) 0 0; }
+    .scene > svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .scene-fade { position: absolute; inset: auto 0 0 0; height: 60px; background: linear-gradient(0deg, var(--surface), transparent); pointer-events: none; }
+    .scene-badge { position: absolute; top: 14px; right: 14px; }
+    .scene-badge2 { position: absolute; top: 14px; left: 14px; }
+    .glass-chip { background: rgba(10, 15, 13, .45); color: #F2EEE7; border: 1px solid rgba(255,255,255,.14); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+    .hero-body { padding: 4px 20px 20px; margin-top: -26px; position: relative; }
+    .counter { display: flex; align-items: baseline; gap: 8px; }
+    .counter .big { font-size: 54px; font-weight: 700; line-height: 1; letter-spacing: -1px; }
+    .clock { font-size: 15px; color: var(--ink-2); font-weight: 500; letter-spacing: .5px; }
+    .clock b { color: var(--ink); font-weight: 600; }
+    .leaf-pop { animation: leafPop .9s var(--ease) both; transform-box: fill-box; transform-origin: center; }
+    @keyframes leafPop { 0% { transform: scale(0); } 70% { transform: scale(1.25); } 100% { transform: scale(1); } }
+    .bud { animation: budPulse 2.6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+    @keyframes budPulse { 0%,100% { opacity: .65; transform: scale(.85); } 50% { opacity: 1; transform: scale(1.1); } }
+    .firefly { animation: fly 6s ease-in-out infinite; }
+    @keyframes fly { 0%,100% { transform: translate(0,0); opacity: .2; } 50% { transform: translate(8px,-10px); opacity: 1; } }
+    .twinkle { animation: twinkle 3.5s ease-in-out infinite; }
+    @keyframes twinkle { 0%,100% { opacity: .9; } 50% { opacity: .3; } }
+
+    .stat {
+      background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg);
+      padding: 14px; display: flex; flex-direction: column; gap: 8px;
+      box-shadow: var(--shadow);
+    }
+    .stat .v { font-size: 21px; font-weight: 700; line-height: 1.15; }
+    .stat .v small { font-size: 12px; font-weight: 500; color: var(--ink-3); margin-inline-start: 3px; }
+    .stat .l { font-size: 12px; color: var(--ink-3); }
+
+    .quote {
+      font-family: var(--font-serif);
+      font-size: 21px; line-height: 1.8;
+      text-align: center; margin: 0; color: var(--ink);
+    }
+    .quote-card { text-align: center; background: linear-gradient(160deg, var(--surface), var(--surface-2)); }
+    .quote-mark { color: var(--sand); opacity: .7; }
+
+    .pouches { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pouch { width: 22px; height: 14px; border-radius: 6px; border: 1.5px solid var(--sand); opacity: .9; }
+    .pouch.used { background: var(--sand); }
+    .pouch.over { border-color: var(--rose); background: var(--rose); }
+
+    .day-nav { display: flex; gap: 6px; }
+    .callout { border-radius: 18px; padding: 14px; background: var(--surface-2); border: 1px solid var(--line); }
+    .callout.sand { background: var(--sand-soft); border-color: transparent; }
+    .callout.sage { background: var(--sage-soft); border-color: transparent; }
+    .callout-title { display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; margin-bottom: 6px; }
+
+    details.more summary { list-style: none; cursor: pointer; font-size: 13px; color: var(--sage-ink); font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
+    details.more summary::-webkit-details-marker { display: none; }
+    details.more[open] summary .ic { transform: rotate(180deg); }
+
+    /* =========================================================
+       JOURNEY PATH
+       ========================================================= */
+    .chapter-head { display: flex; align-items: center; gap: 12px; }
+    .path-wrap { position: relative; width: 320px; max-width: 100%; margin: 6px auto 0; }
+    .path-wrap svg.path-line { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .node {
+      position: absolute; transform: translate(-50%, -50%);
+      width: 52px; height: 52px; border-radius: 50%;
+      display: grid; place-items: center;
+      font-weight: 700; font-size: 16px;
+      background: var(--surface-2); color: var(--ink-3);
+      border: 2px solid var(--line-2);
+      transition: transform .2s var(--ease);
+    }
+    .node:active:not(:disabled) { transform: translate(-50%, -50%) scale(.93); }
+    .node.done { background: var(--sage); color: var(--on-accent); border-color: transparent; }
+    .node.ms { width: 60px; height: 60px; }
+    .node.ms.done { background: linear-gradient(145deg, var(--sand), var(--sage)); }
+    .node.current { background: var(--surface); color: var(--ink); border: 3px solid var(--sage); animation: nodePulse 2.6s ease-in-out infinite; width: 62px; height: 62px; font-size: 19px; }
+    .node.locked { opacity: .55; }
+    .node .tick { position: absolute; bottom: -3px; left: -3px; width: 22px; height: 22px; border-radius: 50%; background: var(--sand); color: var(--on-accent); display: grid; place-items: center; border: 2px solid var(--surface); }
+    .node .crown { position: absolute; top: -12px; color: var(--sand); }
+    @keyframes nodePulse { 0%,100% { box-shadow: 0 0 0 0 var(--sage-soft); } 50% { box-shadow: 0 0 0 12px transparent; } }
+    .node-label { position: absolute; transform: translateY(-50%); width: 118px; font-size: 12px; line-height: 1.5; color: var(--ink-2); }
+    .node-label b { display: block; font-size: 12.5px; color: var(--ink); font-weight: 600; }
+    .node-label .tag { color: var(--sand-ink); font-weight: 700; font-size: 11.5px; display: block; }
+
+    .timeline { position: relative; display: flex; flex-direction: column; gap: 10px; }
+    .tl-item { display: grid; grid-template-columns: 44px 1fr; gap: 12px; align-items: start; }
+    .tl-dot { width: 44px; height: 44px; border-radius: 15px; display: grid; place-items: center; background: var(--surface-2); color: var(--ink-3); border: 1px solid var(--line); }
+    .tl-item.done .tl-dot { background: var(--sage-soft); color: var(--sage-ink); border-color: transparent; }
+    .tl-item.next .tl-dot { background: var(--sand-soft); color: var(--sand-ink); border-color: var(--sand); }
+
+    .badge-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .badge {
+      display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;
+      padding: 14px 6px; border-radius: 20px;
+      background: var(--surface); border: 1px solid var(--line);
+    }
+    .badge .medal { width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center; background: var(--surface-3); color: var(--ink-3); position: relative; }
+    .badge.on .medal { background: radial-gradient(circle at 35% 30%, var(--sand-ink), var(--sand) 55%, #8f6a35); color: #2B2013; box-shadow: 0 8px 22px -10px var(--sand); }
+    .badge.on.sage-m .medal { background: radial-gradient(circle at 35% 30%, var(--sage-ink), var(--sage) 55%, #3E6655); color: #0F1F18; box-shadow: 0 8px 22px -10px var(--sage); }
+    .badge .medal .lk { position: absolute; bottom: -2px; left: -2px; width: 20px; height: 20px; border-radius: 50%; background: var(--surface-2); display: grid; place-items: center; border: 1px solid var(--line-2); }
+    .badge .nm { font-size: 12px; font-weight: 600; line-height: 1.4; }
+    .badge:not(.on) .nm { color: var(--ink-3); }
+
+    /* =========================================================
+       SOS
+       ========================================================= */
+    .sos-hero { text-align: center; padding: 28px 20px 24px; overflow: hidden; }
+    .sos-orb {
+      position: relative;
+      width: 176px; height: 176px; border-radius: 50%;
+      margin: 18px auto 14px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+      background: radial-gradient(circle at 35% 30%, rgba(191,220,205,.35), rgba(111,165,140,.25) 45%, rgba(217,185,133,.16));
+      border: 1px solid rgba(138,185,163,.45);
+      color: var(--ink);
+      transition: transform .2s var(--ease);
+    }
+    .sos-orb:active { transform: scale(.96); }
+    .sos-orb::before, .sos-orb::after {
+      content: ""; position: absolute; inset: -1px; border-radius: 50%;
+      border: 1px solid var(--sage);
+      animation: ripple 3.6s ease-out infinite;
+    }
+    .sos-orb::after { animation-delay: 1.8s; }
+    @keyframes ripple { 0% { transform: scale(1); opacity: .55; } 100% { transform: scale(1.45); opacity: 0; } }
+
+    .session {
+      position: fixed; inset: 0; z-index: 60;
+      background: var(--bg);
+      background-image: radial-gradient(90% 50% at 50% 0%, var(--glow-1), transparent 70%);
+      overflow-y: auto;
+      animation: viewIn .35s var(--ease) both;
+    }
+    .session-inner { max-width: 480px; margin: 0 auto; padding: calc(var(--safe-t) + 14px) 16px calc(var(--safe-b) + 24px); display: flex; flex-direction: column; gap: 14px; }
+    .timer-big { font-size: 34px; font-weight: 700; letter-spacing: 1px; }
+    .wave-svg { width: 100%; height: 110px; display: block; }
+    .breath-stage { position: relative; width: 220px; height: 220px; margin: 8px auto; display: grid; place-items: center; }
+    .breath-ring { position: absolute; inset: 0; border-radius: 50%; border: 1px dashed var(--line-2); }
+    .breath-orb {
+      width: 120px; height: 120px; border-radius: 50%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      background: radial-gradient(circle at 35% 30%, rgba(191,220,205,.55), rgba(111,165,140,.35) 50%, rgba(217,185,133,.25));
+      border: 1px solid rgba(138,185,163,.55);
+      box-shadow: 0 0 60px -10px var(--sage);
+      transition-property: transform; transition-timing-function: ease-in-out; transition-duration: 1s;
+    }
+    .breath-orb .ph { font-size: 15px; font-weight: 700; color: var(--ink); }
+    .breath-orb .sec { font-size: 30px; font-weight: 700; color: var(--sand-ink); line-height: 1.1; }
+    .game-box { position: relative; height: 300px; border-radius: 22px; overflow: hidden; background: radial-gradient(circle at 50% 120%, var(--sage-soft), var(--surface) 70%); border: 1px solid var(--line); }
+    .game-box canvas { width: 100%; height: 100%; display: block; touch-action: none; }
+    .game-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; text-align: center; padding: 20px; background: color-mix(in srgb, var(--surface) 82%, transparent); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+    .letter { font-family: var(--font-serif); font-size: 19px; line-height: 1.95; color: var(--ink); white-space: pre-wrap; margin: 0; }
+
+    /* =========================================================
+       CHARTS
+       ========================================================= */
+    .bars { display: flex; align-items: flex-end; gap: 6px; height: 150px; padding-top: 22px; }
+    .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; height: 100%; cursor: default; }
+    .bar-track { flex: 1; width: 100%; display: flex; align-items: flex-end; justify-content: center; position: relative; }
+    .bar-fill { width: 62%; min-height: 3px; border-radius: 4px 4px 0 0; background: var(--sage); opacity: .5; transition: height .8s var(--ease), opacity .2s; }
+    .bar-fill.peak { opacity: 1; }
+    .bar-col:hover .bar-fill { opacity: .85; }
+    .bar-val { position: absolute; font-size: 11.5px; font-weight: 700; color: var(--ink); transform: translateY(-20px); }
+    .bar-lbl { font-size: 11px; color: var(--ink-3); white-space: nowrap; }
+    .baseline { height: 1px; background: var(--line-2); margin-top: -1px; }
+    .hbar { display: grid; grid-template-columns: 96px 1fr 28px; gap: 10px; align-items: center; font-size: 13px; }
+    .hbar .track { height: 10px; border-radius: 99px; background: var(--surface-3); overflow: hidden; }
+    .hbar .track i { display: block; height: 100%; border-radius: 4px; background: var(--sage); }
+    .chart-svg { width: 100%; display: block; overflow: visible; }
+
+    #tip {
+      position: fixed; z-index: 90; pointer-events: none;
+      background: var(--ink); color: var(--bg);
+      font-size: 12px; font-weight: 600;
+      padding: 6px 10px; border-radius: 10px;
+      transform: translate(-50%, calc(-100% - 10px));
+      white-space: nowrap; opacity: 0; transition: opacity .15s;
+    }
+    #tip.on { opacity: 1; }
+
+    /* =========================================================
+       LIST ROWS (settings)
+       ========================================================= */
+    .list { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-xl); overflow: hidden; box-shadow: var(--shadow); }
+    .list-row { width: 100%; display: flex; align-items: center; gap: 12px; padding: 14px 16px; text-align: right; border-bottom: 1px solid var(--line); min-height: 60px; }
+    .list-row:last-child { border-bottom: 0; }
+    button.list-row:active { background: var(--surface-2); }
+    .list-row .t { font-size: 14px; font-weight: 600; }
+    .list-row .s { font-size: 12px; color: var(--ink-3); }
+    .group-title { font-size: 12.5px; color: var(--ink-3); font-weight: 600; margin: 8px 6px -4px; }
+
+    /* =========================================================
+       TABBAR
+       ========================================================= */
+    .tabbar {
+      position: fixed; z-index: 40;
+      bottom: calc(var(--safe-b) + 12px); left: 50%; transform: translateX(-50%);
+      width: calc(100% - 24px); max-width: 456px;
+      height: 66px;
+      display: grid; grid-template-columns: repeat(5, 1fr); align-items: center;
+      padding: 0 6px;
+      background: var(--glass);
+      backdrop-filter: blur(24px) saturate(150%); -webkit-backdrop-filter: blur(24px) saturate(150%);
+      border: 1px solid var(--line-2);
+      border-radius: 24px;
+      box-shadow: 0 20px 44px -18px rgba(0,0,0,.6);
+    }
+    .tab { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; height: 100%; font-size: 11.5px; font-weight: 600; color: var(--ink-3); transition: color .2s; }
+    .tab .ic { width: 22px; height: 22px; transition: transform .25s var(--ease); }
+    .tab[aria-current="page"] { color: var(--ink); }
+    .tab[aria-current="page"] .ic { color: var(--sage); transform: translateY(-1px); }
+    .tab-sos .sos-core {
+      width: 54px; height: 54px; margin-top: -30px; border-radius: 50%;
+      display: grid; place-items: center;
+      background: linear-gradient(145deg, var(--sage), var(--sand));
+      color: var(--on-accent);
+      box-shadow: 0 10px 24px -8px var(--sage), 0 0 0 5px var(--bg);
+    }
+    .tab-sos .sos-core .ic { color: var(--on-accent) !important; }
+
+    /* =========================================================
+       SHEETS, ONBOARDING, TOAST
+       ========================================================= */
+    .sheet-layer { position: fixed; inset: 0; z-index: 70; display: flex; align-items: flex-end; justify-content: center; }
+    .sheet-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.55); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); animation: fadeIn .25s both; }
+    .sheet {
+      position: relative; width: 100%; max-width: 480px; max-height: 90vh; max-height: 90dvh; overflow-y: auto;
+      background: var(--surface);
+      border: 1px solid var(--line-2); border-bottom: 0;
+      border-radius: 30px 30px 0 0;
+      padding: 10px 20px calc(var(--safe-b) + 22px);
+      animation: sheetUp .38s var(--ease) both;
+    }
+    .sheet-handle { width: 40px; height: 5px; border-radius: 99px; background: var(--line-2); margin: 2px auto 14px; }
+    .sheet-body { display: flex; flex-direction: column; gap: 14px; }
+    @keyframes sheetUp { from { transform: translateY(100%); } to { transform: none; } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    .onb { position: fixed; inset: 0; z-index: 80; background: var(--bg); background-image: radial-gradient(120% 60% at 50% -10%, var(--glow-1), transparent 60%), radial-gradient(80% 50% at 90% 110%, var(--glow-2), transparent 60%); overflow-y: auto; }
+    .onb-inner { max-width: 480px; min-height: 100%; margin: 0 auto; padding: calc(var(--safe-t) + 18px) 20px calc(var(--safe-b) + 22px); display: flex; flex-direction: column; gap: 18px; }
+    .steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; flex: 1; }
+    .steps i { height: 4px; border-radius: 99px; background: var(--surface-3); transition: background .3s; }
+    .steps i.on { background: var(--sage); }
+    .onb-body { display: flex; flex-direction: column; gap: 16px; animation: viewIn .4s var(--ease) both; flex: 1; }
+    .onb-actions { display: flex; gap: 10px; position: sticky; bottom: 0; padding-top: 8px; }
+    .path-card { text-align: right; padding: 16px; border-radius: 22px; background: var(--surface); border: 1.5px solid var(--line); display: flex; gap: 14px; align-items: flex-start; transition: border-color .2s, background .2s; width: 100%; }
+    .path-card[aria-pressed="true"] { border-color: var(--sage); background: var(--sage-soft); }
+    .path-card.sandy[aria-pressed="true"] { border-color: var(--sand); background: var(--sand-soft); }
+    .welcome-hero { text-align: center; padding-top: 18px; }
+    .welcome-logo { width: 84px; height: 84px; margin: 0 auto 16px; border-radius: 28px; display: grid; place-items: center; background: linear-gradient(145deg, var(--sage), var(--sand)); color: var(--on-accent); box-shadow: 0 18px 40px -16px var(--sage); }
+    .feature { display: flex; gap: 12px; align-items: flex-start; text-align: right; }
+
+    #toast {
+      position: fixed; z-index: 95; top: calc(var(--safe-t) + 14px); left: 50%;
+      transform: translate(-50%, calc(-100% - 60px));
+      visibility: hidden;
+      max-width: calc(100% - 32px);
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 16px; border-radius: 99px;
+      background: var(--ink); color: var(--bg);
+      font-size: 13px; font-weight: 600;
+      box-shadow: 0 14px 30px -12px rgba(0,0,0,.5);
+      transition: transform .4s var(--ease), visibility 0s .4s;
+    }
+    #toast.on { transform: translate(-50%, 0); visibility: visible; transition: transform .4s var(--ease); }
+    #confetti { position: fixed; inset: 0; z-index: 96; pointer-events: none; width: 100%; height: 100%; }
+
+    .empty { text-align: center; padding: 26px 18px; }
+    .empty .ibox { margin: 0 auto 12px; width: 56px; height: 56px; border-radius: 20px; }
+
+    @media (min-width: 560px) {
+      .app { padding-top: 28px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <noscript><p style="padding:24px;text-align:center">يحتاج نَقَاء إلى تفعيل JavaScript ليعمل.</p></noscript>
+
+  <div class="app">
+    <main id="view-today" class="view" aria-label="اليوم"></main>
+    <main id="view-journey" class="view" aria-label="الرحلة" hidden></main>
+    <main id="view-sos" class="view" aria-label="النجدة" hidden></main>
+    <main id="view-insights" class="view" aria-label="رؤى" hidden></main>
+    <main id="view-me" class="view" aria-label="أنا" hidden></main>
+  </div>
+
+  <nav class="tabbar" aria-label="التنقل الرئيسي">
+    <button class="tab" data-action="tab" data-tab="today" aria-current="page"><i data-i="sun"></i><span>اليوم</span></button>
+    <button class="tab" data-action="tab" data-tab="journey"><i data-i="route"></i><span>الرحلة</span></button>
+    <button class="tab tab-sos" data-action="tab" data-tab="sos" aria-label="النجدة: أدوات تجاوز الرغبة"><span class="sos-core"><i data-i="wind"></i></span><span>نجدة</span></button>
+    <button class="tab" data-action="tab" data-tab="insights"><i data-i="chart-column"></i><span>رؤى</span></button>
+    <button class="tab" data-action="tab" data-tab="me"><i data-i="user"></i><span>أنا</span></button>
+  </nav>
+
+  <!-- Full-screen SOS session -->
+  <section id="session" class="session" hidden role="dialog" aria-modal="true" aria-label="جلسة عبور الموجة">
+    <div class="session-inner">
+      <div class="row between">
+        <button class="btn sm" data-action="sessionEnd"><i data-i="x" class="sm"></i>إنهاء</button>
+        <div class="center">
+          <div class="xs muted">جلسة العبور</div>
+          <div id="ss-timer" class="timer-big num">٠٣:٠٠</div>
+        </div>
+        <button class="icon-btn" data-action="sessionPause" id="ss-pause" aria-label="إيقاف مؤقت"><i data-i="pause" class="sm"></i></button>
+      </div>
+
+      <div class="card tight">
+        <svg id="ss-wave" class="wave-svg" viewBox="0 0 320 110" preserveAspectRatio="none" aria-hidden="true"></svg>
+        <p id="ss-phase" class="small center bold" style="margin:6px 0 0">الموجة ترتفع — تنفّس معها، لا تقاومها</p>
+      </div>
+
+      <div class="seg" role="tablist" id="ss-tools">
+        <button data-action="sessionTool" data-tool="breath" aria-pressed="true">تنفّس</button>
+        <button data-action="sessionTool" data-tool="touch" aria-pressed="false">لمس هادئ</button>
+        <button data-action="sessionTool" data-tool="remind" aria-pressed="false">تذكير</button>
+      </div>
+
+      <div id="ss-tool-breath" class="col"></div>
+      <div id="ss-tool-touch" class="col" hidden>
+        <div class="row between small">
+          <span class="muted">المس الكرات قبل أن تتلاشى — الذهبية بثلاث نقاط</span>
+          <span class="row" style="gap:12px"><span class="sand bold num" id="gm-score">٠</span><span class="sage bold num" id="gm-time">٦٠ث</span></span>
+        </div>
+        <div class="game-box">
+          <canvas id="gm-canvas"></canvas>
+          <div class="game-overlay" id="gm-overlay">
+            <p class="h3" id="gm-title" style="margin:0">أشغل يديك وذهنك ٦٠ ثانية</p>
+            <p class="xs muted" id="gm-best" style="margin:0"></p>
+            <button class="btn primary" data-action="gameStart"><i data-i="play" class="sm"></i>ابدأ</button>
+          </div>
+        </div>
+      </div>
+      <div id="ss-tool-remind" class="col" hidden></div>
+
+      <button class="btn grad block" data-action="sessionWon"><i data-i="shield-check" class="sm"></i>عبرت الموجة</button>
+    </div>
+  </section>
+
+  <!-- Onboarding -->
+  <section id="onb" class="onb" hidden role="dialog" aria-modal="true" aria-label="إعداد خطتك">
+    <div class="onb-inner">
+      <div class="row">
+        <button class="icon-btn sm" data-action="onbBack" id="onb-back" aria-label="رجوع"><i data-i="chevron-right" class="sm"></i></button>
+        <div class="steps" id="onb-steps"><i></i><i></i><i></i><i></i><i></i></div>
+        <button class="icon-btn sm" data-action="onbClose" id="onb-close" aria-label="إغلاق"><i data-i="x" class="sm"></i></button>
+      </div>
+      <div class="onb-body" id="onb-body"></div>
+      <div class="onb-actions" id="onb-actions"></div>
+    </div>
+  </section>
+
+  <!-- Bottom sheet -->
+  <div id="sheet-layer" class="sheet-layer" hidden>
+    <div class="sheet-backdrop" data-action="closeSheet"></div>
+    <div class="sheet" role="dialog" aria-modal="true">
+      <div class="sheet-handle"></div>
+      <div class="sheet-body" id="sheet-body"></div>
+    </div>
+  </div>
+
+  <div id="toast" role="status" aria-live="polite"><span id="toast-ic"></span><span id="toast-text"></span></div>
+  <div id="tip"></div>
+  <canvas id="confetti"></canvas>
+  <input id="import-file" type="file" accept="application/json" hidden />
+
+  <script>
+  'use strict';
+  /* Icons: Lucide v0.460.0 (ISC License) — inlined for offline use */
+  const ICONS = __ICONS__;
+
+  /* =========================================================
+     CONTENT
+     ========================================================= */
+  const CHAPTERS = [
+    { n: 1, from: 1, to: 7, icon: 'flame', title: 'العاصفة الأولى', desc: 'الجسد يتخلّص من النيكوتين وتعبر ذروة الانسحاب' },
+    { n: 2, from: 8, to: 14, icon: 'unlink', title: 'تفكيك العادة', desc: 'فكّ الارتباط بين المواقف اليومية والظرف' },
+    { n: 3, from: 15, to: 21, icon: 'brain', title: 'صفاء الذهن', desc: 'المزاج يستقر والتركيز يعود متصلاً' },
+    { n: 4, from: 22, to: 30, icon: 'crown', title: 'الهوية الجديدة', desc: 'تثبيت النقاء والتحصّن من «ظرف واحد فقط»' }
+  ];
+
+  const DAYS = [
+    { t: 'الخطوة الأصعب… وقد خطوتها', ms: 'بداية الرحلة',
+      body: 'خلال الساعات الأولى يهبط مستوى النيكوتين في دمك بسرعة؛ فعمر النصف للنيكوتين قرابة ساعتين. يزول أثره المنبّه عن القلب، وتبدأ الأوعية الدقيقة في اللثة بالتحرر من الانقباض.',
+      feel: 'رغبة متكررة ووعي زائد بمكان الظرف تحت شفتك. هذا طبيعي: إنها عادة اليد والفم قبل أن تكون حاجة الجسد.',
+      act: 'تخلّص من أي علبة متبقية — في السيارة والحقيبة والمكتب — واشرب ٨ أكواب ماء اليوم.',
+      tip: 'جهّز بديلاً للفم في جيبك: علكة نعناع خالية من السكر أو مسواك.' },
+    { t: 'الجسد يطالب… وأنت تقرر',
+      body: 'يواصل جسدك التخلّص من النيكوتين ونواتجه. هذه عادةً أيام ذروة الانسحاب، لأن مستقبلات النيكوتين في الدماغ اعتادت جرعات منتظمة وتحتج على غيابها.',
+      feel: 'تهيّج، صعوبة تركيز، وربما صداع خفيف أو جوع زائد. كلها علامات تعافٍ مؤقتة وليست ضعفاً منك.',
+      act: 'عند كل رغبة اليوم افتح «نجدة» وأكمل ٣ دقائق قبل أي قرار.',
+      tip: 'الرغبة تبلغ ذروتها ثم تنحسر خلال دقائق، حتى لو لم تفعل شيئاً.' },
+    { t: 'قمة الجبل الكيميائي', ms: '٧٢ ساعة',
+      body: 'بعد نحو ٧٢ ساعة يكون النيكوتين قد غادر جسدك تقريباً. من هنا تبدأ أعراض الانسحاب الجسدية بالانحسار يوماً بعد يوم، ويبدأ الدماغ رحلة إعادة ضبط مستقبلاته.',
+      feel: 'قد يكون اليوم من أصعب الأيام، وغالباً ما يكون ما بعده أسهل. أنت تعبر القمة الآن.',
+      act: 'امشِ ٢٠ دقيقة بخطى سريعة؛ الحركة تخفف حدة الرغبة وتحسّن المزاج.',
+      tip: 'احتفل بالـ٧٢ ساعة بشيء صغير تحبه — الإنجاز يستحق.' },
+    { t: 'إعادة رسم الصباح',
+      body: 'صار جسدك خالياً من النيكوتين تقريباً، والمعركة الآن مع الارتباطات: القهوة، السيارة، ما بعد الأكل. كل موقف تعبره دون ظرف يُضعف الرابط العصبي بينه وبين الرغبة.',
+      feel: 'رغبات مرتبطة بأوقات بعينها أكثر من كونها مستمرة طوال اليوم.',
+      act: 'غيّر طقس قهوتك الصباحية: مكان مختلف، كوب مختلف، أو أضف إليها مشياً قصيراً.',
+      tip: 'سجّل كل رغبة في «رؤى»؛ معرفة نمطك نصف الحل.' },
+    { t: 'لثّة تتنفس',
+      body: 'تبدأ أنسجة الفم والغشاء المبطّن للشفة بالتعافي من التهيّج الموضعي الذي يسببه الظرف. التغيّرات الموضعية الناتجة عن الأظرف غالباً ما تتحسن تدريجياً خلال أسابيع من التوقف.',
+      feel: 'قد تشعر بحساسية خفيفة في مكان الظرف المعتاد، وهي جزء من التئام الأنسجة.',
+      act: 'التقط صورة لمكان الظرف في لثتك — ستقارنها بصورة اليوم ٢٨.',
+      tip: 'إن لاحظت تقرحاً لا يلتئم خلال أسبوعين، راجع طبيب الأسنان للاطمئنان.' },
+    { t: 'النوم يعيد ترتيب نفسه',
+      body: 'اضطراب النوم شائع في الأسبوع الأول، لأن الدماغ يتكيف مع غياب منبّه اعتاده طوال اليوم. هذا مؤقت ويتحسن عادةً خلال أسابيع قليلة.',
+      feel: 'أحلام واضحة، أو استيقاظ متقطع، أو نعاس في النهار.',
+      act: 'نم الليلة أبكر بـ٣٠ دقيقة، وأبعد الهاتف عن السرير.',
+      tip: 'قلّل الكافيين بعد العصر؛ فبدون النيكوتين قد يصبح أثره أقوى من المعتاد.' },
+    { t: 'أسبوع من النقاء', ms: 'أسبوع كامل',
+      body: '١٦٨ ساعة بلا نيكوتين. تجاوزت أشد مراحل الانسحاب الجسدي، والأسبوع الأول هو الأصعب في أي رحلة إقلاع — وأنت عبرته.',
+      feel: 'فخر، وربما بعض الإرهاق. الرغبات أقل تكراراً لكنها قد تأتي فجأة.',
+      act: 'كافئ نفسك اليوم بوجبة تحبها أو نشاط يسعدك.',
+      tip: 'شارك إنجازك مع شخص يدعمك؛ الإعلان يقوّي الالتزام.' },
+    { t: 'العادة أقوى من المادة',
+      body: 'التحدي الآن سلوكي أكثر منه كيميائي. يدك وفمك اعتادا حركة وضع الظرف آلاف المرات، والدماغ يحتاج وقتاً لنسيان هذا الروتين.',
+      feel: 'لحظات «سهو» تمد فيها يدك إلى جيبك تلقائياً.',
+      act: 'اكتب خطة «إذا… فسأ…» لأخطر ٣ مواقف عليك في «رؤى ← درع المواقف».',
+      tip: 'خطط «إذا… فسأ…» من أكثر أساليب تغيير العادات فاعلية في الأبحاث.' },
+    { t: 'دفء يعود للأطراف',
+      body: 'النيكوتين يقبض الأوعية الدموية. بغيابه تتحسن الدورة الدموية الطرفية، ومعها تروية اللثة والجلد.',
+      feel: 'قد تلاحظ طاقة أفضل أثناء المشي أو صعود الدرج.',
+      act: 'مارس ٣ جولات تنفّس في «نجدة» اليوم — حتى دون رغبة — لتتقن الأداة قبل الحاجة.',
+      tip: 'الزفير الطويل يهدّئ الجهاز العصبي خلال دقيقة أو اثنتين.' },
+    { t: 'تفكيك الارتباط الشرطي', ms: 'العشرة الأوائل',
+      body: 'كل مرة تقود أو تذاكر أو تشرب القهوة دون ظرف، يتعلّم دماغك أن هذه المواقف لا تتطلب نيكوتين. إنه «محو» تدريجي للارتباط.',
+      feel: 'رغبات أخف وأقصر من الأسبوع الأول، وأحياناً تمر ساعات دون تفكير بالظرف.',
+      act: 'اكسر روتيناً واحداً اليوم: طريق مختلف، أو مكان جلوس جديد.',
+      tip: 'عشرة أيام! انظر كم وفّرت في شاشة «اليوم».' },
+    { t: 'شهية جديدة',
+      body: 'يزداد الإحساس بالجوع لدى كثيرين بعد الإقلاع، لأن النيكوتين كان يكبت الشهية ويرفع معدل الحرق قليلاً.',
+      feel: 'رغبة في الحلويات أو الوجبات الخفيفة.',
+      act: 'جهّز وجبات خفيفة صحية: خضار مقرمشة، مكسرات غير مملحة، فواكه.',
+      tip: 'كوب ماء بارد قبل الأكل يساعدك على التمييز بين الجوع والرغبة.' },
+    { t: 'فم أكثر نقاءً',
+      body: 'يتحسن توازن الفم وإفراز اللعاب، ويقل التهيّج في مكان الظرف. أنسجة اللثة تستعيد تدريجياً مرونتها ولونها الصحي.',
+      feel: 'إحساس أوضح بالطعم وانتعاش في النفَس.',
+      act: 'نظّف بين أسنانك بالخيط الليلة، ولاحظ حال لثتك.',
+      tip: 'فرشاة ناعمة وحركات لطيفة أفضل للثة في مرحلة التعافي.' },
+    { t: 'مزاج أكثر استقراراً',
+      body: 'مع غياب دورة «ارتفاع ثم هبوط» النيكوتين كل ساعة، تبدأ تقلبات المزاج بالهدوء. التهيّج المرتبط بالانسحاب يخف عادةً خلال أسبوعين إلى أربعة.',
+      feel: 'لحظات ضيق قد تظهر، لكنها أقصر وأقل حدة.',
+      act: 'سجّل حضورك اليومي وقيّم مزاجك؛ سترى الاتجاه في «رؤى».',
+      tip: 'حين يضيق صدرك اسأل: هل هذا ضيق حقيقي أم صوت الإدمان؟' },
+    { t: 'منتصف الرحلة', ms: 'نصف الطريق',
+      body: 'أسبوعان كاملان. الرغبات الجسدية تراجعت كثيراً، وما تبقى غالباً ذكريات مرتبطة بمواقف. لثتك تواصل الالتئام.',
+      feel: 'ثقة متزايدة — وقد تأتيك فكرة «أنا مسيطر، ظرف واحد لن يضر». احذرها.',
+      act: 'اقرأ رسالتك لنفسك وأسبابك في «أنا»، وأضف سبباً جديداً اكتشفته.',
+      tip: 'خطر الانتكاس لا يأتي من الرغبة القوية فقط، بل من الثقة الزائدة.' },
+    { t: 'متعة بلا وسيط',
+      body: 'دماغك يعيد ضبط نظام المكافأة. الأشياء البسيطة — القهوة، إنجاز مهمة، حديث جميل — تبدأ تمنحك متعة دون الحاجة لنيكوتين.',
+      feel: 'لحظات ملل أو فتور طبيعية أثناء إعادة الضبط.',
+      act: 'أنجز مهمة مؤجلة واستمتع بشعور الإنجاز الصافي.',
+      tip: 'الحركة والشمس والنوم الجيد ترفع المزاج طبيعياً.' },
+    { t: 'تركيز متصل',
+      body: 'لم يعد انتباهك ينقطع كل ساعة لطلب جرعة جديدة. كثيرون يلاحظون في الأسبوع الثالث تحسناً في القدرة على العمل المتصل.',
+      feel: 'قد يتقلب التركيز، لكن الاتجاه العام للأفضل.',
+      act: 'اعمل أو اقرأ ٤٥ دقيقة متصلة مع كوب ماء بجانبك.',
+      tip: 'قسّم وقتك لجلسات مركّزة مع استراحات قصيرة للحركة.' },
+    { t: 'نَفَس منعش',
+      body: 'تتراجع آثار المنكّهات والأملاح على الفم، ويتحسن جفاف الفم الصباحي ورائحة النفَس.',
+      feel: 'إحساس أوضح بنكهات الطعام.',
+      act: 'جرّب اليوم مشروب نعناع طازج أو بابونج دافئ.',
+      tip: 'النعناع البارد بديل ممتاز لإحساس «البرودة» الذي اعتادته لثتك.' },
+    { t: 'حقيقة التوتر',
+      body: 'تُظهر الدراسات أن القلق والتوتر لدى من يقلعون عن النيكوتين يتحسنان مع الوقت. الظرف لم يكن يزيل التوتر؛ كان يزيل توتر الانسحاب الذي سببه الظرف السابق.',
+      feel: 'ضغوط الحياة ما زالت موجودة، لكنك تواجهها دون حلقة الاعتماد.',
+      act: 'عند أي ضغط اليوم، خذ ٣ أنفاس بطيئة قبل أن ترد.',
+      tip: 'سمِّ ما تشعر به بالكلمات؛ تسمية الشعور تخفف حدته.' },
+    { t: 'لثّة تتماسك',
+      body: 'تتحسن تروية اللثة بعد زوال الأثر القابض للنيكوتين. انحسار اللثة الذي حدث لا يعود وحده عادةً، لكن الإقلاع يوقف مزيداً من الضرر.',
+      feel: 'قد تلاحظ نزفاً بسيطاً عند التنظيف مع عودة التروية؛ إن استمر فراجع طبيب الأسنان.',
+      act: 'احجز موعداً لفحص اللثة أو تنظيف الأسنان.',
+      tip: 'استبدل فرشاتك القديمة بأخرى ناعمة جديدة احتفالاً.' },
+    { t: 'لياقة ونَفَس أطول',
+      body: 'مع استقرار النبض وضغط الدم وتحسّن الدورة الدموية يصبح الجهد البدني أسهل. الرياضة الآن حليف قوي ضد الرغبة.',
+      feel: 'طاقة أفضل في التمارين.',
+      act: 'مارس ٢٠ دقيقة من نشاط بدني تحبه.',
+      tip: 'حتى ١٠ دقائق من المشي السريع تخفف حدة الرغبة لدى كثيرين.' },
+    { t: 'هوية جديدة تتشكل', ms: '٢١ يوماً',
+      body: 'ثلاثة أسابيع. لم تعد «شخصاً يحاول الإقلاع»، بل شخصاً لا يستخدم النيكوتين. هذا التحول في الهوية من أقوى عوامل الاستمرار.',
+      feel: 'الرغبات نادرة نسبياً، وقد تأتي في مواقف غير متوقعة.',
+      act: 'اكتب جملة فخر لنفسك وشاركها مع من يدعمك.',
+      tip: 'قل «أنا لا أستخدم النيكوتين» بدلاً من «أنا أحاول التوقف».' },
+    { t: 'خدعة الظرف الواحد',
+      body: 'مستقبلات النيكوتين ما زالت تتعافى، وظرف واحد قادر على إيقاظ الرغبة بسرعة. معظم الانتكاسات تبدأ بـ«مرة واحدة فقط».',
+      feel: 'قد تظن أنك تستطيع الاستخدام «باعتدال».',
+      act: 'جدّد عهدك اليوم: لا لظرف واحد، مهما كانت المناسبة.',
+      tip: 'احفظ جملة رفض جاهزة: «شكراً، أنا لا أستخدمه».' },
+    { t: 'ذهن أصفى',
+      body: 'يستمر الدماغ في استعادة توازنه، وكثيرون يصفون هذه المرحلة بصفاء ذهني وتحسّن في الذاكرة اليومية وسرعة البديهة.',
+      feel: 'ذهن أهدأ وأقل تشتتاً.',
+      act: 'العب جولة «لمس هادئ» في «نجدة» وحاول تحطيم رقمك.',
+      tip: 'الدماغ يحب الجديد: تعلّم شيئاً صغيراً اليوم.' },
+    { t: 'جيب حر وبال حر',
+      body: 'لم تعد تتفقد جيبك قبل الخروج، ولا تقلق من نفاد العلبة في السفر أو الاجتماعات. هذه حرية لا تُقاس بالمال.',
+      feel: 'خفّة غريبة في التفاصيل اليومية.',
+      act: 'اخرج اليوم دون أي بديل في جيبك سوى ثقتك.',
+      tip: 'لاحظ كم مرة كنت تفكر في العلبة كل يوم سابقاً.' },
+    { t: 'طاقة مستقرة',
+      body: 'تختفي فجوات الخمول التي كانت تأتي مع انخفاض النيكوتين في الدم، وتصبح طاقتك أكثر انتظاماً خلال اليوم.',
+      feel: 'صباحات أسهل لدى كثيرين.',
+      act: 'اشرب لترين من الماء اليوم مع شرائح الليمون أو النعناع.',
+      tip: 'انتظام مواعيد النوم والأكل يثبّت طاقتك.' },
+    { t: 'مناعة اجتماعية',
+      body: 'صار بإمكانك الجلوس في المجالس والمناسبات دون أن تربطها بالنيكوتين. كل مناسبة تمر بنجاح تبني مناعة سلوكية جديدة.',
+      feel: 'رغبة عابرة حين ترى غيرك يستخدم.',
+      act: 'راجع خططك في «درع المواقف» وتأكد من جاهزيتها للمناسبات.',
+      tip: 'اجلس بجانب من لا يستخدم، وأمسك كوباً بيدك.' },
+    { t: 'صوت الإدمان',
+      body: 'حتى بعد أسابيع قد يحاول عقلك المساومة: «أنت تستحق»، «مناسبة خاصة». تمييز هذا الصوت هو مهارتك الأهم للمستقبل.',
+      feel: 'أفكار مساومة نادرة لكنها مقنعة.',
+      act: 'اكتب أقوى جملة مساومة يقولها لك عقلك، ثم اكتب ردك عليها.',
+      tip: 'الرغبة فكرة، والفكرة ليست أمراً يجب تنفيذه.' },
+    { t: 'أربعة أسابيع',
+      body: 'تجاوزت معظم أعراض الانسحاب، والرغبات صارت عابرة. مستقبلات الدماغ تواصل التعافي خلال الأسابيع القادمة، فاستمر.',
+      feel: 'شعور بأن الظرف أصبح من الماضي.',
+      act: 'قارن صورة لثتك من اليوم ٥ بصورة اليوم.',
+      tip: 'تأمل الأرقام في «اليوم»: كل ظرف تجنّبته محسوب.' },
+    { t: 'ليلة التتويج',
+      body: 'غداً تُتم ٣٠ يوماً — ٧٢٠ ساعة من النقاء. كسرت الاعتماد الكيميائي وأعدت بناء عاداتك.',
+      feel: 'حماس، وربما رهبة من «ما بعد التحدي».',
+      act: 'جهّز مكافأتك الشخصية للاحتفال غداً.',
+      tip: 'النقاء ليس تحدياً ينتهي بل حياة تستمر.' },
+    { t: 'تاج النقاء', ms: 'التتويج',
+      body: 'مبارك! ٣٠ يوماً بلا نيكوتين. جسدك ولثتك يتعافيان، وعاداتك تغيّرت، وأثبتّ لنفسك أنك أقوى من الإدمان. ينتقل نَقَاء الآن إلى «وضع الحرية».',
+      feel: 'فخر مستحق.',
+      act: 'احتفل بانتصارك، وشارك بطاقة إنجازك من «أنا».',
+      tip: 'استمر في استخدام «نجدة» متى احتجت؛ الحرية تُحرس.' }
+  ].map((d, i) => Object.assign({ day: i + 1 }, d));
+
+  const BODY = [
+    { h: 2, icon: 'droplet', t: 'النيكوتين يتناقص', d: 'بعد قرابة ساعتين ينخفض النيكوتين في دمك إلى النصف.' },
+    { h: 12, icon: 'heart-pulse', t: 'قلب أهدأ', d: 'يزول الأثر المنبّه للنيكوتين، فيميل النبض وضغط الدم إلى الاستقرار.' },
+    { h: 72, icon: 'sparkles', t: 'جسد خالٍ من النيكوتين', d: 'يغادر النيكوتين جسدك تقريباً، وتبلغ أعراض الانسحاب ذروتها ثم تنحسر.' },
+    { h: 168, icon: 'flower-2', t: 'تذوّق ونفَس أنقى', d: 'يتحسن الإحساس بالطعم ويقل تهيّج الفم.' },
+    { h: 336, icon: 'leaf', t: 'التئام أنسجة الفم', d: 'تتحسن التغيّرات الموضعية في مكان الظرف تدريجياً خلال أسابيع.' },
+    { h: 672, icon: 'brain', t: 'انحسار الانسحاب', d: 'تخف معظم أعراض الانسحاب — التهيّج والقلق وصعوبة التركيز — خلال ٢–٤ أسابيع.' },
+    { h: 2160, icon: 'orbit', t: 'مستقبلات متوازنة', d: 'تشير دراسات تصوير الدماغ إلى عودة مستقبلات النيكوتين لمستويات قريبة من غير المستخدمين خلال ٦–١٢ أسبوعاً.' },
+    { h: 4380, icon: 'mountain', t: 'نصف عام من الثبات', d: 'تصبح الرغبات ذكريات نادرة، ويقل احتمال الانتكاس كثيراً.' },
+    { h: 8760, icon: 'crown', t: 'عام من الحرية', d: 'لثة أصح، وجيب أوفر، وهوية جديدة راسخة.' }
+  ];
+
+  const NEXT_STOPS = [
+    { h: 24, t: 'أول ٢٤ ساعة' }, { h: 72, t: 'قمة الـ٧٢ ساعة' }, { h: 168, t: 'أسبوع كامل' },
+    { h: 240, t: 'العشرة الأوائل' }, { h: 336, t: 'نصف الطريق' }, { h: 504, t: '٢١ يوماً' },
+    { h: 720, t: 'تاج النقاء' }, { h: 1440, t: '٦٠ يوماً' }, { h: 2160, t: '٩٠ يوماً' },
+    { h: 4380, t: 'نصف عام' }, { h: 8760, t: 'عام كامل' }
+  ];
+
+  const TRIGGERS = [
+    { id: 'coffee', t: 'القهوة', icon: 'coffee' },
+    { id: 'drive', t: 'القيادة', icon: 'car' },
+    { id: 'work', t: 'العمل/الدراسة', icon: 'briefcase' },
+    { id: 'stress', t: 'التوتر', icon: 'zap' },
+    { id: 'bored', t: 'الملل', icon: 'cloud' },
+    { id: 'meal', t: 'بعد الأكل', icon: 'utensils' },
+    { id: 'social', t: 'المجالس', icon: 'users' },
+    { id: 'night', t: 'السهر', icon: 'moon-star' },
+    { id: 'other', t: 'أخرى', icon: 'sparkles' }
+  ];
+  const INTENSITY = ['', 'خفيفة', 'متوسطة', 'قوية'];
+  const MOODS = [
+    { v: 1, t: 'صعب', icon: 'cloud-rain' }, { v: 2, t: 'متعب', icon: 'cloud' },
+    { v: 3, t: 'عادي', icon: 'cloud-sun' }, { v: 4, t: 'جيد', icon: 'sun' }, { v: 5, t: 'رائع', icon: 'sparkles' }
+  ];
+  const CRAVE_LEVELS = ['لا شيء', 'خفيفة', 'متوسطة', 'قوية'];
+  const REASONS = ['صحة لثتي وأسناني', 'توفير المال', 'صفاء ذهني وتركيزي', 'من أجل عائلتي', 'التحرر من الاعتماد', 'نوم أفضل', 'لياقتي البدنية', 'أن أكون قدوة'];
+  const CURRENCIES = ['ر.س', 'د.إ', 'د.ك', 'ر.ق', 'د.ب', 'ر.ع', 'د.أ', 'ج.م', '$', '€'];
+  const SHIELD_THEN = [
+    'أشرب ماءً مثلجاً برشفات بطيئة',
+    'أمضغ علكة نعناع خالية من السكر',
+    'أستخدم المسواك لإشغال الفم واليد',
+    'أتنفّس ٤-٧-٨ ثلاث مرات',
+    'أغيّر مكاني وأمشي دقيقتين',
+    'أفتح «نجدة» وأكمل ٣ دقائق',
+    'أتصل بشخص يدعمني'
+  ];
+  const ALTS = [
+    { icon: 'glass-water', t: 'ماء مثلج', d: 'رشفات بطيئة من ماء مثلج تبرّد اللثة وتشغل الفم، وتمنحك دقيقة لتعبر ذروة الرغبة.' },
+    { icon: 'feather', t: 'مسواك', d: 'المسواك يشغل الفم واليد بحركة صحية، ويعطي اللثة إحساساً بالانتعاش.' },
+    { icon: 'wind', t: 'علكة نعناع', d: 'علكة نعناع خالية من السكر تمنح برودة المنثول التي اعتادتها لثتك — دون نيكوتين.' },
+    { icon: 'footprints', t: 'مشي دقيقتين', d: 'الحركة تكسر الموقف وتخفف حدة الرغبة؛ دقيقتان تكفيان لتغيير حالتك.' }
+  ];
+  const QUOTES = [
+    'أنت لا تخسر شيئاً بتركه؛ أنت تستعيد ما أخذه منك.',
+    'كل رغبة تعبرها تجعل التي بعدها أضعف.',
+    'الحرية ليست غياب الرغبة، بل القدرة على قول: لا.',
+    'جسدك يشكرك في كل ساعة تمر.',
+    'لست تقاوم ظرفاً، بل تبني نسخة أقوى منك.',
+    'الموجة تعلو… ثم تنكسر. دائماً.',
+    'يكفيك اليوم وحده؛ لا تحمل همّ الغد.',
+    'أصعب الأيام خلفك، وكل يوم بعده أسهل.',
+    'النقاء ليس محطة تصل إليها، بل طريق تمشيه.',
+    'أنت أقوى من ثلاث دقائق.',
+    'التعثّر ليس نهاية الطريق، بل جزء منه.',
+    'استثمر في نفسك ما كنت تنفقه على ما يؤذيك.',
+    'الهدوء الذي تبحث عنه في الظرف… موجود في نفَسك.',
+    'كل «لا» صغيرة اليوم هي «نعم» كبيرة لنفسك غداً.'
+  ];
+  const BREATHS = {
+    '478': { t: '٤-٧-٨', d: 'شهيق ٤ • حبس ٧ • زفير ٨', ph: [['شهيق', 4, 1.32], ['احبس', 7, 1.32], ['زفير', 8, .86]] },
+    box: { t: 'الصندوق', d: 'شهيق ٤ • حبس ٤ • زفير ٤ • حبس ٤', ph: [['شهيق', 4, 1.32], ['احبس', 4, 1.32], ['زفير', 4, .86], ['احبس', 4, .86]] },
+    sigh: { t: 'التنهيدة', d: 'شهيقان متتاليان ثم زفير طويل', ph: [['شهيق', 2, 1.2], ['شهيق أعمق', 1, 1.36], ['زفير طويل', 6, .86]] }
+  };
+
+  /* =========================================================
+     HELPERS
+     ========================================================= */
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const AR_DIGITS = '٠١٢٣٤٥٦٧٨٩';
+  const ar = v => String(v).replace(/[0-9]/g, d => AR_DIGITS[d]);
+  const nfCache = {};
+  const nf = (v, max = 0) => (nfCache[max] || (nfCache[max] = new Intl.NumberFormat('ar-EG', { maximumFractionDigits: max, minimumFractionDigits: 0 }))).format(v);
+  const pad2 = n => String(n).padStart(2, '0');
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const dateKey = (d = new Date()) => d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
+  function ic(n, c = '') {
+    const p = ICONS[n];
+    return p ? `<svg class="ic ${c}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>` : '';
+  }
+  function hydrate(root = document) { $$('i[data-i]', root).forEach(el => { el.outerHTML = ic(el.dataset.i, el.className); }); }
+
+  function plural(n, f) { // f: [one, two, few(3-10), many(11+)]
+    const k = Math.floor(n);
+    if (k === 1) return f[0];
+    if (k === 2) return f[1];
+    const r = k % 100;
+    if (r >= 3 && r <= 10) return nf(k) + ' ' + f[2];
+    return nf(k) + ' ' + f[3];
+  }
+  const daysW = n => plural(n, ['يوم واحد', 'يومان', 'أيام', 'يوماً']);
+  const wavesW = n => n === 0 ? 'لا موجات بعد' : plural(n, ['موجة واحدة', 'موجتان', 'موجات', 'موجة']);
+  function fmtDur(h) {
+    if (h < 1) return nf(Math.max(1, Math.round(h * 60))) + ' د';
+    if (h < 48) { const H = Math.floor(h), m = Math.round((h - H) * 60); return nf(H) + ' س' + (m && H < 10 ? ' و' + nf(m) + ' د' : ''); }
+    const d = Math.floor(h / 24);
+    if (d < 60) { const rh = Math.floor(h % 24); return daysW(d) + (rh && d < 7 ? ' و' + nf(rh) + ' س' : ''); }
+    const mo = Math.round(d / 30);
+    return mo < 12 ? plural(mo, ['شهر واحد', 'شهران', 'أشهر', 'شهراً']) : plural(Math.round(d / 365), ['عام واحد', 'عامان', 'أعوام', 'عاماً']);
+  }
+  const fmtDate = (ts, opts = { day: 'numeric', month: 'long' }) => new Date(ts).toLocaleDateString('ar-EG-u-ca-gregory', opts);
+  const fmtTime = ts => new Date(ts).toLocaleTimeString('ar-EG', { hour: 'numeric', minute: '2-digit' });
+
+  /* =========================================================
+     STATE
+     ========================================================= */
+  const STORE_KEY = 'naqa_v2';
+  const LEGACY_KEY = 'naqa_nicotine_recovery_v1';
+
+  function defaults() {
+    return {
+      v: 2, onboarded: false, name: '',
+      quitMode: 'cold_turkey', startDateISO: new Date().toISOString(),
+      dailyPouches: 10, pouchMg: 10, canPrice: 25, pouchesPerCan: 20, currency: 'ر.س',
+      goalName: 'سماعة رأس عازلة للضوضاء', goalPrice: 1200,
+      reasons: [], letter: '',
+      completedChallenges: {}, taperDailyLogs: {},
+      shields: [], cravings: [], checkins: {}, slips: [], history: [],
+      legacyWins: 0,
+      stats: { breathCycles: 0, games: 0, bestGame: 0 },
+      theme: 'dark', haptics: true, breathPattern: '478',
+      celebrated: 0, badgesSeen: [],
+      firebaseConfig: { apiKey: '', databaseURL: '', projectId: '', email: '', uid: '', idToken: '', refreshToken: '' },
+      updatedAt: Date.now()
+    };
+  }
+  function normalize(o) {
+    const d = defaults();
+    const s = Object.assign(d, o || {});
+    s.stats = Object.assign(defaults().stats, (o && o.stats) || {});
+    s.firebaseConfig = Object.assign(defaults().firebaseConfig, (o && o.firebaseConfig) || {});
+    ['reasons', 'shields', 'cravings', 'slips', 'history', 'badgesSeen'].forEach(k => { if (!Array.isArray(s[k])) s[k] = []; });
+    ['completedChallenges', 'taperDailyLogs', 'checkins'].forEach(k => { if (!s[k] || typeof s[k] !== 'object') s[k] = {}; });
+    return s;
+  }
+  function migrateV1(o) {
+    const s = normalize({});
+    ['onboarded', 'quitMode', 'startDateISO', 'dailyPouches', 'pouchMg', 'canPrice', 'pouchesPerCan', 'goalName', 'goalPrice', 'completedChallenges', 'taperDailyLogs'].forEach(k => { if (o[k] != null) s[k] = o[k]; });
+    const trig = txt => /قهوة|القهوة/.test(txt) ? 'coffee' : /قيادة|القيادة/.test(txt) ? 'drive' : /عمل|دراسة/.test(txt) ? 'work' : /سهر|ملل/.test(txt) ? 'night' : /وجبات/.test(txt) ? 'meal' : /مجالس/.test(txt) ? 'social' : 'other';
+    s.cravings = (o.triggerLogs || []).map(t => ({ id: t.id || Date.now(), ts: t.id || Date.now(), trigger: trig(t.situation || ''), intensity: { 'خفيفة': 1, 'متوسطة': 2, 'قوية': 3 }[t.intensity] || 2, outcome: 'won', note: t.note || '' }));
+    s.legacyWins = Math.max(0, (o.cravingsDefeated || 0) - s.cravings.length);
+    s.shields = (o.shields || []).map(x => ({ when: x.situation, then: x.plan }));
+    s.slips = (o.slips || []).map((x, i) => ({ ts: Date.now() - i, lesson: x.lesson, pouches: x.type === 'reset' ? 0 : 1 }));
+    if (o.firebaseConfig) s.firebaseConfig = Object.assign(s.firebaseConfig, o.firebaseConfig);
+    return s;
+  }
+  function load() {
+    try {
+      const raw = localStorage.getItem(STORE_KEY);
+      if (raw) return normalize(JSON.parse(raw));
+      const legacy = localStorage.getItem(LEGACY_KEY);
+      if (legacy) return migrateV1(JSON.parse(legacy));
+    } catch (e) { /* storage unavailable */ }
+    return defaults();
+  }
+  let state = load();
+  let cloudTimer = null;
+  function save(cloud = true) {
+    state.updatedAt = Date.now();
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (e) { /* ignore */ }
+    if (cloud && state.firebaseConfig.databaseURL && state.firebaseConfig.uid) {
+      clearTimeout(cloudTimer);
+      cloudTimer = setTimeout(() => cloudPush().catch(() => {}), 1500);
+    }
+  }
+
+  /* =========================================================
+     METRICS
+     ========================================================= */
+  function allowance(day) {
+    if (day >= 28) return 0;
+    const f = day <= 7 ? .75 : day <= 14 ? .5 : day <= 21 ? .25 : .1;
+    return Math.max(1, Math.round(state.dailyPouches * f));
+  }
+  const chapterOf = day => CHAPTERS.find(c => day >= c.from && day <= c.to) || CHAPTERS[3];
+
+  function metrics() {
+    const now = Date.now();
+    const st = Date.parse(state.startDateISO) || now;
+    const ms = Math.max(0, now - st);
+    const H = ms / 36e5, D = H / 24;
+    const gradual = state.quitMode === 'gradual';
+    const day = Math.min(30, Math.floor(D) + 1);
+    const stKey = dateKey(new Date(st));
+    let usedTaper = 0;
+    if (gradual) for (const k in state.taperDailyLogs) if (k >= stKey) usedTaper += Number(state.taperDailyLogs[k]) || 0;
+    const slipP = state.slips.filter(s => s.ts >= st).reduce((a, s) => a + (Number(s.pouches) || 0), 0);
+    const avoided = Math.max(0, D * state.dailyPouches - usedTaper - slipP);
+    const ppp = state.canPrice / Math.max(1, state.pouchesPerCan);
+    const saved = avoided * ppp;
+    const won = state.cravings.filter(c => c.outcome === 'won').length + (state.legacyWins || 0);
+    const slipped = state.cravings.filter(c => c.outcome === 'slip').length;
+    const best = Math.max(H, ...state.history.map(h => h.hours || 0));
+    return {
+      now, st, ms, H, D, gradual, day,
+      days: Math.floor(D), hh: Math.floor(H % 24), mm: Math.floor(ms / 6e4 % 60), ss: Math.floor(ms / 1e3 % 60),
+      free: H >= 720, chapter: chapterOf(day),
+      avoided, saved, mg: avoided * state.pouchMg, perDay: state.dailyPouches * ppp,
+      goalPct: clamp(saved / Math.max(1, state.goalPrice) * 100, 0, 100),
+      allowed: gradual ? allowance(day) : 0, usedToday: Number(state.taperDailyLogs[dateKey()]) || 0,
+      won, slipped, best,
+      challengesDone: Object.values(state.completedChallenges).filter(Boolean).length,
+      checkinCount: Object.keys(state.checkins).length
+    };
+  }
+  function checkinStreak() {
+    let n = 0; const d = new Date();
+    if (!state.checkins[dateKey(d)]) d.setDate(d.getDate() - 1);
+    while (state.checkins[dateKey(d)]) { n++; d.setDate(d.getDate() - 1); }
+    return n;
+  }
+
+  /* =========================================================
+     BADGES
+     ========================================================= */
+  const BADGES = [
+    { id: 'h24', icon: 'sunrise', t: 'أول ٢٤ ساعة', d: 'أتممت يومك الأول كاملاً.', ok: m => m.H >= 24 },
+    { id: 'h72', icon: 'mountain', t: 'قمة الـ٧٢', d: 'عبرت ذروة الانسحاب الكيميائي.', ok: m => m.H >= 72 },
+    { id: 'd7', icon: 'flag', t: 'أسبوع كامل', d: 'سبعة أيام متصلة من النقاء.', ok: m => m.H >= 168 },
+    { id: 'd14', icon: 'route', t: 'نصف الطريق', d: 'أسبوعان كاملان.', ok: m => m.H >= 336 },
+    { id: 'd21', icon: 'sprout', t: 'هوية جديدة', d: 'ثلاثة أسابيع — العادة تغيّرت.', ok: m => m.H >= 504 },
+    { id: 'd30', icon: 'crown', t: 'تاج النقاء', d: 'أتممت تحدي الثلاثين يوماً.', ok: m => m.H >= 720 },
+    { id: 'd90', icon: 'orbit', t: '٩٠ يوماً', d: 'ثلاثة أشهر من الحرية.', ok: m => m.H >= 2160 },
+    { id: 'w1', icon: 'waves', t: 'أول موجة', d: 'عبرت أول رغبة مسجّلة.', ok: m => m.won >= 1, sage: true },
+    { id: 'w10', icon: 'shield', t: 'كاسر الموجات', d: 'عبرت ١٠ موجات.', ok: m => m.won >= 10, sage: true },
+    { id: 'w30', icon: 'trophy', t: 'سيد الهدوء', d: 'عبرت ٣٠ موجة.', ok: m => m.won >= 30, sage: true },
+    { id: 'c5', icon: 'list-checks', t: 'خمسة تحديات', d: 'أنجزت ٥ تحديات يومية.', ok: m => m.challengesDone >= 5, sage: true },
+    { id: 'c20', icon: 'medal', t: 'عشرون تحدياً', d: 'أنجزت ٢٠ تحدياً يومياً.', ok: m => m.challengesDone >= 20, sage: true },
+    { id: 'k7', icon: 'calendar', t: 'حضور ٧ أيام', d: 'سجّلت حضورك اليومي ٧ مرات.', ok: m => m.checkinCount >= 7, sage: true },
+    { id: 'letter', icon: 'mail', t: 'رسالة للمستقبل', d: 'كتبت رسالة لنفسك تقرأها وقت الرغبة.', ok: () => (state.letter || '').trim().length > 10, sage: true },
+    { id: 'shield', icon: 'shield-check', t: 'درع مكتمل', d: 'جهّزت ٣ خطط «إذا… فسأ…».', ok: () => state.shields.length >= 3, sage: true },
+    { id: 'breath', icon: 'wind', t: 'متنفّس', d: 'أكملت ١٠ دورات تنفّس.', ok: () => state.stats.breathCycles >= 10, sage: true },
+    { id: 'game', icon: 'hand', t: 'يد مشغولة', d: 'أكملت جولة «لمس هادئ».', ok: () => state.stats.games >= 1, sage: true },
+    { id: 'goal', icon: 'gift', t: 'المكافأة', d: 'جمعت قيمة مكافأتك من التوفير.', ok: m => m.goalPct >= 100 }
+  ];
+
+  /* =========================================================
+     HAPTICS / TOAST / CONFETTI / TOOLTIP
+     ========================================================= */
+  const buzz = (p = 10) => { try { if (state.haptics && navigator.vibrate) navigator.vibrate(p); } catch (e) {} };
+  let toastT;
+  function toast(msg, icon = 'circle-check') {
+    $('#toast-ic').innerHTML = ic(icon, 'sm');
+    $('#toast-text').textContent = msg;
+    const t = $('#toast');
+    t.classList.add('on');
+    clearTimeout(toastT);
+    toastT = setTimeout(() => t.classList.remove('on'), 2600);
+  }
+  const reduceMotion = () => window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function confetti() {
+    if (reduceMotion()) return;
+    const c = $('#confetti'), ctx = c.getContext('2d');
+    const dpr = window.devicePixelRatio || 1;
+    c.width = innerWidth * dpr; c.height = innerHeight * dpr; ctx.scale(dpr, dpr);
+    const cols = ['#8AB9A3', '#D9B985', '#ECE8E1', '#BFDCCD', '#EBD3AA'];
+    const P = Array.from({ length: 110 }, () => ({
+      x: innerWidth / 2 + (Math.random() - .5) * 80, y: innerHeight * .35,
+      vx: (Math.random() - .5) * 9, vy: -Math.random() * 9 - 3,
+      r: 3 + Math.random() * 4, c: cols[(Math.random() * cols.length) | 0], a: Math.random() * 6, va: (Math.random() - .5) * .3
+    }));
+    let f = 0;
+    (function loop() {
+      ctx.clearRect(0, 0, innerWidth, innerHeight);
+      P.forEach(p => { p.vy += .22; p.x += p.vx; p.y += p.vy; p.vx *= .99; p.a += p.va; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.a); ctx.fillStyle = p.c; ctx.globalAlpha = Math.max(0, 1 - f / 110); ctx.fillRect(-p.r, -p.r / 2, p.r * 2, p.r); ctx.restore(); });
+      if (++f < 110) requestAnimationFrame(loop); else ctx.clearRect(0, 0, innerWidth, innerHeight);
+    })();
+  }
+  let tipT;
+  function showTip(el) {
+    const tip = $('#tip'), r = el.getBoundingClientRect();
+    tip.textContent = el.dataset.tip;
+    tip.style.left = clamp(r.left + r.width / 2, 70, innerWidth - 70) + 'px';
+    tip.style.top = r.top + 'px';
+    tip.classList.add('on');
+  }
+  const hideTip = () => $('#tip').classList.remove('on');
+
+  /* =========================================================
+     THEME
+     ========================================================= */
+  function applyTheme() {
+    const pref = state.theme === 'auto' ? (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark') : state.theme;
+    document.documentElement.dataset.theme = pref;
+    const meta = $('meta[name="theme-color"]');
+    if (meta) meta.content = pref === 'light' ? '#F3F0E8' : '#0A0F0D';
+  }
+
+  /* =========================================================
+     SCENE: SKY + GROWING TREE
+     ========================================================= */
+  function rng(seed) { return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  let TREE = null;
+  function buildTree() {
+    const r = rng(7301);
+    const WIN = [[0, 1.5], [1.5, 4], [4, 9], [9, 16], [16, 24]];
+    const br = [];
+    (function grow(x, y, a, len, w, d) {
+      a = clamp(a, -Math.PI + .3, -.3);
+      const x2 = x + Math.cos(a) * len, y2 = y + Math.sin(a) * len;
+      const bend = (r() - .5) * len * .35;
+      const cx = (x + x2) / 2 + Math.cos(a + Math.PI / 2) * bend, cy = (y + y2) / 2 + Math.sin(a + Math.PI / 2) * bend;
+      const [s, e] = WIN[d], span = e - s;
+      const st = d ? s + r() * span * .35 : 0;
+      const en = d ? Math.min(e, st + span * .65) : WIN[0][1];
+      br.push({ x, y, x2, y2, cx, cy, w, d, st, en });
+      if (d < 4) {
+        const n = d === 0 ? 3 : (r() < .35 ? 3 : 2);
+        for (let i = 0; i < n; i++) {
+          const spread = n === 3 ? (i - 1) * .62 : (i === 0 ? -.44 : .44);
+          grow(x2, y2, a + spread + (r() - .5) * .25, len * (.7 + r() * .08), w * .64, d + 1);
+        }
+      }
+    })(180, 206, -Math.PI / 2, 46, 8, 0);
+    const pt = (b, t) => ({ x: (1 - t) * (1 - t) * b.x + 2 * (1 - t) * t * b.cx + t * t * b.x2, y: (1 - t) * (1 - t) * b.y + 2 * (1 - t) * t * b.cy + t * t * b.y2 });
+    const spots = [];
+    br.forEach(b => {
+      const ts = b.d === 0 ? [.5, .72, .9] : [.55, 1];
+      ts.forEach(t => { const p = pt(b, t); spots.push({ x: p.x + (r() - .5) * 4, y: p.y + (r() - .5) * 4, rot: (r() * 140 - 70) | 0, avail: b.st + (b.en - b.st) * t, k: r(), tip: t === 1 && b.d >= 2 }); });
+    });
+    spots.sort((a, b) => a.avail - b.avail || a.k - b.k);
+    const used = new Set(), leaf = [];
+    for (let k = 1; k <= 70; k++) {
+      let idx = spots.findIndex((s, i) => !used.has(i) && s.avail <= k);
+      if (idx < 0) idx = spots.findIndex((s, i) => !used.has(i));
+      if (idx < 0) break;
+      used.add(idx); leaf[k] = spots[idx];
+    }
+    const stars = Array.from({ length: 28 }, () => ({ x: r() * 360, y: r() * 120, r: .4 + r() * 1.1, d: (r() * 3).toFixed(2) }));
+    TREE = { br, leaf, stars };
+  }
+  function lerpHex(a, b, t) {
+    const pa = parseInt(a.slice(1), 16), pb = parseInt(b.slice(1), 16);
+    const ch = s => [(s >> 16) & 255, (s >> 8) & 255, s & 255];
+    const A = ch(pa), B = ch(pb);
+    return '#' + A.map((v, i) => Math.round(v + (B[i] - v) * t).toString(16).padStart(2, '0')).join('');
+  }
+  function ramp(stops, p) {
+    for (let i = 1; i < stops.length; i++) if (p <= stops[i][0]) { const [p0, c0] = stops[i - 1], [p1, c1] = stops[i]; return lerpHex(c0, c1, (p - p0) / (p1 - p0)); }
+    return stops[stops.length - 1][1];
+  }
+  function sceneSVG(m, opts = {}) {
+    if (!TREE) buildTree();
+    const p = clamp(m.D / 30, 0, 1);
+    const skyTop = ramp([[0, '#0B1622'], [.35, '#1B2440'], [.65, '#2E4A6B'], [1, '#4F86A6']], p);
+    const skyBot = ramp([[0, '#1A2A33'], [.35, '#5E4A5C'], [.65, '#C98E68'], [1, '#F0D2A0']], p);
+    const ground = ramp([[0, '#13201A'], [1, '#2E5442']], p);
+    const hills = ramp([[0, '#1A2B24'], [1, '#4C7D66']], p);
+    const trunk = ramp([[0, '#3A2C22'], [1, '#5E4230']], p);
+    const sunY = 214 - p * 150;
+    const D = Math.min(m.D, 30);
+    let s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" preserveAspectRatio="xMidYMid slice" role="img" aria-label="شجرة النقاء: تنمو ورقة مع كل يوم">
+      <defs>
+        <linearGradient id="skyG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${skyTop}"/><stop offset="1" stop-color="${skyBot}"/></linearGradient>
+        <radialGradient id="sunG"><stop offset="0" stop-color="#FFE7B8" stop-opacity=".95"/><stop offset=".35" stop-color="#F6C98A" stop-opacity=".45"/><stop offset="1" stop-color="#F6C98A" stop-opacity="0"/></radialGradient>
+      </defs>
+      <rect width="360" height="240" fill="url(#skyG)"/>`;
+    const starO = clamp(1 - p * 1.6, 0, 1);
+    if (starO > 0) {
+      s += `<g opacity="${starO.toFixed(2)}" fill="#F4EFE6">` + TREE.stars.map(t => `<circle class="${opts.static ? '' : 'twinkle'}" style="animation-delay:${t.d}s" cx="${t.x.toFixed(1)}" cy="${t.y.toFixed(1)}" r="${t.r.toFixed(2)}"/>`).join('') + '</g>';
+      s += `<g opacity="${starO.toFixed(2)}"><circle cx="118" cy="64" r="12" fill="#EDE6D6"/><circle cx="124" cy="59" r="11" fill="${skyTop}"/></g>`;
+    }
+    s += `<circle cx="282" cy="${sunY.toFixed(1)}" r="70" fill="url(#sunG)" opacity="${(.25 + p * .75).toFixed(2)}"/>
+      <circle cx="282" cy="${sunY.toFixed(1)}" r="15" fill="#FBE3B4" opacity="${(.35 + p * .65).toFixed(2)}"/>
+      <path d="M0,192 Q60,160 130,180 T260,170 T360,178 V240 H0Z" fill="${hills}" opacity=".75"/>
+      <path d="M0,214 Q90,196 180,206 T360,203 V240 H0Z" fill="${ground}"/>`;
+    // branches
+    s += '<g stroke-linecap="round" fill="none">';
+    TREE.br.forEach(b => {
+      const f = clamp((D - b.st) / Math.max(.01, b.en - b.st), 0, 1);
+      if (f <= 0) return;
+      s += `<path d="M${b.x.toFixed(1)},${b.y.toFixed(1)} Q${b.cx.toFixed(1)},${b.cy.toFixed(1)} ${b.x2.toFixed(1)},${b.y2.toFixed(1)}" pathLength="1" stroke-dasharray="1 1" stroke-dashoffset="${(1 - f).toFixed(3)}" stroke="${trunk}" stroke-width="${Math.max(1, b.w * (0.55 + 0.45 * Math.min(1, D / 10))).toFixed(2)}"/>`;
+    });
+    s += '</g>';
+    // leaves
+    const greens = ['#7FB89A', '#9CCAB0', '#6AA585', '#B5D9C2'];
+    const count = Math.min(30, m.day) + (m.free ? Math.min(40, Math.floor(m.D - 30)) : 0);
+    for (let k = 1; k <= count; k++) {
+      const L = TREE.leaf[k]; if (!L) continue;
+      const isBud = !m.free && k === m.day;
+      const sc = isBud ? .7 : 1;
+      const cls = isBud && !opts.static ? 'bud' : (!opts.static && k === m.day - 1 ? 'leaf-pop' : '');
+      s += `<ellipse class="${cls}" cx="${L.x.toFixed(1)}" cy="${L.y.toFixed(1)}" rx="${(5.4 * sc).toFixed(1)}" ry="${(2.8 * sc).toFixed(1)}" transform="rotate(${L.rot} ${L.x.toFixed(1)} ${L.y.toFixed(1)})" fill="${greens[k % 4]}"/>`;
+      if (k <= 30 && state.completedChallenges[k]) s += `<circle cx="${(L.x + 3.5).toFixed(1)}" cy="${(L.y + 3).toFixed(1)}" r="1.9" fill="#E8B96A"/>`;
+    }
+    // blossoms on milestones
+    DAYS.filter(d => d.ms && d.day < m.day + (m.free ? 1 : 0)).forEach(d => {
+      const L = TREE.leaf[d.day + 40] || TREE.leaf[d.day]; if (!L) return;
+      const x = L.x, y = L.y - 2;
+      s += `<g>${[0, 72, 144, 216, 288].map(a => `<circle cx="${(x + Math.cos(a * Math.PI / 180) * 2.6).toFixed(1)}" cy="${(y + Math.sin(a * Math.PI / 180) * 2.6).toFixed(1)}" r="2.2" fill="#F6DDB2"/>`).join('')}<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="1.5" fill="#D99A55"/></g>`;
+    });
+    if (m.free && !opts.static) {
+      s += '<g fill="#FBE7B0">' + [[120, 120], [240, 110], [150, 80], [215, 150], [100, 160], [260, 140]].map(([x, y], i) => `<circle class="firefly" style="animation-delay:${i * .9}s" cx="${x}" cy="${y}" r="1.8"/>`).join('') + '</g>';
+    }
+    s += '</svg>';
+    return s;
+  }
+
+  /* =========================================================
+     NAVIGATION
+     ========================================================= */
+  let currentTab = 'today';
+  let previewDay = null;
+  let journeySeg = 'path';
+  const RENDER = {};
+  function go(tab, opts = {}) {
+    currentTab = tab;
+    ['today', 'journey', 'sos', 'insights', 'me'].forEach(t => {
+      const v = $('#view-' + t);
+      v.hidden = t !== tab;
+      v.classList.remove('enter');
+    });
+    $$('.tab').forEach(b => b.dataset.tab === tab ? b.setAttribute('aria-current', 'page') : b.removeAttribute('aria-current'));
+    RENDER[tab]();
+    const v = $('#view-' + tab);
+    void v.offsetWidth; v.classList.add('enter');
+    if (!opts.keepScroll) window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+  }
+  const rerender = () => RENDER[currentTab]();
+
+  /* =========================================================
+     VIEW: TODAY
+     ========================================================= */
+  function greeting() {
+    const h = new Date().getHours();
+    const g = h < 5 ? 'ليلة هادئة' : h < 12 ? 'صباح النقاء' : h < 17 ? 'نهارك نقي' : 'مساء النقاء';
+    return g + (state.name ? '، ' + esc(state.name) : '');
+  }
+  function nextStop(m) { return NEXT_STOPS.find(s => s.h > m.H); }
+
+  RENDER.today = function () {
+    const m = metrics();
+    const active = previewDay || m.day;
+    const d = DAYS[active - 1];
+    const ch = chapterOf(active);
+    const done = !!state.completedChallenges[active];
+    const ns = nextStop(m);
+    const cur = state.currency;
+    const todayCk = state.checkins[dateKey()];
+    const streak = checkinStreak();
+    const quote = QUOTES[(Math.floor(m.now / 864e5)) % QUOTES.length];
+    const dayLeft = m.perDay > 0 ? Math.ceil(Math.max(0, state.goalPrice - m.saved) / m.perDay) : 0;
+    const eta = new Date(m.now + dayLeft * 864e5);
+
+    let html = `
+      <header class="topbar">
+        <div class="brand">
+          <div class="logo">${ic('leaf')}</div>
+          <div>
+            <p class="eyebrow">${fmtDate(m.now, { weekday: 'long', day: 'numeric', month: 'long' })}</p>
+            <h1 class="h2">${greeting()}</h1>
+          </div>
+        </div>
+        <button class="icon-btn" data-action="tab" data-tab="me" aria-label="الإعدادات">${ic('settings', 'sm')}</button>
+      </header>
+
+      <section class="card hero">
+        <div class="scene" id="scene">${sceneSVG(m)}<div class="scene-fade"></div>
+          <span class="chip glass-chip scene-badge">${m.free ? ic('crown', 'xs') + ' وضع الحرية' : 'اليوم ' + ar(m.day) + ' من ٣٠'}</span>
+          <span class="chip glass-chip scene-badge2">${ic('leaf', 'xs')} ${ar(Math.min(30, m.day))} ورقة</span>
+        </div>
+        <div class="hero-body">
+          <p class="xs muted" style="margin:0 0 4px">${m.gradual && !m.free ? 'في رحلة التدرّج منذ' : 'نقيّ منذ'}</p>
+          <div class="counter"><span class="big num" data-live="days">${nf(m.days)}</span><span class="h3 ink2" data-live="daysW">${m.days === 1 ? 'يوم' : m.days === 2 ? 'يومان' : (m.days % 100 >= 3 && m.days % 100 <= 10) ? 'أيام' : 'يوماً'}</span></div>
+          <div class="clock num" data-live="clock"></div>
+          <div class="bar thin" style="margin:14px 0 8px"><i data-live="prog" style="width:${Math.max(2, clamp(m.H / 720 * 100, 0, 100))}%"></i></div>
+          <div class="row between xs muted"><span>${ic('flag', 'xs')} ${m.free ? 'أتممت التحدي' : 'الفصل ' + ar(m.chapter.n) + ' · ' + m.chapter.title}</span><span data-live="next">${ns ? esc(ns.t) + ' بعد ' + fmtDur(ns.h - m.H) : ''}</span></div>
+        </div>
+      </section>
+
+      <section class="grid-2">
+        <div class="stat"><div class="row between"><span class="l">وفّرت</span><span class="ibox sm sand">${ic('wallet', 'sm')}</span></div><div class="v num"><span data-live="saved">${nf(m.saved, m.saved < 100 ? 1 : 0)}</span><small>${esc(cur)}</small></div></div>
+        <div class="stat"><div class="row between"><span class="l">ظرف تجنّبته</span><span class="ibox sm">${ic('shield-check', 'sm')}</span></div><div class="v num" data-live="avoided">${nf(Math.floor(m.avoided))}</div></div>
+        <div class="stat"><div class="row between"><span class="l">نيكوتين لم يدخل جسدك</span><span class="ibox sm">${ic('droplet', 'sm')}</span></div><div class="v num"><span data-live="mg">${nf(Math.round(m.mg))}</span><small>ملغ</small></div></div>
+        <div class="stat"><div class="row between"><span class="l">موجات عبرتها</span><span class="ibox sm sand">${ic('waves', 'sm')}</span></div><div class="v num">${nf(m.won)}</div></div>
+      </section>`;
+
+    // Check-in
+    if (todayCk && !checkinEditing) {
+      const mood = MOODS.find(x => x.v === todayCk.mood) || MOODS[2];
+      html += `
+      <section class="card tight">
+        <div class="row">
+          <span class="ibox">${ic(mood.icon)}</span>
+          <div class="grow"><div class="h3">سجّلت حضورك اليوم</div><div class="xs muted">المزاج: ${mood.t} · الرغبة: ${CRAVE_LEVELS[todayCk.craving] || '—'}</div></div>
+          ${streak > 1 ? `<span class="chip sand">${ic('flame', 'xs')} ${daysW(streak)}</span>` : ''}
+          <button class="icon-btn sm" data-action="checkinEdit" aria-label="تعديل">${ic('pencil', 'xs')}</button>
+        </div>
+      </section>`;
+    } else {
+      const dm = checkinDraft.mood ?? (todayCk && todayCk.mood), dc = checkinDraft.craving ?? (todayCk && todayCk.craving);
+      html += `
+      <section class="card">
+        <div class="card-head"><span class="ibox sand">${ic('calendar')}</span><div class="grow"><h2 class="h3">كيف حالك اليوم؟</h2><p class="xs muted" style="margin:0">تسجيل يومي في ثوانٍ يكشف لك نمطك في «رؤى»</p></div></div>
+        <div class="grid-4" style="grid-template-columns:repeat(5,1fr)">
+          ${MOODS.map(x => `<button class="opt" data-action="ckMood" data-v="${x.v}" aria-pressed="${dm === x.v}">${ic(x.icon)}<span>${x.t}</span></button>`).join('')}
+        </div>
+        <p class="xs muted" style="margin:14px 0 8px">شدة الرغبة اليوم</p>
+        <div class="grid-4">
+          ${CRAVE_LEVELS.map((t, i) => `<button class="opt inline sand" data-action="ckCrave" data-v="${i}" aria-pressed="${dc === i}">${t}</button>`).join('')}
+        </div>
+        <button class="btn primary block" style="margin-top:14px" data-action="ckSave" ${dm && dc != null ? '' : 'disabled'}>حفظ حضور اليوم</button>
+      </section>`;
+    }
+
+    // Taper
+    if (m.gradual && !m.free) {
+      const over = Math.max(0, m.usedToday - m.allowed);
+      const dots = Array.from({ length: Math.max(m.allowed, m.usedToday) }, (_, i) => `<span class="pouch ${i < m.usedToday ? (i >= m.allowed ? 'over' : 'used') : ''}"></span>`).join('');
+      const mgRec = m.day <= 14 ? state.pouchMg : Math.max(2, Math.round(state.pouchMg / 2));
+      html += `
+      <section class="card">
+        <div class="card-head"><span class="ibox sand">${ic('trending-down')}</span>
+          <div class="grow"><h2 class="h3">حصة التدرّج اليوم</h2><p class="xs muted" style="margin:0">${m.allowed ? 'الحد الأقصى ' + nf(m.allowed) + ' · بتركيز ' + nf(mgRec) + ' ملغ أو أقل' : 'يوم صفر — أنت جاهز للتوقف التام'}</p></div>
+          <span class="chip ${over ? 'rose' : 'sage'}">${over ? 'تجاوزت بـ' + nf(over) : 'متبقٍ ' + nf(Math.max(0, m.allowed - m.usedToday))}</span>
+        </div>
+        ${dots ? `<div class="pouches">${dots}</div>` : `<div class="callout sage small">${ic('target', 'sm')} لا أظرف اليوم. استعن بـ«نجدة» إن جاءت الرغبة.</div>`}
+        ${over ? '<p class="xs rose" style="margin:10px 0 0">لا بأس — سجّلها بصدق وغداً بداية جديدة.</p>' : ''}
+        <div class="row" style="margin-top:14px">
+          <button class="btn soft-sand grow" data-action="taperAdd">${ic('plus', 'sm')} سجّلت ظرفاً</button>
+          <button class="btn" data-action="taperUndo" ${m.usedToday ? '' : 'disabled'} aria-label="تراجع">${ic('rotate-ccw', 'sm')}</button>
+        </div>
+      </section>`;
+    }
+
+    // Day card
+    html += `
+      <section class="card">
+        <div class="row between" style="align-items:flex-start">
+          <div class="grow">
+            <span class="xs sage bold">الفصل ${ar(ch.n)} · ${ch.title}${d.ms ? ' · <span class="sand">' + d.ms + '</span>' : ''}</span>
+            <h2 class="h2" style="margin-top:4px">اليوم ${ar(active)}: ${d.t}</h2>
+          </div>
+          <div class="day-nav">
+            <button class="icon-btn sm" data-action="prevDay" ${active <= 1 ? 'disabled' : ''} aria-label="اليوم السابق">${ic('chevron-right', 'sm')}</button>
+            <button class="icon-btn sm" data-action="nextDay" ${active >= m.day ? 'disabled' : ''} aria-label="اليوم التالي">${ic('chevron-left', 'sm')}</button>
+          </div>
+        </div>
+        <p class="body" style="margin-top:10px">${d.body}</p>
+        <details class="more" style="margin-top:8px"><summary>ماذا قد تشعر به؟ ${ic('chevron-down', 'xs')}</summary><p class="body small" style="margin-top:6px">${d.feel}</p><p class="small sand" style="margin:8px 0 0">${ic('lightbulb', 'xs')} ${d.tip}</p></details>
+        <div class="callout sand" style="margin-top:14px">
+          <div class="callout-title sand">${ic('target', 'xs')} تحدي اليوم</div>
+          <p class="small" style="margin:0 0 12px;line-height:1.8">${d.act}</p>
+          <button class="btn ${done ? 'soft' : 'sand'} block sm" data-action="toggleChallenge" data-day="${active}">${ic(done ? 'circle-check' : 'check', 'sm')} ${done ? 'أنجزته — ثمرة ذهبية على شجرتك' : 'أنجزت التحدي'}</button>
+        </div>
+        ${previewDay && previewDay !== m.day ? `<button class="btn ghost block sm" style="margin-top:8px" data-action="todayDay">العودة إلى يومي الحالي</button>` : ''}
+      </section>`;
+
+    // Goal
+    html += `
+      <section class="card">
+        <div class="card-head">
+          <span class="ibox sand">${ic('gift')}</span>
+          <div class="grow"><p class="xs muted" style="margin:0">مكافأتك</p><h2 class="h3">${esc(state.goalName)}</h2></div>
+          <button class="btn sm" data-action="editGoal">${ic('pencil', 'xs')} تعديل</button>
+        </div>
+        <div class="row between small" style="margin-bottom:8px"><span><b class="sand num" data-live="goalSaved">${nf(Math.min(m.saved, state.goalPrice), 0)}</b> <span class="muted">من ${nf(state.goalPrice)} ${esc(cur)}</span></span><b class="num" data-live="goalPct">${nf(Math.floor(m.goalPct))}٪</b></div>
+        <div class="bar"><i data-live="goalBar" style="width:${Math.max(2, m.goalPct)}%"></i></div>
+        <p class="xs muted" style="margin:10px 0 0">${m.goalPct >= 100 ? 'مبارك! جمعت قيمة مكافأتك كاملة — اشترِها بفخر.' : 'توفّر ' + nf(m.perDay, 1) + ' ' + esc(cur) + ' يومياً · تصل إليها تقريباً في ' + fmtDate(eta.getTime())}</p>
+      </section>
+
+      <section class="card quote-card">
+        <span class="quote-mark">${ic('quote', 'lg')}</span>
+        <p class="quote">${quote}</p>
+      </section>`;
+
+    $('#view-today').innerHTML = html;
+    lastDay = m.day;
+    updateLive(m);
+  };
+
+  let checkinEditing = false;
+  let checkinDraft = {};
+
+  /* =========================================================
+     VIEW: JOURNEY
+     ========================================================= */
+  RENDER.journey = function () {
+    const m = metrics();
+    let html = `
+      <header class="topbar"><div><p class="eyebrow">${m.free ? 'أتممت الثلاثين — الشجرة مكتملة' : 'اليوم ' + ar(m.day) + ' من ٣٠'}</p><h1 class="h1">رحلتك</h1></div>
+        <span class="chip sand">${ic('award', 'xs')} ${nf(BADGES.filter(b => b.ok(m)).length)}/${nf(BADGES.length)} وسام</span></header>
+      <div class="seg" role="tablist">
+        <button data-action="journeySeg" data-v="path" aria-pressed="${journeySeg === 'path'}">المسار</button>
+        <button data-action="journeySeg" data-v="body" aria-pressed="${journeySeg === 'body'}">جسدك</button>
+        <button data-action="journeySeg" data-v="badges" aria-pressed="${journeySeg === 'badges'}">الأوسمة</button>
+      </div>`;
+
+    if (journeySeg === 'path') {
+      const W = 320, ROW = 86, AMP = 72;
+      CHAPTERS.forEach(c => {
+        const days = DAYS.filter(d => d.day >= c.from && d.day <= c.to);
+        const doneN = days.filter(d => d.day < m.day || m.free).length;
+        const isCur = !m.free && m.chapter.n === c.n;
+        html += `<section class="card">
+          <div class="chapter-head">
+            <span class="ibox ${isCur ? '' : doneN === days.length ? '' : 'sand'}">${ic(c.icon)}</span>
+            <div class="grow"><div class="xs ${isCur ? 'sage' : 'muted'} bold">الفصل ${ar(c.n)}${isCur ? ' · أنت هنا' : ''}</div><h2 class="h3">${c.title}</h2><p class="xs muted" style="margin:0">${c.desc}</p></div>
+            <span class="xs bold num ${doneN ? 'sand' : 'muted'}">${ar(doneN)}/${ar(days.length)}</span>
+          </div>`;
+        const pts = days.map((d, i) => ({ d, x: W / 2 + Math.sin((d.day - 1) * .9) * AMP, y: ROW * i + ROW / 2 }));
+        const pathD = arr => arr.map((p, i) => i === 0 ? `M${p.x.toFixed(1)},${p.y}` : `C${arr[i - 1].x.toFixed(1)},${arr[i - 1].y + ROW / 2} ${p.x.toFixed(1)},${p.y - ROW / 2} ${p.x.toFixed(1)},${p.y}`).join(' ');
+        const progIdx = pts.filter(p => p.d.day <= m.day || m.free).length;
+        html += `<div class="path-wrap" style="height:${ROW * days.length}px">
+          <svg class="path-line" viewBox="0 0 ${W} ${ROW * days.length}" aria-hidden="true">
+            <path d="${pathD(pts)}" fill="none" stroke="var(--line-2)" stroke-width="3" stroke-dasharray="2 9" stroke-linecap="round"/>
+            ${progIdx > 1 ? `<path d="${pathD(pts.slice(0, progIdx))}" fill="none" stroke="var(--sage)" stroke-width="4" stroke-linecap="round" opacity=".85"/>` : ''}
+          </svg>`;
+        pts.forEach(p => {
+          const d = p.d;
+          const doneD = d.day < m.day || m.free, cur = d.day === m.day && !m.free, locked = d.day > m.day;
+          const cls = ['node', d.ms ? 'ms' : '', doneD ? 'done' : '', cur ? 'current' : '', locked ? 'locked' : ''].join(' ');
+          html += `<button class="${cls}" style="left:${p.x.toFixed(1)}px;top:${p.y}px" data-action="openDay" data-day="${d.day}" ${locked ? 'disabled' : ''} aria-label="اليوم ${ar(d.day)}${locked ? ' مقفل' : ''}">
+            ${d.ms ? `<span class="crown">${ic('star', 'xs')}</span>` : ''}
+            ${locked && !d.ms ? ic('lock', 'xs') : `<span class="num">${ar(d.day)}</span>`}
+            ${state.completedChallenges[d.day] ? `<span class="tick">${ic('check', 'xs')}</span>` : ''}
+          </button>`;
+          const right = p.x < W / 2;
+          const lx = right ? p.x + 40 : p.x - 40 - 118;
+          if (!locked || d.ms) {
+            html += `<div class="node-label" style="left:${lx.toFixed(1)}px;top:${p.y}px;text-align:${right ? 'right' : 'left'};direction:rtl">
+              ${d.ms ? `<span class="tag">${d.ms}</span>` : ''}${cur ? '<span class="tag sage" style="color:var(--sage-ink)">أنت هنا</span>' : ''}
+              ${!locked ? `<b class="clamp-2">${d.t}</b>` : '<span class="muted">محطة قادمة</span>'}</div>`;
+          }
+        });
+        html += `</div></section>`;
+      });
+      html += `<section class="card" style="border-color:${m.free ? 'var(--sand)' : 'var(--line)'}">
+        <div class="row"><span class="ibox sand">${ic('crown')}</span><div class="grow"><h2 class="h3">واحة الحرية</h2><p class="xs muted" style="margin:0">${m.free ? 'أنت فيها منذ ' + daysW(Math.floor(m.D - 30) || 1) + '. الشجرة تواصل النمو بأوراق جديدة.' : 'تُفتح بعد اليوم ٣٠، وتتابع فيها إنجازك بلا توقف.'}</p></div></div>
+      </section>`;
+    } else if (journeySeg === 'body') {
+      const nextI = BODY.findIndex(b => b.h > m.H);
+      html += `<section class="card"><div class="card-head"><span class="ibox">${ic('activity')}</span><div class="grow"><h2 class="h3">ماذا يحدث في جسدك؟</h2><p class="xs muted" style="margin:0">خط زمني يتحدّث تلقائياً مع كل ساعة</p></div></div>
+        <div class="timeline">` + BODY.map((b, i) => {
+          const done = m.H >= b.h, next = i === nextI;
+          const prevH = i ? BODY[i - 1].h : 0;
+          const pct = done ? 100 : next ? clamp((m.H - prevH) / (b.h - prevH) * 100, 2, 100) : 0;
+          return `<div class="tl-item ${done ? 'done' : next ? 'next' : ''}">
+            <div class="tl-dot">${ic(done ? 'check' : b.icon, 'sm')}</div>
+            <div style="padding-bottom:8px;border-bottom:1px solid var(--line)">
+              <div class="row between"><span class="h3">${b.t}</span><span class="xs ${done ? 'sage' : next ? 'sand' : 'muted'} bold">${done ? 'تحقّق' : next ? 'بعد ' + fmtDur(b.h - m.H) : 'عند ' + fmtDur(b.h)}</span></div>
+              <p class="small ink2" style="margin:2px 0 ${next ? '8px' : '0'};line-height:1.75">${b.d}</p>
+              ${next ? `<div class="bar thin"><i style="width:${pct}%"></i></div>` : ''}
+            </div></div>`;
+        }).join('') + `</div>
+        <p class="xs muted" style="margin:14px 0 0">${ic('info', 'xs')} الأزمنة تقريبية وتختلف بين الأشخاص. نَقَاء أداة دعم وليس بديلاً عن استشارة الطبيب.</p></section>`;
+    } else {
+      const earned = BADGES.filter(b => b.ok(m)).length;
+      html += `<section class="card tight"><div class="row"><span class="ibox sand">${ic('award')}</span><div class="grow"><div class="h3">${nf(earned)} من ${nf(BADGES.length)} وسام</div><div class="bar thin" style="margin-top:8px"><i style="width:${earned / BADGES.length * 100}%"></i></div></div></div></section>
+      <div class="badge-grid">` + BADGES.map(b => {
+        const on = b.ok(m);
+        return `<button class="badge ${on ? 'on' : ''} ${b.sage ? 'sage-m' : ''}" data-action="openBadge" data-id="${b.id}">
+          <span class="medal">${ic(b.icon, 'lg')}${on ? '' : `<span class="lk">${ic('lock', 'xs')}</span>`}</span>
+          <span class="nm">${b.t}</span></button>`;
+      }).join('') + `</div>`;
+    }
+    $('#view-journey').innerHTML = html;
+  };
+
+  /* =========================================================
+     VIEW: SOS
+     ========================================================= */
+  RENDER.sos = function () {
+    const m = metrics();
+    const last = state.cravings.slice().sort((a, b) => b.ts - a.ts)[0];
+    $('#view-sos').innerHTML = `
+      <header class="topbar"><div><p class="eyebrow">الرغبة تبلغ ذروتها ثم تنحسر خلال دقائق</p><h1 class="h1">نجدة</h1></div></header>
+      <section class="card sos-hero">
+        <h2 class="h2">هل تشعر برغبة الآن؟</h2>
+        <p class="small muted" style="margin:6px auto 0;max-width:300px">لا تقاومها وحدك. ثلاث دقائق من التنفّس والتركيز، وسترى الموجة تنكسر أمامك.</p>
+        <button class="sos-orb" data-action="sessionStart" aria-label="ابدأ جلسة العبور لمدة ٣ دقائق">
+          ${ic('wind', 'xl')}<span class="h3">ابدأ ٣ دقائق</span><span class="xs ink2">جلسة العبور</span>
+        </button>
+        <div class="row" style="justify-content:center;gap:8px">
+          <span class="chip sage">${ic('waves', 'xs')} ${m.won ? 'عبرت ' + wavesW(m.won) : 'لم تسجّل موجات بعد'}</span>
+          ${last ? `<span class="chip">${ic('clock', 'xs')} آخر رغبة قبل ${fmtDur((m.now - last.ts) / 36e5)}</span>` : ''}
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-head"><span class="ibox">${ic('hand-heart')}</span><div class="grow"><h2 class="h3">بدائل فورية للفم واليد</h2><p class="xs muted" style="margin:0">اختر واحداً وطبّقه الآن</p></div></div>
+        <div class="grid-4">${ALTS.map((a, i) => `<button class="opt" data-action="alt" data-idx="${i}" aria-pressed="false">${ic(a.icon)}<span>${a.t}</span></button>`).join('')}</div>
+        <div id="alt-box" class="callout sage small" style="margin-top:12px;line-height:1.8" hidden></div>
+      </section>
+
+      <section class="grid-2">
+        <button class="card tight" style="text-align:right" data-action="openReasons">
+          <span class="ibox sand" style="margin-bottom:10px">${ic('heart')}</span>
+          <div class="h3">لماذا بدأت؟</div><div class="xs muted">${state.reasons.length ? plural(state.reasons.length, ['سبب واحد', 'سببان', 'أسباب', 'سبباً']) + ' تذكّرك' : 'أضف أسبابك'}</div>
+        </button>
+        <button class="card tight" style="text-align:right" data-action="openLetter">
+          <span class="ibox" style="margin-bottom:10px">${ic('mail')}</span>
+          <div class="h3">رسالتك لنفسك</div><div class="xs muted">${(state.letter || '').trim() ? 'اقرأها الآن' : 'اكتبها لوقت الشدة'}</div>
+        </button>
+      </section>
+
+      <button class="btn block" data-action="logCraving">${ic('pen-line', 'sm')} سجّل رغبة مرّت بك دون جلسة</button>`;
+  };
+
+  /* =========================================================
+     VIEW: INSIGHTS
+     ========================================================= */
+  const BUCKETS = ['١٢ص', '٣ص', '٦ص', '٩ص', '١٢م', '٣م', '٦م', '٩م'];
+  const BUCKET_LONG = ['منتصف الليل–٣ فجراً', '٣–٦ فجراً', '٦–٩ صباحاً', '٩–١٢ ظهراً', '١٢–٣ عصراً', '٣–٦ مساءً', '٦–٩ مساءً', '٩–١٢ ليلاً'];
+  RENDER.insights = function () {
+    const m = metrics();
+    const cr = state.cravings;
+    const total = cr.length;
+    let html = `<header class="topbar"><div><p class="eyebrow">كل تسجيل يجعل درعك أذكى</p><h1 class="h1">رؤى</h1></div>
+      <button class="btn sm primary" data-action="logCraving">${ic('plus', 'sm')} سجّل رغبة</button></header>`;
+
+    const rate = (m.won + m.slipped) ? Math.round(m.won / (m.won + m.slipped) * 100) : null;
+    const buckets = Array(8).fill(0);
+    cr.forEach(c => { buckets[Math.floor(new Date(c.ts).getHours() / 3)]++; });
+    const maxB = Math.max(...buckets);
+    const peakI = maxB ? buckets.indexOf(maxB) : -1;
+
+    html += `<section class="grid-2">
+      <div class="stat"><span class="l">موجات عبرتها</span><div class="v num">${nf(m.won)}</div></div>
+      <div class="stat"><span class="l">نسبة العبور</span><div class="v num">${rate == null ? '—' : nf(rate) + '٪'}</div></div>
+      <div class="stat"><span class="l">أخطر وقت</span><div class="v" style="font-size:16px">${peakI >= 0 ? BUCKET_LONG[peakI] : '—'}</div></div>
+      <div class="stat"><span class="l">أيام الحضور</span><div class="v num">${nf(m.checkinCount)}</div></div>
+    </section>`;
+
+    if (!total) {
+      html += `<section class="card empty"><span class="ibox">${ic('chart-column', 'lg')}</span><h2 class="h3">لا رغبات مسجّلة بعد</h2>
+        <p class="small muted" style="margin:6px 0 14px">بعد كل جلسة «نجدة» أو رغبة تمر بك، سجّلها في ثوانٍ. سيظهر لك هنا متى تأتيك الرغبة وما الذي يثيرها.</p>
+        <button class="btn soft" data-action="logCraving">${ic('pen-line', 'sm')} سجّل أول رغبة</button></section>`;
+    } else {
+      html += `<section class="card">
+        <div class="card-head"><span class="ibox">${ic('clock')}</span><div class="grow"><h2 class="h3">متى تأتيك الرغبة؟</h2><p class="xs muted" style="margin:0">${nf(total)} رغبة مسجّلة موزعة على ساعات اليوم</p></div></div>
+        <div class="bars" role="img" aria-label="توزيع الرغبات على ساعات اليوم">
+          ${buckets.map((v, i) => `<div class="bar-col" data-tip="${BUCKET_LONG[i]}: ${v ? nf(v) + ' رغبة' : 'لا شيء'}">
+            <div class="bar-track">${i === peakI ? `<span class="bar-val num" style="bottom:${v / maxB * 100}%">${nf(v)}</span>` : ''}<div class="bar-fill ${i === peakI ? 'peak' : ''}" style="height:${maxB ? v / maxB * 100 : 0}%"></div></div>
+            <span class="bar-lbl">${BUCKETS[i]}</span></div>`).join('')}
+        </div>
+        ${peakI >= 0 ? `<div class="callout sand small" style="margin-top:12px;line-height:1.8">${ic('lightbulb', 'xs')} ذروة رغباتك بين <b>${BUCKET_LONG[peakI]}</b>. جهّز خطة في «درع المواقف» لهذا الوقت.</div>` : ''}
+      </section>`;
+
+      const tc = {};
+      cr.forEach(c => { tc[c.trigger] = (tc[c.trigger] || 0) + 1; });
+      const top = Object.entries(tc).sort((a, b) => b[1] - a[1]).slice(0, 5);
+      const tmax = top.length ? top[0][1] : 1;
+      html += `<section class="card">
+        <div class="card-head"><span class="ibox sand">${ic('target')}</span><div class="grow"><h2 class="h3">أكثر ما يثير رغبتك</h2></div></div>
+        <div class="col" style="gap:12px">${top.map(([id, n]) => { const t = TRIGGERS.find(x => x.id === id) || TRIGGERS[8]; return `<div class="hbar" data-tip="${t.t}: ${nf(n)} رغبة"><span class="row" style="gap:6px">${ic(t.icon, 'xs')}${t.t}</span><span class="track"><i style="width:${n / tmax * 100}%"></i></span><b class="num xs">${nf(n)}</b></div>`; }).join('')}</div>
+      </section>`;
+    }
+
+    // Mood trend
+    const days14 = Array.from({ length: 14 }, (_, i) => { const d = new Date(); d.setDate(d.getDate() - (13 - i)); return { k: dateKey(d), d }; });
+    const pts = days14.map((x, i) => ({ i, c: state.checkins[x.k], d: x.d })).filter(p => p.c);
+    if (pts.length) {
+      const W = 320, H = 130, padX = 14, padY = 16;
+      const xOf = i => W - padX - i * ((W - padX * 2) / 13); // RTL: oldest on the right
+      const yOf = v => padY + (5 - v) * ((H - padY * 2) / 4);
+      let path = '', prev = null;
+      pts.forEach(p => { const x = xOf(p.i), y = yOf(p.c.mood); path += (prev && p.i === prev.i + 1 ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1) + ' '; prev = p; });
+      const avg = pts.reduce((a, p) => a + p.c.mood, 0) / pts.length;
+      const avgMood = MOODS[Math.round(avg) - 1];
+      html += `<section class="card">
+        <div class="card-head"><span class="ibox">${ic('smile')}</span><div class="grow"><h2 class="h3">مزاجك في آخر ١٤ يوماً</h2><p class="xs muted" style="margin:0">المتوسط: ${avgMood.t} · ${nf(pts.length)} تسجيل</p></div></div>
+        <svg class="chart-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="منحنى المزاج اليومي">
+          ${[1, 3, 5].map(v => `<line x1="${padX}" x2="${W - padX}" y1="${yOf(v)}" y2="${yOf(v)}" stroke="var(--line)" stroke-width="1"/>`).join('')}
+          <path d="${path}" fill="none" stroke="var(--sage)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+          ${pts.map(p => `<circle cx="${xOf(p.i).toFixed(1)}" cy="${yOf(p.c.mood).toFixed(1)}" r="5" fill="var(--sage)" stroke="var(--surface)" stroke-width="2" data-tip="${fmtDate(p.d.getTime())}: ${MOODS[p.c.mood - 1].t} · رغبة ${CRAVE_LEVELS[p.c.craving]}"/><circle cx="${xOf(p.i).toFixed(1)}" cy="${yOf(p.c.mood).toFixed(1)}" r="14" fill="transparent" data-tip="${fmtDate(p.d.getTime())}: ${MOODS[p.c.mood - 1].t} · رغبة ${CRAVE_LEVELS[p.c.craving]}"/>`).join('')}
+        </svg>
+        <div class="row between xs muted" style="margin-top:6px"><span>قبل ١٤ يوماً</span><span>الأعلى = مزاج أفضل</span><span>اليوم</span></div>
+      </section>`;
+    }
+
+    // Shields
+    html += `<section class="card">
+      <div class="card-head"><span class="ibox">${ic('shield')}</span><div class="grow"><h2 class="h3">درع المواقف</h2><p class="xs muted" style="margin:0">خطط «إذا… فسأ…» جاهزة قبل أن تأتي الرغبة</p></div>
+        <button class="icon-btn sm" data-action="shieldEdit" data-idx="-1" aria-label="إضافة خطة">${ic('plus', 'sm')}</button></div>
+      <div class="col">` + (state.shields.length ? state.shields.map((s, i) => `
+        <div class="callout" style="padding:12px 14px">
+          <div class="row" style="align-items:flex-start">
+            <div class="grow small" style="line-height:1.9"><span class="muted">إذا</span> <b>${esc(s.when)}</b><br><span class="muted">فسأ</span> <span class="sage bold">${esc(s.then)}</span></div>
+            <button class="icon-btn sm" data-action="shieldEdit" data-idx="${i}" aria-label="تعديل">${ic('pencil', 'xs')}</button>
+            <button class="icon-btn sm" data-action="shieldDel" data-idx="${i}" aria-label="حذف">${ic('trash-2', 'xs')}</button>
+          </div></div>`).join('') : `<p class="small muted" style="margin:0">لا خطط بعد. أضف خطتك الأولى لأخطر موقف عليك.</p>
+          <div class="row wrap">${['شربت قهوتي الصباحية', 'ركبت السيارة', 'شعرت بضغط العمل'].map(w => `<button class="chip" data-action="shieldQuick" data-w="${w}">${ic('plus', 'xs')} ${w}</button>`).join('')}</div>`) + `</div>
+    </section>`;
+
+    // Recent log + lessons
+    const recent = cr.slice().sort((a, b) => b.ts - a.ts).slice(0, 6);
+    if (recent.length) {
+      html += `<section class="card"><div class="card-head"><span class="ibox sand">${ic('list-checks')}</span><h2 class="h3 grow">آخر الموجات</h2></div><div class="col" style="gap:0">` +
+        recent.map(c => { const t = TRIGGERS.find(x => x.id === c.trigger) || TRIGGERS[8]; return `<div class="row" style="padding:10px 0;border-bottom:1px solid var(--line)">
+          <span class="ibox sm ${c.outcome === 'won' ? '' : 'rose'}">${ic(c.outcome === 'won' ? 'shield-check' : 'rotate-ccw', 'xs')}</span>
+          <div class="grow"><div class="small bold">${t.t} <span class="xs muted">· ${INTENSITY[c.intensity] || ''}</span></div>${c.note ? `<div class="xs muted">${esc(c.note)}</div>` : ''}</div>
+          <span class="xs muted">${fmtDate(c.ts, { day: 'numeric', month: 'short' })} ${fmtTime(c.ts)}</span></div>`; }).join('') + `</div></section>`;
+    }
+    const lessons = state.slips.filter(s => s.lesson).slice().reverse().slice(0, 5);
+    if (lessons.length) {
+      html += `<section class="card"><div class="card-head"><span class="ibox rose">${ic('book-open')}</span><div class="grow"><h2 class="h3">دروس التعثّر</h2><p class="xs muted" style="margin:0">كل تعثّر علّمك شيئاً</p></div></div>
+        <div class="col">${lessons.map(s => `<div class="callout small" style="line-height:1.8"><span class="xs muted">${fmtDate(s.ts)}</span><br>${esc(s.lesson)}</div>`).join('')}</div></section>`;
+    }
+    $('#view-insights').innerHTML = html;
+  };
+
+  /* =========================================================
+     VIEW: ME
+     ========================================================= */
+  RENDER.me = function () {
+    const m = metrics();
+    const initial = (state.name || 'ن').trim().charAt(0);
+    const cloudOn = !!(state.firebaseConfig.databaseURL && state.firebaseConfig.uid);
+    $('#view-me').innerHTML = `
+      <header class="topbar"><h1 class="h1">أنا</h1></header>
+      <section class="card">
+        <div class="row">
+          <div class="welcome-logo" style="width:60px;height:60px;border-radius:22px;margin:0;font-size:24px;font-weight:700">${esc(initial)}</div>
+          <div class="grow"><h2 class="h2">${esc(state.name || 'صديق النقاء')}</h2><p class="xs muted" style="margin:0">${m.gradual ? 'التدرّج الذكي' : 'القطع الفوري'} · بدأت ${fmtDate(m.st, { day: 'numeric', month: 'long', year: 'numeric' })}</p></div>
+        </div>
+        <div class="grid-3" style="margin-top:16px;text-align:center">
+          <div><div class="h2 num">${nf(m.days)}</div><div class="xs muted">يوم حالي</div></div>
+          <div><div class="h2 num">${nf(Math.floor(m.best / 24))}</div><div class="xs muted">أطول فترة</div></div>
+          <div><div class="h2 num">${nf(BADGES.filter(b => b.ok(m)).length)}</div><div class="xs muted">وسام</div></div>
+        </div>
+      </section>
+
+      <p class="group-title">رحلتي</p>
+      <div class="list">
+        <button class="list-row" data-action="share"><span class="ibox sm sand">${ic('share-2', 'sm')}</span><div class="grow"><div class="t">شارك بطاقة إنجازك</div><div class="s">صورة جميلة بشجرتك وأرقامك</div></div>${ic('chevron-left', 'sm muted')}</button>
+        <button class="list-row" data-action="editPlan"><span class="ibox sm">${ic('sliders-horizontal', 'sm')}</span><div class="grow"><div class="t">تعديل خطتي</div><div class="s">أسلوب الإقلاع، الاستهلاك، تاريخ البداية</div></div>${ic('chevron-left', 'sm muted')}</button>
+        <button class="list-row" data-action="openReasons"><span class="ibox sm sand">${ic('heart', 'sm')}</span><div class="grow"><div class="t">أسبابي</div><div class="s">${state.reasons.length ? state.reasons.map(esc).slice(0, 2).join('، ') + (state.reasons.length > 2 ? '…' : '') : 'لم تُضف بعد'}</div></div>${ic('chevron-left', 'sm muted')}</button>
+        <button class="list-row" data-action="openLetter"><span class="ibox sm">${ic('mail', 'sm')}</span><div class="grow"><div class="t">رسالتي لنفسي</div><div class="s">تظهر لك في لحظات الرغبة</div></div>${ic('chevron-left', 'sm muted')}</button>
+        <button class="list-row" data-action="editGoal"><span class="ibox sm sand">${ic('gift', 'sm')}</span><div class="grow"><div class="t">مكافأتي</div><div class="s">${esc(state.goalName)} · ${nf(state.goalPrice)} ${esc(state.currency)}</div></div>${ic('chevron-left', 'sm muted')}</button>
+      </div>
+
+      <p class="group-title">التفضيلات</p>
+      <div class="list">
+        <div class="list-row"><span class="ibox sm">${ic('palette', 'sm')}</span><div class="grow"><div class="t">المظهر</div></div>
+          <div class="seg" style="width:180px">${[['dark', 'داكن'], ['light', 'فاتح'], ['auto', 'تلقائي']].map(([v, t]) => `<button data-action="theme" data-v="${v}" aria-pressed="${state.theme === v}" style="min-height:32px;font-size:12px">${t}</button>`).join('')}</div></div>
+        <div class="list-row"><span class="ibox sm">${ic('vibrate', 'sm')}</span><div class="grow"><div class="t">الاهتزاز اللمسي</div><div class="s">ارتداد خفيف مع التنفّس واللمس</div></div><button class="switch" role="switch" aria-checked="${state.haptics}" data-action="haptics" aria-label="الاهتزاز"></button></div>
+        <div class="list-row"><span class="ibox sm sand">${ic('banknote', 'sm')}</span><div class="grow"><div class="t">العملة</div></div>
+          <select class="input" style="width:110px;min-height:38px" data-change="currency">${CURRENCIES.map(c => `<option ${c === state.currency ? 'selected' : ''}>${c}</option>`).join('')}</select></div>
+      </div>
+
+      <p class="group-title">البيانات والمزامنة</p>
+      <div class="list">
+        <button class="list-row" data-action="cloud"><span class="ibox sm">${ic(cloudOn ? 'cloud-upload' : 'cloud', 'sm')}</span><div class="grow"><div class="t">المزامنة السحابية</div><div class="s">${cloudOn ? 'متصل بـ Firebase ✓' : 'اربط حسابك على Firebase'}</div></div>${ic('chevron-left', 'sm muted')}</button>
+        <button class="list-row" data-action="export"><span class="ibox sm">${ic('download', 'sm')}</span><div class="grow"><div class="t">تصدير نسخة احتياطية</div><div class="s">ملف JSON على جهازك</div></div></button>
+        <button class="list-row" data-action="import"><span class="ibox sm sand">${ic('upload', 'sm')}</span><div class="grow"><div class="t">استعادة نسخة</div></div></button>
+      </div>
+
+      <p class="group-title">بداية جديدة</p>
+      <div class="list">
+        <button class="list-row" data-action="resetCounter"><span class="ibox sm rose">${ic('rotate-ccw', 'sm')}</span><div class="grow"><div class="t">إعادة ضبط العدّاد</div><div class="s">تحفظ أطول فترة ودروسك وإعداداتك</div></div></button>
+        <button class="list-row" data-action="wipe"><span class="ibox sm rose">${ic('trash-2', 'sm')}</span><div class="grow"><div class="t rose">حذف كل البيانات</div></div></button>
+      </div>
+
+      <section class="card flat tight" style="background:var(--surface-2)">
+        <p class="xs muted" style="margin:0;line-height:1.9">${ic('info', 'xs')} نَقَاء أداة دعم سلوكي للإقلاع عن أظرف النيكوتين، وليس بديلاً عن الاستشارة الطبية. إن كنت تعاني من أعراض شديدة أو حالة صحية، استشر طبيبك أو الصيدلي حول خيارات العلاج المساندة. بياناتك تُحفظ على جهازك فقط ما لم تفعّل المزامنة.</p>
+      </section>
+      <p class="xs muted center" style="margin:4px 0 0">نَقَاء · الإصدار ٢٫٠</p>`;
+  };
+
+  /* =========================================================
+     LIVE TICK
+     ========================================================= */
+  let lastDay = null;
+  function updateLive(m) {
+    if (currentTab !== 'today') return;
+    const set = (k, v) => { const el = $(`[data-live="${k}"]`); if (el && el.textContent !== v) el.textContent = v; };
+    set('days', nf(m.days));
+    const c = $('[data-live="clock"]');
+    if (c) c.innerHTML = `<b>${ar(pad2(m.hh))}</b> س : <b>${ar(pad2(m.mm))}</b> د : <b>${ar(pad2(m.ss))}</b> ث`;
+    const pr = $('[data-live="prog"]'); if (pr) pr.style.width = Math.max(2, clamp(m.H / 720 * 100, 0, 100)) + '%';
+    const ns = nextStop(m);
+    set('next', ns ? ns.t + ' بعد ' + fmtDur(ns.h - m.H) : '');
+    set('saved', nf(m.saved, m.saved < 100 ? 1 : 0));
+    set('avoided', nf(Math.floor(m.avoided)));
+    set('mg', nf(Math.round(m.mg)));
+    set('goalSaved', nf(Math.min(m.saved, state.goalPrice), 0));
+    set('goalPct', nf(Math.floor(m.goalPct)) + '٪');
+    const gb = $('[data-live="goalBar"]'); if (gb) gb.style.width = Math.max(2, m.goalPct) + '%';
+  }
+  function tick() {
+    const m = metrics();
+    const dayChanged = lastDay !== null && m.day !== lastDay;
+    lastDay = m.day;
+    if (dayChanged) { previewDay = null; rerender(); } else updateLive(m);
+    checkCelebrations(m);
+  }
+
+  function checkCelebrations(m) {
+    if (!state.onboarded || !$('#sheet-layer').hidden || !$('#session').hidden) return;
+    const ms = DAYS.filter(d => d.ms && d.day > 1 && m.day >= d.day).map(d => d.day);
+    const top = ms.length ? ms[ms.length - 1] : 0;
+    if (top > (state.celebrated || 0)) {
+      state.celebrated = top; save();
+      const d = DAYS[top - 1];
+      openSheet(`<div class="center col" style="align-items:center;gap:12px;padding:10px 0">
+        <div class="welcome-logo" style="margin:0">${ic(top === 30 ? 'crown' : 'award', 'xl')}</div>
+        <span class="chip sand">${d.ms}</span>
+        <h2 class="h1">اليوم ${ar(top)}: ${d.t}</h2>
+        <p class="body">${d.body}</p>
+        <button class="btn primary block" data-action="closeSheet">واصل الرحلة</button></div>`);
+      confetti(); buzz([20, 40, 20]);
+      return;
+    }
+    const newly = BADGES.filter(b => b.ok(m) && !state.badgesSeen.includes(b.id));
+    if (newly.length) {
+      state.badgesSeen.push(...newly.map(b => b.id)); save(false);
+      if (state.badgesSeen.length > newly.length) toast('وسام جديد: ' + newly[0].t, 'award');
+    }
+  }
+
+  /* =========================================================
+     SHEETS
+     ========================================================= */
+  let sheetClose = null;
+  function openSheet(html, onMount, onClose) {
+    const layer = $('#sheet-layer');
+    $('#sheet-body').innerHTML = html;
+    layer.hidden = false;
+    document.body.style.overflow = 'hidden';
+    sheetClose = onClose || null;
+    if (onMount) onMount($('#sheet-body'));
+    const f = $('#sheet-body').querySelector('[autofocus]'); if (f) setTimeout(() => f.focus(), 350);
+  }
+  function closeSheet() {
+    $('#sheet-layer').hidden = true;
+    document.body.style.overflow = '';
+    const cb = sheetClose; sheetClose = null; if (cb) cb();
+  }
+
+  function openDay(day) {
+    const d = DAYS[day - 1], ch = chapterOf(day), done = !!state.completedChallenges[day];
+    openSheet(`
+      <div class="row between"><span class="chip sage">اليوم ${ar(day)} · الفصل ${ar(ch.n)}</span>${d.ms ? `<span class="chip sand">${ic('star', 'xs')} ${d.ms}</span>` : ''}</div>
+      <h2 class="h1">${d.t}</h2>
+      <div class="callout sage"><div class="callout-title sage">${ic('activity', 'xs')} ما يحدث في جسدك</div><p class="small" style="margin:0;line-height:1.85">${d.body}</p></div>
+      <div class="callout"><div class="callout-title">${ic('heart', 'xs')} ما قد تشعر به</div><p class="small ink2" style="margin:0;line-height:1.85">${d.feel}</p></div>
+      <div class="callout sand"><div class="callout-title sand">${ic('target', 'xs')} التحدي ${done ? '· أُنجز ✓' : ''}</div><p class="small" style="margin:0;line-height:1.85">${d.act}</p></div>
+      <p class="small sand" style="margin:0">${ic('lightbulb', 'xs')} ${d.tip}</p>
+      <button class="btn primary block" data-action="viewDay" data-day="${day}">عرضه في شاشة اليوم</button>`);
+  }
+
+  function openBadge(id) {
+    const m = metrics(), b = BADGES.find(x => x.id === id), on = b.ok(m);
+    openSheet(`<div class="center col" style="align-items:center;gap:10px;padding:6px 0">
+      <div class="badge ${on ? 'on' : ''} ${b.sage ? 'sage-m' : ''}" style="border:0;background:none;padding:0"><span class="medal" style="width:84px;height:84px">${ic(b.icon, 'xl')}</span></div>
+      <h2 class="h2">${b.t}</h2><p class="body">${b.d}</p>
+      <span class="chip ${on ? 'sage' : ''}">${on ? ic('check', 'xs') + ' حصلت عليه' : ic('lock', 'xs') + ' لم يُفتح بعد'}</span>
+      <button class="btn block" data-action="closeSheet" style="margin-top:6px">حسناً</button></div>`);
+  }
+
+  function openReasons() {
+    let sel = state.reasons.slice();
+    const draw = body => {
+      $('#rs-chips', body).innerHTML = REASONS.concat(sel.filter(r => !REASONS.includes(r))).map(r => `<button class="opt inline" data-r="${esc(r)}" aria-pressed="${sel.includes(r)}">${esc(r)}</button>`).join('');
+    };
+    openSheet(`
+      <div class="row"><span class="ibox sand">${ic('heart')}</span><div class="grow"><h2 class="h2">لماذا تريد التحرر؟</h2><p class="xs muted" style="margin:0">ستظهر لك أسبابك في لحظات الرغبة</p></div></div>
+      <div class="row wrap" id="rs-chips"></div>
+      <div class="row"><input class="input grow" id="rs-new" placeholder="سبب خاص بك…" maxlength="60" /><button class="btn soft" id="rs-add">${ic('plus', 'sm')}</button></div>
+      <button class="btn primary block" id="rs-save">حفظ</button>`, body => {
+      draw(body);
+      $('#rs-chips', body).addEventListener('click', e => {
+        const b = e.target.closest('[data-r]'); if (!b) return;
+        const r = b.dataset.r; sel = sel.includes(r) ? sel.filter(x => x !== r) : sel.concat(r); buzz(); draw(body);
+      });
+      $('#rs-add', body).onclick = () => { const v = $('#rs-new', body).value.trim(); if (v && !sel.includes(v)) { sel.push(v); $('#rs-new', body).value = ''; draw(body); } };
+      $('#rs-save', body).onclick = () => { state.reasons = sel; save(); closeSheet(); toast('حُفظت أسبابك'); rerender(); };
+    });
+  }
+
+  function openLetter() {
+    const has = (state.letter || '').trim();
+    openSheet(`
+      <div class="row"><span class="ibox">${ic('mail')}</span><div class="grow"><h2 class="h2">رسالة إلى نفسك</h2><p class="xs muted" style="margin:0">اكتبها وأنت قوي، لتقرأها وقت الرغبة</p></div></div>
+      ${has ? `<div class="callout" style="padding:18px"><p class="letter">${esc(state.letter)}</p></div>` : ''}
+      <textarea class="input" id="lt-text" rows="6" maxlength="1200" placeholder="مثال: أعرف أن الرغبة الآن تبدو كبيرة، لكنك تعرف كم تعبت لتصل إلى هنا…">${esc(state.letter)}</textarea>
+      <button class="btn primary block" id="lt-save">${has ? 'حفظ التعديل' : 'حفظ الرسالة'}</button>`, body => {
+      $('#lt-save', body).onclick = () => { state.letter = $('#lt-text', body).value.trim(); save(); closeSheet(); toast('حُفظت رسالتك', 'mail'); rerender(); };
+    });
+  }
+
+  function openShieldEditor(i) {
+    const s = i >= 0 ? state.shields[i] : { when: '', then: SHIELD_THEN[0] };
+    openSheet(`
+      <div class="row"><span class="ibox">${ic('shield')}</span><h2 class="h2 grow">${i >= 0 ? 'تعديل الخطة' : 'خطة جديدة'}</h2></div>
+      <div class="field"><label for="sh-when">إذا…</label><input class="input" id="sh-when" maxlength="60" value="${esc(s.when)}" placeholder="مثال: شربت قهوتي الصباحية" /></div>
+      <div class="row wrap">${TRIGGERS.slice(0, 8).map(t => `<button class="chip" data-w="${t.t}">${ic(t.icon, 'xs')} ${t.t}</button>`).join('')}</div>
+      <div class="field"><label for="sh-then">فسأ…</label><input class="input" id="sh-then" maxlength="70" value="${esc(s.then)}" /></div>
+      <div class="col" style="gap:6px">${SHIELD_THEN.map(t => `<button class="opt inline" style="justify-content:flex-start" data-t="${t}" aria-pressed="${s.then === t}">${t}</button>`).join('')}</div>
+      <button class="btn primary block" id="sh-save">حفظ الخطة</button>`, body => {
+      body.addEventListener('click', e => {
+        const w = e.target.closest('[data-w]'); if (w) $('#sh-when', body).value = ({ 'القهوة': 'شربت قهوتي', 'القيادة': 'ركبت السيارة', 'العمل/الدراسة': 'جلست للعمل أو الدراسة', 'التوتر': 'شعرت بالتوتر', 'الملل': 'شعرت بالملل', 'بعد الأكل': 'انتهيت من الأكل', 'المجالس': 'جلست في مجلس', 'السهر': 'سهرت ليلاً' })[w.dataset.w] || w.dataset.w;
+        const t = e.target.closest('[data-t]'); if (t) { $('#sh-then', body).value = t.dataset.t; $$('[data-t]', body).forEach(b => b.setAttribute('aria-pressed', b === t)); }
+      });
+      $('#sh-save', body).onclick = () => {
+        const when = $('#sh-when', body).value.trim(), then = $('#sh-then', body).value.trim();
+        if (!when || !then) { toast('أكمل الخطة أولاً', 'circle-alert'); return; }
+        if (i >= 0) state.shields[i] = { when, then }; else state.shields.push({ when, then });
+        save(); closeSheet(); toast('تم تحديث درعك', 'shield-check'); rerender();
+      };
+    });
+  }
+
+  /* Craving outcome (after SOS session or manual log) */
+  function openOutcome(opts = {}) {
+    const o = { outcome: opts.outcome || 'won', trigger: null, intensity: 2 };
+    const draw = body => {
+      $('#oc-out', body).innerHTML = `
+        <button class="opt" data-out="won" aria-pressed="${o.outcome === 'won'}">${ic('shield-check', 'lg')}<span>عبرتها</span></button>
+        <button class="opt rose" data-out="slip" aria-pressed="${o.outcome === 'slip'}">${ic('rotate-ccw', 'lg')}<span>تعثّرت</span></button>`;
+      $('#oc-trig', body).innerHTML = TRIGGERS.map(t => `<button class="opt" data-trig="${t.id}" aria-pressed="${o.trigger === t.id}">${ic(t.icon, 'sm')}<span>${t.t}</span></button>`).join('');
+      $('#oc-int', body).innerHTML = [1, 2, 3].map(v => `<button data-int="${v}" aria-pressed="${o.intensity === v}">${INTENSITY[v]}</button>`).join('');
+      $('#oc-slip', body).hidden = o.outcome !== 'slip';
+      $('#oc-save', body).className = 'btn block ' + (o.outcome === 'won' ? 'grad' : 'sand');
+      $('#oc-save', body).textContent = o.outcome === 'won' ? 'سجّل انتصاري' : 'احفظ الدرس وواصل';
+    };
+    openSheet(`
+      <h2 class="h2">${opts.title || 'كيف انتهت الموجة؟'}</h2>
+      <div class="grid-2" id="oc-out"></div>
+      <p class="xs muted" style="margin:0">ما الذي أثارها؟</p>
+      <div class="grid-3" id="oc-trig"></div>
+      <p class="xs muted" style="margin:0">شدتها</p>
+      <div class="seg" id="oc-int"></div>
+      <div id="oc-slip" class="col" hidden>
+        <div class="callout sand small" style="line-height:1.85">${ic('hand-heart', 'xs')} التعثّر لا يمحو ما بنيته. لن نصفّر عدّادك — سنحسب ظرفاً واحداً فقط ونتعلّم منه.</div>
+        <textarea class="input" id="oc-lesson" rows="3" maxlength="300" placeholder="ما الذي ستفعله بشكل مختلف في المرة القادمة؟"></textarea>
+      </div>
+      <input class="input" id="oc-note" maxlength="120" placeholder="ملاحظة (اختياري): كيف تجاوزتها؟" />
+      <button id="oc-save"></button>`, body => {
+      draw(body);
+      body.addEventListener('click', e => {
+        const a = e.target.closest('[data-out]'); if (a) { o.outcome = a.dataset.out; buzz(); draw(body); }
+        const t = e.target.closest('[data-trig]'); if (t) { o.trigger = t.dataset.trig; buzz(); draw(body); }
+        const n = e.target.closest('[data-int]'); if (n) { o.intensity = +n.dataset.int; buzz(); draw(body); }
+      });
+      $('#oc-save', body).onclick = () => {
+        const ts = Date.now();
+        state.cravings.push({ id: ts, ts, trigger: o.trigger || 'other', intensity: o.intensity, outcome: o.outcome, note: $('#oc-note', body).value.trim(), src: opts.src || 'manual' });
+        if (o.outcome === 'slip') {
+          state.slips.push({ ts, lesson: $('#oc-lesson', body).value.trim(), pouches: 1 });
+          toast('حُفظ الدرس — رحلتك مستمرة', 'hand-heart');
+        } else { toast('انتصار جديد! الموجة انكسرت', 'shield-check'); confetti(); buzz([15, 30, 15]); }
+        save(); closeSheet(); if (opts.after) opts.after(); rerender();
+      };
+    });
+  }
+
+  /* Cloud sheet */
+  function openCloud() {
+    const c = state.firebaseConfig;
+    openSheet(`
+      <div class="row"><span class="ibox">${ic('cloud-upload')}</span><div class="grow"><h2 class="h2">المزامنة السحابية</h2><p class="xs muted" style="margin:0">اربط مشروع Firebase Realtime Database الخاص بك</p></div></div>
+      <input class="input" id="fb-key" dir="ltr" placeholder="Firebase apiKey" value="${esc(c.apiKey)}" />
+      <input class="input" id="fb-url" dir="ltr" type="url" placeholder="https://your-project-default-rtdb.firebaseio.com" value="${esc(c.databaseURL)}" />
+      <input class="input" id="fb-pid" dir="ltr" placeholder="projectId (اختياري)" value="${esc(c.projectId)}" />
+      <div class="grid-2"><input class="input" id="fb-mail" dir="ltr" type="email" placeholder="email" value="${esc(c.email)}" autocomplete="email" /><input class="input" id="fb-pass" dir="ltr" type="password" placeholder="password" autocomplete="current-password" /></div>
+      <div class="grid-2"><button class="btn primary" id="fb-push">${ic('cloud-upload', 'sm')} حفظ ومزامنة</button><button class="btn" id="fb-pull">${ic('cloud-download', 'sm')} جلب</button></div>
+      <p class="xs muted" id="fb-msg" style="margin:0">كلمة المرور لا تُحفظ. تُستخدم مرة واحدة لتسجيل الدخول.</p>`, body => {
+      const msg = t => { $('#fb-msg', body).textContent = t; };
+      $('#fb-push', body).onclick = async () => {
+        const apiKey = $('#fb-key', body).value.trim(), databaseURL = $('#fb-url', body).value.trim(), projectId = $('#fb-pid', body).value.trim(), email = $('#fb-mail', body).value.trim(), pass = $('#fb-pass', body).value;
+        if (!/^https:\/\/.+/.test(databaseURL)) { msg('أدخل رابط Realtime Database صحيحاً يبدأ بـ https://'); return; }
+        msg('جارٍ المزامنة…');
+        try {
+          let uid = state.firebaseConfig.uid || 'guest_device', idToken = state.firebaseConfig.idToken || '', refreshToken = state.firebaseConfig.refreshToken || '';
+          if (apiKey && email && pass) { const a = await fbAuth(apiKey, email, pass); uid = a.uid; idToken = a.idToken; refreshToken = a.refreshToken; }
+          state.firebaseConfig = { apiKey, databaseURL, projectId, email, uid, idToken, refreshToken };
+          save(false); await cloudPush(); msg('تمت المزامنة بنجاح ✓'); toast('تمت المزامنة مع السحابة', 'cloud-upload');
+        } catch (e) { msg('تنبيه: ' + (e.message || 'تحقق من الإعدادات')); }
+      };
+      $('#fb-pull', body).onclick = async () => {
+        msg('جارٍ الجلب…');
+        try { await cloudPull(); msg('تم استرجاع بياناتك ✓'); toast('تم تحديث بياناتك من السحابة', 'cloud-download'); } catch (e) { msg('تنبيه: ' + (e.message || 'تعذر الجلب')); }
+      };
+    });
+  }
+
+  /* =========================================================
+     FIREBASE (REST)
+     ========================================================= */
+  async function fbAuth(apiKey, email, password) {
+    const call = async ep => {
+      const r = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:${ep}?key=${encodeURIComponent(apiKey)}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password, returnSecureToken: true }) });
+      return { ok: r.ok, data: await r.json() };
+    };
+    let r = await call('signInWithPassword');
+    if (!r.ok) r = await call('signUp');
+    if (!r.ok) throw new Error((r.data && r.data.error && r.data.error.message) || 'تعذرت المصادقة');
+    return { uid: r.data.localId, idToken: r.data.idToken, refreshToken: r.data.refreshToken };
+  }
+  async function fbRefresh() {
+    const c = state.firebaseConfig;
+    if (!c.apiKey || !c.refreshToken) return false;
+    const r = await fetch(`https://securetoken.googleapis.com/v1/token?key=${encodeURIComponent(c.apiKey)}`, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: 'grant_type=refresh_token&refresh_token=' + encodeURIComponent(c.refreshToken) });
+    if (!r.ok) return false;
+    const d = await r.json();
+    c.idToken = d.id_token; c.refreshToken = d.refresh_token; save(false);
+    return true;
+  }
+  function fbEndpoint() {
+    const c = state.firebaseConfig;
+    return `${c.databaseURL.replace(/\/$/, '')}/users/${encodeURIComponent(c.uid)}/naqaState.json${c.idToken ? '?auth=' + encodeURIComponent(c.idToken) : ''}`;
+  }
+  async function fbFetch(opts, retry = true) {
+    const r = await fetch(fbEndpoint(), opts);
+    if ((r.status === 401 || r.status === 403) && retry && await fbRefresh()) return fbFetch(opts, false);
+    return r;
+  }
+  async function cloudPush() {
+    const c = state.firebaseConfig;
+    if (!c.databaseURL || !c.uid) return;
+    const payload = Object.assign({}, state); delete payload.firebaseConfig;
+    const r = await fbFetch({ method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+    if (!r.ok) throw new Error('فشل رفع البيانات');
+  }
+  async function cloudPull() {
+    const c = state.firebaseConfig;
+    if (!c.databaseURL || !c.uid) throw new Error('اربط حسابك أولاً');
+    const r = await fbFetch({});
+    if (!r.ok) throw new Error('تعذر جلب البيانات');
+    const remote = await r.json();
+    if (remote && typeof remote === 'object') {
+      const fb = state.firebaseConfig;
+      state = normalize(remote.v === 2 ? remote : migrateV1(remote));
+      state.firebaseConfig = fb;
+      save(false); applyTheme(); rerender();
+    }
+  }
+
+  /* =========================================================
+     SOS SESSION
+     ========================================================= */
+  const SESSION_LEN = 180;
+  const sess = { end: 0, left: SESSION_LEN, paused: false, timer: null, tool: 'breath' };
+  const waveF = t => (t / 50) * Math.exp(1 - t / 50); // peaks at 50s
+  function sessionStart() {
+    sess.left = SESSION_LEN; sess.paused = false; sess.end = Date.now() + SESSION_LEN * 1000;
+    $('#session').hidden = false; document.body.style.overflow = 'hidden';
+    setSessionTool('breath');
+    drawWave(0);
+    clearInterval(sess.timer); sess.timer = setInterval(sessionTick, 250);
+    sessionTick(); buzz(20);
+  }
+  function sessionTick() {
+    if (!sess.paused) sess.left = Math.max(0, (sess.end - Date.now()) / 1000);
+    const s = Math.ceil(sess.left);
+    $('#ss-timer').textContent = ar(pad2(Math.floor(s / 60)) + ':' + pad2(s % 60));
+    const t = SESSION_LEN - sess.left;
+    drawWave(t);
+    $('#ss-phase').textContent = t < 35 ? 'الموجة ترتفع — تنفّس معها، لا تقاومها' : t < 70 ? 'أنت عند الذروة — هذا أقصى ما ستصل إليه' : sess.left > 0 ? 'الموجة تنحسر — استمر، أنت تعبرها' : 'عبرت الموجة.';
+    if (sess.left <= 0) { clearInterval(sess.timer); sess.timer = null; finishSession(true); }
+  }
+  function drawWave(t) {
+    const W = 320, H = 110, pad = 8;
+    const x = s => W - pad - (s / SESSION_LEN) * (W - pad * 2);
+    const y = v => H - 14 - v * (H - 34);
+    let d = '';
+    for (let s = 0; s <= SESSION_LEN; s += 3) d += (s ? 'L' : 'M') + x(s).toFixed(1) + ',' + y(waveF(s)).toFixed(1);
+    let dp = '';
+    for (let s = 0; s <= t; s += 2) dp += (s ? 'L' : 'M') + x(s).toFixed(1) + ',' + y(waveF(s)).toFixed(1);
+    const cx = x(t), cy = y(waveF(t));
+    $('#ss-wave').innerHTML = `
+      <path d="${d} L${x(SESSION_LEN)},${H - 14} L${x(0)},${H - 14} Z" fill="var(--sage-soft)"/>
+      <path d="${d}" fill="none" stroke="var(--line-2)" stroke-width="2" stroke-dasharray="3 5"/>
+      ${dp ? `<path d="${dp}" fill="none" stroke="var(--sage)" stroke-width="2.5" stroke-linecap="round"/>` : ''}
+      <line x1="${x(50)}" x2="${x(50)}" y1="${y(1) - 4}" y2="${H - 14}" stroke="var(--sand)" stroke-width="1" stroke-dasharray="2 3" opacity=".6"/>
+      <circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="6" fill="var(--sand)" stroke="var(--surface)" stroke-width="2"/>`;
+  }
+  function setSessionTool(tool) {
+    sess.tool = tool;
+    $$('#ss-tools button').forEach(b => b.setAttribute('aria-pressed', b.dataset.tool === tool));
+    ['breath', 'touch', 'remind'].forEach(t => { $('#ss-tool-' + t).hidden = t !== tool; });
+    if (tool === 'breath') { renderBreath(); breathStart(); } else breathStop();
+    if (tool !== 'touch') gameStop(false);
+    if (tool === 'touch') { $('#gm-best').textContent = state.stats.bestGame ? 'رقمك القياسي: ' + nf(state.stats.bestGame) : ''; }
+    if (tool === 'remind') renderRemind();
+  }
+  function finishSession(auto) {
+    breathStop(); gameStop(false);
+    clearInterval(sess.timer); sess.timer = null;
+    openOutcome({ title: auto ? 'مرّت ٣ دقائق. كيف تشعر الآن؟' : 'كيف انتهت الموجة؟', src: 'sos', after: closeSession });
+  }
+  function closeSession() {
+    breathStop(); gameStop(false); clearInterval(sess.timer); sess.timer = null;
+    $('#session').hidden = true; document.body.style.overflow = '';
+    if (currentTab === 'sos') rerender();
+  }
+  function renderRemind() {
+    const m = metrics();
+    $('#ss-tool-remind').innerHTML = `
+      <div class="grid-2">
+        <div class="stat"><span class="l">صبرك حتى الآن</span><div class="v num">${fmtDur(m.H)}</div></div>
+        <div class="stat"><span class="l">اقتربت من مكافأتك</span><div class="v num">${nf(Math.floor(m.goalPct))}٪</div></div>
+      </div>
+      <div class="callout sage small" style="line-height:1.9">نجا جسدك من <b>${nf(Math.floor(m.avoided))}</b> ظرف و<b>${nf(Math.round(m.mg))}</b> ملغ نيكوتين، ووفّرت <b>${nf(m.saved, 1)} ${esc(state.currency)}</b> نحو «${esc(state.goalName)}». هل تستحق ٣ دقائق عابرة أن تفرّط في كل هذا؟</div>
+      ${state.reasons.length ? `<div class="card tight flat"><div class="callout-title sand">${ic('heart', 'xs')} أسبابك</div><div class="col" style="gap:6px">${state.reasons.map(r => `<div class="row small">${ic('check', 'xs sage')} ${esc(r)}</div>`).join('')}</div></div>` : ''}
+      ${(state.letter || '').trim() ? `<div class="card flat"><div class="callout-title">${ic('mail', 'xs')} رسالة منك إليك</div><p class="letter">${esc(state.letter)}</p></div>` : `<button class="btn soft block" data-action="openLetter">${ic('pen-line', 'sm')} اكتب رسالة لنفسك لتقرأها هنا</button>`}`;
+  }
+
+  /* Breathing */
+  const br = { timer: null, phase: 0, sec: 0, cycles: 0 };
+  function renderBreath() {
+    const p = BREATHS[state.breathPattern] || BREATHS['478'];
+    $('#ss-tool-breath').innerHTML = `
+      <div class="seg">${Object.entries(BREATHS).map(([k, v]) => `<button data-action="breathPattern" data-v="${k}" aria-pressed="${state.breathPattern === k}">${v.t}</button>`).join('')}</div>
+      <div class="breath-stage"><div class="breath-ring"></div><div class="breath-orb" id="br-orb"><span class="ph" id="br-ph">استعد</span><span class="sec num" id="br-sec"></span></div></div>
+      <p class="xs muted center" style="margin:0">${p.d} · <span id="br-cycles">${br.cycles ? 'دورات: ' + nf(br.cycles) : 'اتبع الدائرة'}</span></p>`;
+  }
+  function breathStart() {
+    breathStop();
+    const p = BREATHS[state.breathPattern] || BREATHS['478'];
+    br.phase = 0; br.sec = 0;
+    const step = () => {
+      const [label, secs, scale] = p.ph[br.phase];
+      const orb = $('#br-orb'); if (!orb) return;
+      if (br.sec === 0) {
+        orb.style.transitionDuration = secs + 's';
+        orb.style.transform = `scale(${scale})`;
+        $('#br-ph').textContent = label;
+        buzz(label.startsWith('احبس') ? 8 : 18);
+      }
+      $('#br-sec').textContent = ar(secs - br.sec);
+      br.sec++;
+      if (br.sec >= secs) {
+        br.sec = 0; br.phase++;
+        if (br.phase >= p.ph.length) { br.phase = 0; br.cycles++; state.stats.breathCycles++; save(false); const c = $('#br-cycles'); if (c) c.textContent = 'دورات: ' + nf(br.cycles); }
+      }
+    };
+    step(); br.timer = setInterval(step, 1000);
+  }
+  function breathStop() { clearInterval(br.timer); br.timer = null; const o = $('#br-orb'); if (o) { o.style.transitionDuration = '.6s'; o.style.transform = 'scale(1)'; } }
+
+  /* Calm touch game */
+  const gm = { run: false, raf: 0, timer: 0, score: 0, left: 60, orbs: [], fx: [], w: 0, h: 0, ctx: null };
+  function gameSetup() {
+    const c = $('#gm-canvas'); const r = c.getBoundingClientRect(); const dpr = window.devicePixelRatio || 1;
+    c.width = r.width * dpr; c.height = r.height * dpr; gm.w = r.width; gm.h = r.height;
+    gm.ctx = c.getContext('2d'); gm.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  function spawnOrb() {
+    const r = 18 + Math.random() * 14;
+    gm.orbs.push({ x: r + Math.random() * (gm.w - 2 * r), y: gm.h - r - Math.random() * gm.h * .5, r, vy: -(.18 + Math.random() * .35), life: 1, decay: .0035 + Math.random() * .003, gold: Math.random() > .72 });
+  }
+  function gameStart() {
+    gameSetup(); gameStop(false);
+    gm.run = true; gm.score = 0; gm.left = 60; gm.orbs = []; gm.fx = [];
+    for (let i = 0; i < 3; i++) spawnOrb();
+    $('#gm-overlay').hidden = true; $('#gm-score').textContent = '٠'; $('#gm-time').textContent = '٦٠ث';
+    const loop = () => {
+      if (!gm.run) return;
+      const ctx = gm.ctx; ctx.clearRect(0, 0, gm.w, gm.h);
+      if (gm.orbs.length < 5 && Math.random() < .06) spawnOrb();
+      for (let i = gm.orbs.length - 1; i >= 0; i--) {
+        const o = gm.orbs[i]; o.y += o.vy; o.life -= o.decay;
+        if (o.life <= .05 || o.y < -o.r) { gm.orbs.splice(i, 1); continue; }
+        const g = ctx.createRadialGradient(o.x - o.r * .3, o.y - o.r * .3, 2, o.x, o.y, o.r);
+        const c = o.gold ? [235, 211, 170] : [191, 220, 205], c2 = o.gold ? [217, 185, 133] : [111, 165, 140];
+        g.addColorStop(0, `rgba(${c},${o.life})`); g.addColorStop(1, `rgba(${c2},${o.life * .25})`);
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(o.x, o.y, o.r, 0, Math.PI * 2); ctx.fill();
+      }
+      for (let i = gm.fx.length - 1; i >= 0; i--) {
+        const f = gm.fx[i]; f.r += 2.2; f.a -= .045;
+        if (f.a <= 0) { gm.fx.splice(i, 1); continue; }
+        ctx.strokeStyle = `rgba(${f.gold ? '235,211,170' : '191,220,205'},${f.a})`; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2); ctx.stroke();
+      }
+      gm.raf = requestAnimationFrame(loop);
+    };
+    loop();
+    gm.timer = setInterval(() => {
+      gm.left--; $('#gm-time').textContent = ar(gm.left) + 'ث';
+      if (gm.left <= 0) gameStop(true);
+    }, 1000);
+  }
+  function gameStop(finished) {
+    const was = gm.run;
+    gm.run = false; cancelAnimationFrame(gm.raf); clearInterval(gm.timer);
+    if (finished && was) {
+      state.stats.games++;
+      const rec = gm.score > state.stats.bestGame;
+      if (rec) state.stats.bestGame = gm.score;
+      save();
+      $('#gm-title').textContent = (rec ? 'رقم قياسي جديد! ' : 'أحسنت! ') + nf(gm.score) + ' نقطة';
+      $('#gm-best').textContent = 'رقمك القياسي: ' + nf(state.stats.bestGame);
+      $('#gm-overlay').hidden = false; buzz([20, 40, 20]);
+    } else if (!finished && was) { $('#gm-overlay').hidden = false; }
+  }
+  function gameTap(e) {
+    if (!gm.run) return;
+    e.preventDefault();
+    const r = e.currentTarget.getBoundingClientRect(); const x = e.clientX - r.left, y = e.clientY - r.top;
+    for (let i = gm.orbs.length - 1; i >= 0; i--) {
+      const o = gm.orbs[i];
+      if (Math.hypot(x - o.x, y - o.y) <= o.r + 12) {
+        gm.score += o.gold ? 3 : 1; $('#gm-score').textContent = nf(gm.score);
+        gm.fx.push({ x: o.x, y: o.y, r: o.r, a: .9, gold: o.gold });
+        gm.orbs.splice(i, 1); spawnOrb(); buzz(o.gold ? 16 : 8);
+        break;
+      }
+    }
+  }
+
+  /* =========================================================
+     ONBOARDING
+     ========================================================= */
+  const onb = { step: 0, draft: null, editing: false };
+  function openOnb(step = 0) {
+    onb.editing = state.onboarded;
+    onb.step = step;
+    const d = new Date(state.startDateISO);
+    onb.draft = {
+      name: state.name, quitMode: state.quitMode,
+      start: `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}T${pad2(d.getHours())}:${pad2(d.getMinutes())}`,
+      dailyPouches: state.dailyPouches, pouchMg: state.pouchMg, canPrice: state.canPrice, pouchesPerCan: state.pouchesPerCan, currency: state.currency,
+      reasons: state.reasons.slice(), letter: state.letter, goalName: state.goalName, goalPrice: state.goalPrice
+    };
+    if (!state.onboarded) { const n = new Date(); onb.draft.start = `${n.getFullYear()}-${pad2(n.getMonth() + 1)}-${pad2(n.getDate())}T${pad2(n.getHours())}:${pad2(n.getMinutes())}`; }
+    $('#onb').hidden = false; document.body.style.overflow = 'hidden';
+    renderOnb();
+  }
+  function closeOnb() { $('#onb').hidden = true; document.body.style.overflow = ''; }
+  function readOnbInputs() {
+    const D = onb.draft, v = id => { const el = $('#' + id); return el ? el.value : null; };
+    if ($('#o-name')) D.name = v('o-name').trim().slice(0, 24);
+    if ($('#o-start')) D.start = v('o-start');
+    [['o-daily', 'dailyPouches'], ['o-mg', 'pouchMg'], ['o-price', 'canPrice'], ['o-per', 'pouchesPerCan'], ['o-gprice', 'goalPrice']].forEach(([id, k]) => { if ($('#' + id)) D[k] = Number(v(id)) || 0; });
+    if ($('#o-cur')) D.currency = v('o-cur');
+    if ($('#o-letter')) D.letter = v('o-letter');
+    if ($('#o-gname')) D.goalName = v('o-gname').trim().slice(0, 50);
+  }
+  function renderOnb() {
+    const D = onb.draft, s = onb.step;
+    $$('#onb-steps i').forEach((el, i) => el.classList.toggle('on', i <= s));
+    $('#onb-back').style.visibility = s > 0 ? 'visible' : 'hidden';
+    $('#onb-close').style.visibility = onb.editing ? 'visible' : 'hidden';
+    let body = '', actions = '';
+    if (s === 0) {
+      body = `<div class="welcome-hero">
+          <div class="welcome-logo">${ic('leaf', 'xl')}</div>
+          <h1 class="h1" style="font-size:30px">نَقَاء</h1>
+          <p class="body" style="max-width:320px;margin:8px auto 0">رفيقك الهادئ للتحرر من أظرف النيكوتين في ٣٠ يوماً — بلا لوم، خطوة بخطوة.</p>
+        </div>
+        <div class="card col" style="gap:16px">
+          <div class="feature"><span class="ibox">${ic('sprout')}</span><div><div class="h3">شجرة تنمو معك</div><div class="small muted">ورقة جديدة مع كل يوم، وزهرة عند كل محطة كبرى.</div></div></div>
+          <div class="feature"><span class="ibox sand">${ic('wind')}</span><div><div class="h3">نجدة في ٣ دقائق</div><div class="small muted">تنفّس موجَّه ولعبة لمس وتذكير بأسبابك حين تشتد الرغبة.</div></div></div>
+          <div class="feature"><span class="ibox">${ic('chart-column')}</span><div><div class="h3">رؤى تكشف نمطك</div><div class="small muted">متى تأتيك الرغبة، وما الذي يثيرها، وكيف يتحسن مزاجك.</div></div></div>
+        </div>
+        <div class="field"><label for="o-name">ماذا نناديك؟ (اختياري)</label><input class="input" id="o-name" maxlength="24" value="${esc(D.name)}" placeholder="اسمك" /></div>`;
+      actions = `<button class="btn primary block" data-action="onbNext">لنبدأ ${ic('chevron-left', 'sm')}</button>`;
+    } else if (s === 1) {
+      body = `<div><h2 class="h1">اختر طريقك</h2><p class="body">كلا المسارين يوصلك إلى التحرر الكامل خلال ٣٠ يوماً.</p></div>
+        <button class="path-card" data-action="onbMode" data-v="cold_turkey" aria-pressed="${D.quitMode === 'cold_turkey'}">
+          <span class="ibox">${ic('zap')}</span><div class="grow"><div class="h3">القطع الفوري</div><p class="small muted" style="margin:4px 0 0;line-height:1.8">توقف تام من اللحظة الأولى. أصعب في الأيام الثلاثة الأولى، وأسرع في التخلص من النيكوتين.</p></div></button>
+        <button class="path-card sandy" data-action="onbMode" data-v="gradual" aria-pressed="${D.quitMode === 'gradual'}">
+          <span class="ibox sand">${ic('trending-down')}</span><div class="grow"><div class="h3">التدرّج الذكي</div><p class="small muted" style="margin:4px 0 0;line-height:1.8">حصة يومية تنخفض أسبوعياً: ٧٥٪ ← ٥٠٪ ← ٢٥٪ ← ١٠٪، ثم أيام صفر من اليوم ٢٨.</p></div></button>`;
+      actions = `<button class="btn primary block" data-action="onbNext">التالي ${ic('chevron-left', 'sm')}</button>`;
+    } else if (s === 2) {
+      const ppp = D.canPrice / Math.max(1, D.pouchesPerCan);
+      body = `<div><h2 class="h1">استهلاكك الحالي</h2><p class="body">لنحسب ما توفّره وما ينجو منه جسدك بدقة.</p></div>
+        <div class="field"><label for="o-start">${D.quitMode === 'gradual' ? 'تاريخ بدء الخطة' : 'آخر ظرف استخدمته'}</label>
+          <div class="row"><input class="input grow" id="o-start" type="datetime-local" value="${D.start}" /><button class="btn sm" data-action="onbNow">الآن</button></div></div>
+        <div class="grid-2">
+          <div class="field"><label for="o-daily">أظرف في اليوم</label><input class="input num" id="o-daily" type="number" inputmode="numeric" min="1" max="80" value="${D.dailyPouches}" /></div>
+          <div class="field"><label for="o-mg">التركيز (ملغ)</label><input class="input num" id="o-mg" type="number" inputmode="decimal" min="1" max="60" step="0.5" value="${D.pouchMg}" /></div>
+          <div class="field"><label for="o-price">سعر العلبة</label><input class="input num" id="o-price" type="number" inputmode="decimal" min="1" max="1000" step="0.5" value="${D.canPrice}" /></div>
+          <div class="field"><label for="o-per">أظرف العلبة</label><input class="input num" id="o-per" type="number" inputmode="numeric" min="5" max="50" value="${D.pouchesPerCan}" /></div>
+        </div>
+        <div class="field"><label for="o-cur">العملة</label><select class="input" id="o-cur">${CURRENCIES.map(c => `<option ${c === D.currency ? 'selected' : ''}>${c}</option>`).join('')}</select></div>
+        <div class="callout sage small" id="o-calc">${ic('wallet', 'xs')} تنفق حالياً قرابة <b>${nf(D.dailyPouches * ppp * 30, 0)} ${esc(D.currency)}</b> شهرياً، وتستهلك <b>${nf(D.dailyPouches * D.pouchMg * 30)}</b> ملغ نيكوتين.</div>`;
+      actions = `<button class="btn primary block" data-action="onbNext">التالي ${ic('chevron-left', 'sm')}</button>`;
+    } else if (s === 3) {
+      body = `<div><h2 class="h1">لماذا الآن؟</h2><p class="body">أسبابك هي وقودك في لحظات الرغبة. اختر ما يلمسك.</p></div>
+        <div class="row wrap" id="o-reasons">${REASONS.concat(D.reasons.filter(r => !REASONS.includes(r))).map(r => `<button class="opt inline" data-action="onbReason" data-v="${esc(r)}" aria-pressed="${D.reasons.includes(r)}">${esc(r)}</button>`).join('')}</div>
+        <div class="field"><label for="o-letter">رسالة لنفسك تقرأها وقت الشدة (اختياري)</label>
+          <textarea class="input" id="o-letter" rows="5" maxlength="1200" placeholder="أعرف أن الرغبة الآن تبدو كبيرة، لكنك تعرف كم تعبت لتصل إلى هنا…">${esc(D.letter)}</textarea></div>`;
+      actions = `<button class="btn primary block" data-action="onbNext">التالي ${ic('chevron-left', 'sm')}</button>`;
+    } else {
+      const perDay = D.dailyPouches * (D.canPrice / Math.max(1, D.pouchesPerCan));
+      const days = perDay > 0 ? Math.ceil(D.goalPrice / perDay) : 0;
+      body = `<div><h2 class="h1">مكافأتك</h2><p class="body">شيء تحبه، يحوّل نَقَاء أموال الأظرف إليه يوماً بعد يوم.</p></div>
+        <div class="field"><label for="o-gname">ما هي؟</label><input class="input" id="o-gname" maxlength="50" value="${esc(D.goalName)}" placeholder="سماعة، عطر، رحلة…" /></div>
+        <div class="field"><label for="o-gprice">سعرها التقريبي (${esc(D.currency)})</label><input class="input num" id="o-gprice" type="number" inputmode="decimal" min="10" max="1000000" value="${D.goalPrice}" /></div>
+        <div class="card" style="background:linear-gradient(160deg,var(--sand-soft),var(--sage-soft));border:0">
+          <div class="row"><span class="ibox sand">${ic('gift')}</span><div class="grow small" style="line-height:1.85">بتوفير <b>${nf(perDay, 1)} ${esc(D.currency)}</b> يومياً تصل إلى مكافأتك خلال <b>${daysW(days)}</b> تقريباً.</div></div>
+        </div>`;
+      actions = `<button class="btn grad block" data-action="onbFinish">${onb.editing ? 'حفظ التعديلات' : 'ابدأ رحلة النقاء'} ${ic('sprout', 'sm')}</button>`;
+    }
+    $('#onb-body').innerHTML = body;
+    $('#onb-body').style.animation = 'none'; void $('#onb-body').offsetWidth; $('#onb-body').style.animation = '';
+    $('#onb-actions').innerHTML = actions;
+    if (s === 2) $$('#o-daily,#o-mg,#o-price,#o-per,#o-cur').forEach(el => el.addEventListener('input', () => { readOnbInputs(); const ppp = D.canPrice / Math.max(1, D.pouchesPerCan); $('#o-calc').innerHTML = `${ic('wallet', 'xs')} تنفق حالياً قرابة <b>${nf(D.dailyPouches * ppp * 30, 0)} ${esc(D.currency)}</b> شهرياً، وتستهلك <b>${nf(D.dailyPouches * D.pouchMg * 30)}</b> ملغ نيكوتين.`; }));
+    if (s === 4) $$('#o-gprice').forEach(el => el.addEventListener('change', () => { readOnbInputs(); renderOnb(); }));
+  }
+  function finishOnb() {
+    readOnbInputs();
+    const D = onb.draft;
+    const startISO = D.start ? new Date(D.start).toISOString() : new Date().toISOString();
+    const startChanged = startISO !== state.startDateISO;
+    Object.assign(state, {
+      name: D.name, quitMode: D.quitMode, startDateISO: startISO,
+      dailyPouches: clamp(D.dailyPouches || 10, 1, 80), pouchMg: clamp(D.pouchMg || 10, 1, 60),
+      canPrice: clamp(D.canPrice || 25, 1, 1000), pouchesPerCan: clamp(D.pouchesPerCan || 20, 1, 50), currency: D.currency,
+      reasons: D.reasons, letter: (D.letter || '').trim(),
+      goalName: D.goalName || 'مكافأتي', goalPrice: clamp(D.goalPrice || 1000, 10, 1000000)
+    });
+    if (!state.onboarded || startChanged) { state.celebrated = metrics().day; }
+    const first = !state.onboarded;
+    state.onboarded = true;
+    if (first) state.badgesSeen = BADGES.filter(b => b.ok(metrics())).map(b => b.id);
+    save(); closeOnb(); previewDay = null; go('today');
+    toast(first ? 'بدأت رحلتك. شجرتك زُرعت للتو' : 'حُفظت خطتك', first ? 'sprout' : 'circle-check');
+    if (first) confetti();
+  }
+
+  /* =========================================================
+     SHARE CARD
+     ========================================================= */
+  async function shareCard() {
+    const m = metrics();
+    toast('جارٍ تجهيز البطاقة…', 'sparkles');
+    try {
+      const W = 1080, H = 1350;
+      const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+      const ctx = cv.getContext('2d');
+      const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#0E1714'); g.addColorStop(1, '#0A0F0D');
+      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+      const svg = sceneSVG(m, { static: true });
+      const img = new Image();
+      await new Promise((res, rej) => { img.onload = res; img.onerror = rej; img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg); });
+      const r = 48, sx = 70, sy = 70, sw = W - 140, sh = sw * 240 / 360;
+      ctx.save(); ctx.beginPath(); ctx.roundRect ? ctx.roundRect(sx, sy, sw, sh, r) : ctx.rect(sx, sy, sw, sh); ctx.clip(); ctx.drawImage(img, sx, sy, sw, sh); ctx.restore();
+      try { await document.fonts.ready; } catch (e) {}
+      ctx.direction = 'rtl'; ctx.textAlign = 'center';
+      ctx.fillStyle = '#ECE8E1'; ctx.font = '700 140px "Readex Pro", sans-serif';
+      ctx.fillText(nf(m.days), W / 2, sy + sh + 190);
+      ctx.fillStyle = '#B7C0BB'; ctx.font = '500 46px "Readex Pro", sans-serif';
+      ctx.fillText(m.days === 1 ? 'يوم من النقاء' : m.days === 2 ? 'يومان من النقاء' : (m.days % 100 >= 3 && m.days % 100 <= 10 ? 'أيام' : 'يوماً') + ' من النقاء', W / 2, sy + sh + 260);
+      const stats = [[nf(m.saved, 0) + ' ' + state.currency, 'وفّرتها'], [nf(Math.floor(m.avoided)), 'ظرف تجنّبته'], [nf(m.won), 'موجة عبرتها']];
+      stats.forEach((s, i) => {
+        const cx = W - 70 - (sw / 3) * i - sw / 6, y = sy + sh + 400;
+        ctx.fillStyle = 'rgba(236,232,225,.06)'; ctx.beginPath(); ctx.roundRect ? ctx.roundRect(cx - sw / 6 + 12, y - 90, sw / 3 - 24, 170, 32) : ctx.rect(cx - sw / 6 + 12, y - 90, sw / 3 - 24, 170); ctx.fill();
+        ctx.fillStyle = i === 0 ? '#EBD3AA' : '#BFDCCD'; ctx.font = '700 50px "Readex Pro", sans-serif'; ctx.fillText(s[0], cx, y);
+        ctx.fillStyle = '#86918B'; ctx.font = '400 32px "Readex Pro", sans-serif'; ctx.fillText(s[1], cx, y + 52);
+      });
+      ctx.fillStyle = '#8AB9A3'; ctx.font = '700 54px "Readex Pro", sans-serif'; ctx.fillText('نَقَاء', W / 2, H - 110);
+      ctx.fillStyle = '#86918B'; ctx.font = '400 30px "Readex Pro", sans-serif'; ctx.fillText('رحلتي للتحرر من أظرف النيكوتين', W / 2, H - 62);
+      const blob = await new Promise(res => cv.toBlob(res, 'image/png'));
+      const file = new File([blob], 'naqa-progress.png', { type: 'image/png' });
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file], title: 'نَقَاء', text: `${nf(m.days)} ${m.days > 10 ? 'يوماً' : 'أيام'} من النقاء` });
+      } else {
+        const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'naqa-progress.png'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 2000);
+        toast('حُفظت البطاقة على جهازك', 'download');
+      }
+    } catch (e) { if (e && e.name !== 'AbortError') toast('تعذّر إنشاء البطاقة', 'circle-alert'); }
+  }
+
+  /* =========================================================
+     ACTIONS
+     ========================================================= */
+  const ACTIONS = {
+    tab: el => { buzz(6); go(el.dataset.tab); },
+    closeSheet,
+    prevDay: () => { const m = metrics(); const cur = previewDay || m.day; if (cur > 1) { previewDay = cur - 1; RENDER.today(); } },
+    nextDay: () => { const m = metrics(); const cur = previewDay || m.day; if (cur < m.day) { previewDay = cur + 1 === m.day ? null : cur + 1; RENDER.today(); } },
+    todayDay: () => { previewDay = null; RENDER.today(); },
+    viewDay: el => { const d = +el.dataset.day; previewDay = d === metrics().day ? null : d; closeSheet(); go('today'); },
+    toggleChallenge: el => {
+      const d = +el.dataset.day; state.completedChallenges[d] = !state.completedChallenges[d]; save();
+      if (state.completedChallenges[d]) { toast('أحسنت! ثمرة ذهبية جديدة على شجرتك', 'sparkles'); confetti(); buzz([15, 30, 15]); }
+      RENDER.today();
+    },
+    ckMood: el => { checkinDraft.mood = +el.dataset.v; buzz(); RENDER.today(); },
+    ckCrave: el => { checkinDraft.craving = +el.dataset.v; buzz(); RENDER.today(); },
+    ckSave: () => {
+      const prev = state.checkins[dateKey()] || {};
+      state.checkins[dateKey()] = { mood: checkinDraft.mood ?? prev.mood, craving: checkinDraft.craving ?? prev.craving, ts: Date.now() };
+      checkinDraft = {}; checkinEditing = false; save(); toast('سُجّل حضورك اليوم', 'calendar'); RENDER.today();
+    },
+    checkinEdit: () => { checkinEditing = true; checkinDraft = {}; RENDER.today(); },
+    taperAdd: () => { const k = dateKey(); state.taperDailyLogs[k] = (state.taperDailyLogs[k] || 0) + 1; save(); buzz(); RENDER.today(); },
+    taperUndo: () => { const k = dateKey(); state.taperDailyLogs[k] = Math.max(0, (state.taperDailyLogs[k] || 0) - 1); save(); RENDER.today(); },
+    editGoal: () => openOnb(4),
+    editPlan: () => openOnb(1),
+    journeySeg: el => { journeySeg = el.dataset.v; RENDER.journey(); },
+    openDay: el => openDay(+el.dataset.day),
+    openBadge: el => openBadge(el.dataset.id),
+    alt: el => {
+      const a = ALTS[+el.dataset.idx]; $$('[data-action="alt"]').forEach(b => b.setAttribute('aria-pressed', b === el));
+      const box = $('#alt-box'); box.hidden = false; box.innerHTML = `${ic(a.icon, 'xs')} ${a.d}`; buzz();
+    },
+    openReasons, openLetter,
+    logCraving: () => openOutcome({ src: 'manual', title: 'سجّل رغبة مرّت بك' }),
+    shieldEdit: el => openShieldEditor(+el.dataset.idx),
+    shieldQuick: el => { state.shields.push({ when: el.dataset.w, then: SHIELD_THEN[0] }); save(); openShieldEditor(state.shields.length - 1); },
+    shieldDel: el => { state.shields.splice(+el.dataset.idx, 1); save(); RENDER.insights(); toast('حُذفت الخطة', 'trash-2'); },
+    sessionStart, sessionTool: el => setSessionTool(el.dataset.tool),
+    sessionPause: () => {
+      sess.paused = !sess.paused;
+      if (!sess.paused) sess.end = Date.now() + sess.left * 1000;
+      $('#ss-pause').innerHTML = ic(sess.paused ? 'play' : 'pause', 'sm');
+      if (sess.paused) breathStop(); else if (sess.tool === 'breath') breathStart();
+    },
+    sessionEnd: () => {
+      if (SESSION_LEN - sess.left < 15) { closeSession(); return; }
+      finishSession(false);
+    },
+    sessionWon: () => finishSession(false),
+    breathPattern: el => { state.breathPattern = el.dataset.v; save(false); renderBreath(); breathStart(); },
+    gameStart,
+    theme: el => { state.theme = el.dataset.v; save(false); applyTheme(); RENDER.me(); },
+    haptics: () => { state.haptics = !state.haptics; save(false); buzz(20); RENDER.me(); },
+    share: shareCard,
+    cloud: openCloud,
+    export: () => {
+      const data = Object.assign({}, state, { firebaseConfig: Object.assign({}, state.firebaseConfig, { idToken: '', refreshToken: '' }) });
+      const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }));
+      const a = document.createElement('a'); a.href = url; a.download = 'naqa-backup-' + dateKey() + '.json'; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 2000); toast('صُدّرت النسخة الاحتياطية', 'download');
+    },
+    import: () => $('#import-file').click(),
+    resetCounter: () => {
+      openSheet(`
+        <div class="row"><span class="ibox rose">${ic('rotate-ccw')}</span><div class="grow"><h2 class="h2">بداية جديدة</h2><p class="xs muted" style="margin:0">لا بأس. كل محاولة تقرّبك أكثر.</p></div></div>
+        <p class="body">سيبدأ العدّاد من الآن. نحتفظ بأطول فترة حققتها (${fmtDur(metrics().best)})، ودروسك، وأسبابك، ودرعك.</p>
+        <textarea class="input" id="rs-lesson" rows="3" maxlength="300" placeholder="ما الذي تعلّمته من هذه المحاولة؟"></textarea>
+        <div class="grid-2"><button class="btn" data-action="closeSheet">إلغاء</button><button class="btn danger" id="rs-go">ابدأ من جديد</button></div>`, body => {
+        $('#rs-go', body).onclick = () => {
+          const m = metrics();
+          state.history.push({ start: state.startDateISO, end: new Date().toISOString(), hours: m.H });
+          const lesson = $('#rs-lesson', body).value.trim();
+          state.slips.push({ ts: Date.now(), lesson, pouches: 0, reset: true });
+          state.startDateISO = new Date().toISOString(); state.completedChallenges = {}; state.celebrated = 1; previewDay = null;
+          save(); closeSheet(); go('today'); toast('بداية جديدة. شجرة جديدة تُزرع الآن', 'sprout');
+        };
+      });
+    },
+    wipe: () => {
+      openSheet(`<h2 class="h2">حذف كل البيانات؟</h2><p class="body">سيُحذف كل شيء من هذا الجهاز ولا يمكن التراجع. صدّر نسخة احتياطية أولاً إن أردت.</p>
+        <div class="grid-2"><button class="btn" data-action="closeSheet">إلغاء</button><button class="btn danger" id="wp-go">حذف نهائي</button></div>`, body => {
+        $('#wp-go', body).onclick = () => { try { localStorage.removeItem(STORE_KEY); localStorage.removeItem(LEGACY_KEY); } catch (e) {} state = defaults(); closeSheet(); applyTheme(); openOnb(0); };
+      });
+    },
+    onbNext: () => { readOnbInputs(); onb.step = Math.min(4, onb.step + 1); renderOnb(); $('#onb').scrollTop = 0; },
+    onbBack: () => { readOnbInputs(); onb.step = Math.max(0, onb.step - 1); renderOnb(); },
+    onbClose: () => { if (state.onboarded) closeOnb(); },
+    onbMode: el => { onb.draft.quitMode = el.dataset.v; buzz(); renderOnb(); },
+    onbNow: () => { const n = new Date(); $('#o-start').value = `${n.getFullYear()}-${pad2(n.getMonth() + 1)}-${pad2(n.getDate())}T${pad2(n.getHours())}:${pad2(n.getMinutes())}`; },
+    onbReason: el => { readOnbInputs(); const r = el.dataset.v, R = onb.draft.reasons; onb.draft.reasons = R.includes(r) ? R.filter(x => x !== r) : R.concat(r); buzz(); el.setAttribute('aria-pressed', onb.draft.reasons.includes(r)); },
+    onbFinish: finishOnb
+  };
+
+  document.addEventListener('click', e => {
+    const el = e.target.closest('[data-action]');
+    if (!el || el.disabled) return;
+    const fn = ACTIONS[el.dataset.action];
+    if (fn) { e.preventDefault(); fn(el, e); }
+  });
+  document.addEventListener('change', e => {
+    const el = e.target.closest('[data-change]'); if (!el) return;
+    if (el.dataset.change === 'currency') { state.currency = el.value; save(); toast('تم تغيير العملة'); }
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { if (!$('#sheet-layer').hidden) closeSheet(); else if (!$('#onb').hidden && state.onboarded) closeOnb(); }
+  });
+  document.addEventListener('pointerover', e => { const t = e.target.closest && e.target.closest('[data-tip]'); if (t && e.pointerType === 'mouse') showTip(t); });
+  document.addEventListener('pointerout', e => { const t = e.target.closest && e.target.closest('[data-tip]'); if (t && e.pointerType === 'mouse') hideTip(); });
+  document.addEventListener('pointerdown', e => {
+    const t = e.target.closest && e.target.closest('[data-tip]');
+    if (t && e.pointerType !== 'mouse') { showTip(t); clearTimeout(tipT); tipT = setTimeout(hideTip, 1800); } else if (!t) hideTip();
+  });
+  window.addEventListener('scroll', hideTip, { passive: true });
+
+  $('#import-file').addEventListener('change', e => {
+    const f = e.target.files && e.target.files[0]; if (!f) return;
+    const rd = new FileReader();
+    rd.onload = ev => {
+      try {
+        const o = JSON.parse(ev.target.result);
+        const fb = state.firebaseConfig;
+        state = o.v === 2 ? normalize(o) : migrateV1(o);
+        if (!state.firebaseConfig.databaseURL) state.firebaseConfig = fb;
+        save(); applyTheme(); go('today'); toast('استُعيدت نسختك بنجاح', 'upload');
+      } catch (err) { toast('ملف غير صالح', 'circle-alert'); }
+      e.target.value = '';
+    };
+    rd.readAsText(f);
+  });
+  $('#gm-canvas').addEventListener('pointerdown', gameTap);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) { tick(); if (sess.timer && !sess.paused) sessionTick(); } });
+  if (window.matchMedia) matchMedia('(prefers-color-scheme: light)').addEventListener && matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => { if (state.theme === 'auto') applyTheme(); });
+
+  /* =========================================================
+     BOOT
+     ========================================================= */
+  hydrate();
+  applyTheme();
+  go('today', { keepScroll: true });
+  if (!state.onboarded) openOnb(0);
+  setInterval(tick, 1000);
+  if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+  }
+  </script>
+</body>
+</html>
