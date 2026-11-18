@@ -641,6 +641,13 @@
     .tile .st .ic { width: 11px; height: 11px; }
     .day-peek { display: flex; align-items: center; gap: 10px; width: 100%; text-align: right; margin-top: 14px; padding: 12px 14px; border-radius: 16px; background: var(--surface-2); }
     .wk-row { display: flex; align-items: center; gap: 12px; width: 100%; text-align: right; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+    .mini-links { display: flex; flex-wrap: wrap; gap: 4px 16px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+    .mini-links button { font-size: 13px; font-weight: 600; color: var(--sage-ink); display: inline-flex; align-items: center; gap: 4px; }
+    .link-btn { display: block; margin: 0 auto; padding: 6px 12px; font-size: 13px; font-weight: 600; color: var(--ink-3); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 4px; }
+    .has-dot { position: relative; }
+    .has-dot::after { content: ""; position: absolute; top: 6px; right: 6px; width: 9px; height: 9px; border-radius: 50%; background: var(--sand); border: 2px solid var(--surface-2); }
+    .more-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-xl); padding: 14px 18px; }
+    .more-card > summary { width: 100%; justify-content: center; }
     .empty { text-align: center; padding: 26px 18px; }
     .empty .ibox { margin: 0 auto 12px; width: 56px; height: 56px; border-radius: 20px; }
 
@@ -1672,7 +1679,7 @@
             <h1 class="h2">${greeting()}</h1>
           </div>
         </div>
-        <button class="icon-btn" data-action="settings" aria-label="الإعدادات">${ic('settings', 'sm')}</button>
+        <button class="icon-btn ${backupDue(m) ? 'has-dot' : ''}" data-action="settings" aria-label="الإعدادات">${ic('settings', 'sm')}</button>
       </header>
 
       <section class="card hero">
@@ -1687,7 +1694,7 @@
           </div>
           ${m.prep ? '' : `<div class="bar thin" style="margin-top:12px"><i data-live="prog" style="width:${Math.max(2, clamp(m.pd / 30 * 100, 0, 100))}%"></i></div>`}
           <p class="small ink2" style="margin:10px 0 0">${ic('sprout', 'xs sage')} ${sceneCaption(m)}</p>
-          ${!state.legendSeen ? `<div class="callout sage small" style="margin-top:10px;line-height:1.8">
+          ${!state.legendSeen && (m.prep || m.pd < 2) ? `<div class="callout sage small" style="margin-top:10px;line-height:1.8">
               <b>كيف تقرأ المشهد؟</b> العلبة عادتك القديمة، والشجرة تنمو منها: <b>ورقة</b> لكل يوم، <b>ثمرة</b> لكل تحدٍّ، <b>زهرة</b> لكل محطة كبرى.
               <div class="row" style="margin-top:8px;gap:8px"><button class="btn sm primary" data-action="legendOk">فهمت</button><button class="btn sm ghost" data-action="legend">المزيد</button></div></div>` : ''}
         </div>
@@ -1717,8 +1724,7 @@
 
     const title = m.prep ? 'خطة التحضير' : 'خطتك اليوم';
     html += `<section class="card plan">
-      <div class="row between"><h2 class="h3">${title}</h2><span class="chip ${doneN === tasks.length ? 'sage' : ''} num">${ar(doneN)} من ${ar(tasks.length)}</span></div>
-      <div class="bar thin" style="margin:10px 0 14px"><i style="width:${doneN / tasks.length * 100}%"></i></div>`;
+      <div class="row between" style="margin-bottom:12px"><h2 class="h3">${title}</h2><span class="chip ${doneN === tasks.length ? 'sage' : ''} num">${ar(doneN)} من ${ar(tasks.length)}</span></div>`;
     if (nxt) {
       html += `<div class="next-task">
         <div class="xs sage bold">${ic('play', 'xs')} مهمتك التالية — ${nxt.when || 'الآن'}</div>
@@ -1729,7 +1735,7 @@
       html += `<div class="next-task center">
         <span class="ibox" style="margin:0 auto 8px;width:48px;height:48px;border-radius:16px">${ic('circle-check', 'lg')}</span>
         <p class="h3" style="margin:0">${m.prep ? 'جاهز ليوم إقلاعك' : 'أكملت خطة اليوم'}</p>
-        <p class="small muted" style="margin:4px 0 0">${m.prep ? 'تبدأ رحلتك ' + fmtDate(m.st, { weekday: 'long', hour: 'numeric', minute: '2-digit' }) : 'ارتح الآن. خطة الغد تنتظرك.'}</p>
+        <p class="small muted" style="margin:4px 0 0">${m.prep ? 'تبدأ رحلتك ' + fmtDate(m.st, { weekday: 'long', hour: 'numeric', minute: '2-digit' }) : !m.free && m.day < 30 ? 'غداً: ' + planTasks(m.day + 1)[0].t : 'ارتح الآن. خطة بكرة تنتظرك.'}</p>
       </div>`;
     }
     const rest = tasks.filter(t => t !== nxt);
@@ -1742,37 +1748,21 @@
       </button>`;
     }).join('') + `</div>` + (nxt ? '</details>' : '');
     if (m.prep) {
-      html += `<button class="btn ghost block sm" style="margin-top:6px" data-action="quitNow">${ic('zap', 'xs')} أنا جاهز — ابدأ الآن</button>`;
+      html += `<div class="mini-links"><button data-action="quitNow">${ic('zap', 'xs')} أنا جاهز — ابدأ الآن</button></div>`;
     } else if (!m.free) {
-      html += `<div class="row" style="margin-top:10px;gap:8px">
-        <button class="btn sm grow" data-action="openDay" data-day="${m.day}">${ic('book-open', 'xs')} عن يومك</button>
-        <button class="btn sm grow" data-action="symptoms">${ic('activity', 'xs')} هل ما أشعر به طبيعي؟</button>
-      </div>
-      ${m.day < 30 ? `<p class="xs muted" style="margin:10px 0 0">${ic('calendar', 'xs')} غداً: ${planTasks(m.day + 1)[0].t}</p>` : ''}`;
+      html += `<div class="mini-links"><button data-action="openDay" data-day="${m.day}">${ic('book-open', 'xs')} عن يومك</button>${m.day <= 14 ? `<button data-action="symptoms">${ic('activity', 'xs')} هل ما أشعر به طبيعي؟</button>` : ''}</div>`;
     }
     html += `</section>`;
 
     if (!m.prep && !m.logTaper) {
-      html += `<button class="btn block" data-action="usedPouch">${ic('rotate-ccw', 'sm')} استخدمت ظرفاً؟ سجّله بدون تصفير</button>`;
+      html += `<button class="link-btn" data-action="usedPouch">استخدمت ظرفاً؟ سجّله بدون تصفير</button>`;
     }
-
-    const standalone = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone;
-    if (!m.prep && m.pd >= 3 && Date.now() - (state.lastBackup || 0) > 7 * 864e5 && state.backupNudge !== dateKey()) html += `
-      <section class="card tight" style="border-color:var(--sand)">
-        <div class="row" style="align-items:flex-start"><span class="ibox sm sand">${ic('download', 'sm')}</span><div class="grow"><div class="small bold">احفظ رحلتك</div><p class="xs ink2" style="margin:2px 0 0;line-height:1.7">${standalone ? 'احفظ نسخة احتياطية مرة بالأسبوع.' : 'المتصفح قد يمسح بياناتك إذا ما فتحت الموقع فترة. ثبّت نَقَاء على الشاشة الرئيسية واحفظ نسخة.'}</p></div></div>
-        <div class="row" style="margin-top:10px;gap:8px">${standalone ? '' : `<button class="btn sm soft grow" data-action="install">${ic('smartphone', 'xs')} ثبّته</button>`}<button class="btn sm soft-sand grow" data-action="export">${ic('download', 'xs')} حفظ نسخة</button><button class="btn sm ghost" data-action="backupLater">لاحقاً</button></div>
-      </section>`;
-    if (!m.prep) html += `
-      <button class="card tight strip" data-action="tab" data-tab="me" aria-label="تفاصيل التوفير والمكافأة">
-        <div><div class="v num sand"><span data-live="saved">${nf(m.saved, 0)}</span> <small>${esc(cur)}</small></div><div class="l">وفّرت</div></div>
-        <div><div class="v num" data-live="avoided">${nf(Math.floor(m.avoided))}</div><div class="l">ظرف تجنّبته</div></div>
-        <div><div class="v num" data-live="goalPct">${nf(Math.floor(m.goalPct))}٪</div><div class="l">نحو مكافأتك</div></div>
-      </button>`;
 
     $('#view-today').innerHTML = html;
     lastDay = m.day; lastPrep = m.prep;
     updateLive(m);
   };
+  function backupDue(m) { return !m.prep && m.pd >= 3 && Date.now() - (state.lastBackup || 0) > 7 * 864e5; }
   const dayUnit = n => n <= 2 ? 'يوم' : (n % 100 >= 3 && n % 100 <= 10) ? 'أيام' : 'يوماً';
   const afterIdx = m => clamp(Math.floor((m.pd - 30) / 7), 0, AFTER30.length - 1);
 
@@ -2114,10 +2104,13 @@
         <div id="alt-box" class="callout sage small" style="margin-top:12px;line-height:1.8" hidden></div>
       </section>
 
-      <button class="btn block" data-action="symptoms">${ic('activity', 'sm')} هل ما أشعر به طبيعي؟</button>
-      ${supportCallout()}
-
-      <button class="btn block" data-action="logCraving">${ic('pen-line', 'sm')} سجّل رغبة مرّت بك</button>`;
+      <details class="more more-card"><summary>المزيد ${ic('chevron-down', 'xs')}</summary>
+        <div class="col" style="margin-top:12px">
+          <button class="btn block" data-action="symptoms">${ic('activity', 'sm')} هل ما أشعر به طبيعي؟</button>
+          ${supportCallout()}
+          <button class="btn block" data-action="logCraving">${ic('pen-line', 'sm')} سجّل رغبة مرّت بك</button>
+        </div>
+      </details>`;
   };
 
   /* =========================================================
@@ -2256,6 +2249,8 @@
     const sw = (action, on, label) => `<button class="switch" role="switch" aria-checked="${on}" data-action="${action}" aria-label="${label}"></button>`;
     openSheet(`
       <div class="row"><h2 class="h2 grow">الإعدادات</h2><button class="icon-btn sm" data-action="closeSheet" aria-label="إغلاق">${ic('x', 'sm')}</button></div>
+      ${backupDue(metrics()) ? `<div class="callout sand small" style="line-height:1.8">${ic('download', 'xs')} <b>احفظ رحلتك:</b> المتصفح قد يمسح بياناتك إذا ما فتحت الموقع فترة. احفظ نسخة، وثبّت نَقَاء على الشاشة الرئيسية.
+        <div class="row" style="margin-top:8px;gap:8px"><button class="btn sm soft-sand grow" data-action="export">${ic('download', 'xs')} حفظ نسخة</button><button class="btn sm soft grow" data-action="install">${ic('smartphone', 'xs')} ثبّته</button></div></div>` : ''}
       <div class="list" style="box-shadow:none">
         <div class="list-row"><span class="ibox sm">${ic('palette', 'sm')}</span><div class="grow"><div class="t">المظهر</div></div>
           <div class="seg" style="width:176px">${[['light', 'فاتح'], ['dark', 'داكن'], ['auto', 'تلقائي']].map(([v, t]) => `<button data-action="theme" data-v="${v}" aria-pressed="${state.theme === v}" style="min-height:32px;font-size:12px">${t}</button>`).join('')}</div></div>
@@ -2570,7 +2565,7 @@
   /* =========================================================
      ONBOARDING
      ========================================================= */
-  const ONB_STEPS = ['welcome', 'usage', 'path', 'triggers', 'why', 'reward', 'quit', 'plan'];
+  const ONB_STEPS = ['welcome', 'usage', 'path', 'why', 'quit', 'plan'];
   const onb = { step: 0, draft: null, editing: false };
   const toLocalInput = d => `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}T${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
   function quitChoiceDate(choice) {
@@ -2651,17 +2646,28 @@
         </div>
         <div class="field"><label for="o-cur">العملة</label><select class="input" id="o-cur">${CURRENCIES.map(c => `<option ${c === D.currency ? 'selected' : ''}>${c}</option>`).join('')}</select></div>
         <div id="o-heavy">${heavyNote(D)}</div>
-        <div class="callout sage small" id="o-calc">${usageCalc(D)}</div>`;
+        <div class="callout sage small" id="o-calc">${usageCalc(D)}</div>
+        <div class="field"><label>متى تستخدمه عادة؟ (اختياري — نبني خطتك اليومية عليها)</label>
+          <div class="grid-3">${TRIGGERS.map(t => `<button class="opt" data-action="onbTrig" data-v="${t.id}" aria-pressed="${D.triggers.includes(t.id)}">${ic(t.icon, 'sm')}<span>${t.t}</span></button>`).join('')}</div></div>`;
     } else if (name === 'triggers') {
       body = `<div><h2 class="h1">متى تستخدم الظرف عادة؟</h2><p class="body">اختر مواقفك. ستُبنى خطتك اليومية حولها.</p></div>
         <div class="grid-3">${TRIGGERS.map(t => `<button class="opt" data-action="onbTrig" data-v="${t.id}" aria-pressed="${D.triggers.includes(t.id)}">${ic(t.icon)}<span>${t.t}</span></button>`).join('')}</div>
         <p class="xs muted" style="margin:0">${ic('info', 'xs')} يمكنك تعديلها لاحقاً من «أنا ← تعديل خطتي».</p>`;
       actions = `<button class="btn primary block" data-action="onbNext" ${D.triggers.length ? '' : 'disabled'}>التالي ${ic('chevron-left', 'sm')}</button>`;
     } else if (name === 'why') {
-      body = `<div><h2 class="h1">لماذا تترك؟</h2><p class="body">أسبابك ستطير من العلبة القديمة كل يوم، وتظهر لك وقت الرغبة.</p></div>
+      const perDay = D.dailyPouches * (D.canPrice / Math.max(1, D.pouchesPerCan));
+      body = `<div><h2 class="h1">ليش تترك؟</h2><p class="body">أسبابك تظهر لك كل صباح وفي لحظات الرغبة.</p></div>
         <div class="row wrap" id="o-reasons">${REASONS.concat(D.reasons.filter(r => !REASONS.includes(r))).map(r => `<button class="opt inline" data-action="onbReason" data-v="${esc(r)}" aria-pressed="${D.reasons.includes(r)}">${esc(r)}</button>`).join('')}</div>
         <details class="more" ${D.letter ? 'open' : ''}><summary>${ic('mail', 'xs')} اكتب رسالة لنفسك (اختياري) ${ic('chevron-down', 'xs')}</summary>
-          <textarea class="input" id="o-letter" rows="4" maxlength="1200" style="margin-top:8px" placeholder="أعرف أن الرغبة الآن تبدو كبيرة، لكنك تعرف كم تعبت لتصل إلى هنا…">${esc(D.letter)}</textarea></details>`;
+          <textarea class="input" id="o-letter" rows="4" maxlength="1200" style="margin-top:8px" placeholder="أعرف أن الرغبة الآن تبدو كبيرة، لكنك تعرف كم تعبت لتصل إلى هنا…">${esc(D.letter)}</textarea></details>
+        <div class="card flat" style="background:var(--sand-soft);border:0">
+          <div class="h3" style="margin-bottom:10px">${ic('gift', 'sm sand')} ومكافأتك من فلوس الأظرف</div>
+          <div class="grid-2">
+            <div class="field"><label for="o-gname">وش هي؟</label><input class="input" id="o-gname" maxlength="50" value="${esc(D.goalName)}" placeholder="سماعة، عطر، رحلة…" /></div>
+            <div class="field"><label for="o-gprice">سعرها (${esc(D.currency)})</label><input class="input num" id="o-gprice" type="number" inputmode="decimal" min="10" max="1000000" value="${D.goalPrice}" /></div>
+          </div>
+          <p class="xs ink2" style="margin:8px 0 0" id="o-eta">توفّر قرابة ${nf(perDay, 1)} ${esc(D.currency)} يومياً — توصل لها خلال ${daysW(perDay > 0 ? Math.ceil(D.goalPrice / perDay) : 0)} تقريباً.</p>
+        </div>`;
     } else if (name === 'reward') {
       const perDay = D.dailyPouches * (D.canPrice / Math.max(1, D.pouchesPerCan));
       const days = perDay > 0 ? Math.ceil(D.goalPrice / perDay) : 0;
@@ -2700,7 +2706,7 @@
     $('#onb-body').style.animation = 'none'; void $('#onb-body').offsetWidth; $('#onb-body').style.animation = '';
     $('#onb-actions').innerHTML = actions;
     if (name === 'usage') $$('#o-daily,#o-mg,#o-price,#o-per,#o-cur').forEach(el => el.addEventListener('input', () => { readOnbInputs(); $('#o-heavy').innerHTML = heavyNote(D); $('#o-calc').innerHTML = usageCalc(D); }));
-    if (name === 'reward') $$('#o-gprice').forEach(el => el.addEventListener('change', () => { readOnbInputs(); renderOnb(); }));
+    if ($('#o-gprice')) $('#o-gprice').addEventListener('input', () => { readOnbInputs(); const pdv = D.dailyPouches * (D.canPrice / Math.max(1, D.pouchesPerCan)); $('#o-eta').textContent = `توفّر قرابة ${nf(pdv, 1)} ${D.currency} يومياً — توصل لها خلال ${daysW(pdv > 0 ? Math.ceil(D.goalPrice / pdv) : 0)} تقريباً.`; });
     if (name === 'quit' && $('#o-start')) $('#o-start').addEventListener('change', () => { readOnbInputs(); renderOnb(); });
   }
   function heavyNote(D) {
@@ -2815,7 +2821,7 @@
     checkinEdit: () => { checkinEditing = true; checkinDraft = {}; RENDER.today(); },
     taperAdd: () => { const k = dateKey(); state.taperDailyLogs[k] = (state.taperDailyLogs[k] || 0) + 1; save(); buzz(); RENDER.today(); },
     taperUndo: () => { const k = dateKey(); state.taperDailyLogs[k] = Math.max(0, (state.taperDailyLogs[k] || 0) - 1); save(); RENDER.today(); },
-    editGoal: () => openOnb('reward'),
+    editGoal: () => openOnb('why'),
     editPlan: () => openOnb('usage'),
     taskGo: el => runTask(el.dataset.id, true),
     taskRow: el => runTask(el.dataset.id, false),
