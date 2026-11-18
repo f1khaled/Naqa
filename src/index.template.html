@@ -15,7 +15,7 @@
   <link rel="apple-touch-icon" href="icons/icon-192.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Readex+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Readex+Pro:wght@200;300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
     /* =========================================================
@@ -657,9 +657,232 @@
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
     }
+
+    /* =========================================================
+       DESIGN LAYER v8 — system type, grouped surfaces, materials, motion
+       ========================================================= */
+    :root, [data-theme="light"] {
+      --font: -apple-system, BlinkMacSystemFont, "SF Arabic", "SF Pro Text", "Readex Pro", "Segoe UI", system-ui, sans-serif;
+      --bg: #F2F2F7;
+      --glow-1: transparent; --glow-2: transparent;
+      --surface: #FFFFFF;
+      --surface-2: rgba(118, 118, 128, .12);
+      --surface-3: rgba(118, 118, 128, .2);
+      --glass: rgba(249, 249, 249, .78);
+      --line: rgba(60, 60, 67, .13);
+      --line-2: rgba(60, 60, 67, .22);
+      --ink: #0B0B0C;
+      --ink-2: #3A3A3C;
+      --ink-3: #6E6E73;
+      --sage: #007A68;
+      --sage-2: #00695A;
+      --sage-ink: #007A68;
+      --sage-soft: rgba(0, 122, 104, .11);
+      --sand: #B35000;
+      --sand-ink: #B35000;
+      --sand-soft: rgba(255, 149, 0, .14);
+      --rose: #D70015;
+      --rose-soft: rgba(255, 59, 48, .11);
+      --on-accent: #FFFFFF;
+      --shadow: 0 1px 1px rgba(0, 0, 0, .02);
+      --ease: cubic-bezier(.32, .72, 0, 1);
+      --r-xl: 22px;
+    }
+    [data-theme="dark"] {
+      --bg: #000000;
+      --surface: #1C1C1E;
+      --surface-2: rgba(118, 118, 128, .24);
+      --surface-3: rgba(118, 118, 128, .36);
+      --glass: rgba(22, 22, 24, .76);
+      --line: rgba(84, 84, 88, .55);
+      --line-2: rgba(120, 120, 128, .6);
+      --ink: #FFFFFF;
+      --ink-2: rgba(235, 235, 245, .82);
+      --ink-3: #A1A1A8;
+      --sage: #30D5B5;
+      --sage-2: #2AC2A4;
+      --sage-ink: #30D5B5;
+      --sage-soft: rgba(48, 213, 181, .16);
+      --sand: #FF9F0A;
+      --sand-ink: #FF9F0A;
+      --sand-soft: rgba(255, 159, 10, .16);
+      --rose: #FF6961;
+      --rose-soft: rgba(255, 105, 97, .16);
+      --on-accent: #002E26;
+      --shadow: none;
+    }
+    body { font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; letter-spacing: 0; background-image: none; }
+    body::before { display: none; }
+    .app { padding-top: calc(var(--safe-t) + 8px); transition: transform .5s var(--ease), border-radius .5s var(--ease), filter .5s var(--ease); transform-origin: 50% 0; }
+    body.sheet-open .app { transform: scale(.94) translateY(8px); border-radius: 14px; filter: brightness(.92); }
+    .view { gap: 16px; }
+    .view.enter { animation: viewIn .32s var(--ease) both; }
+    @keyframes viewIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+    /* type scale */
+    .h1 { font-size: 32px; font-weight: 800; letter-spacing: -.2px; line-height: 1.2; }
+    .h2 { font-size: 20px; font-weight: 700; line-height: 1.35; }
+    .h3 { font-size: 17px; font-weight: 600; line-height: 1.45; }
+    .body { font-size: 16px; line-height: 1.7; color: var(--ink-2); }
+    .small { font-size: 15px; }
+    .xs { font-size: 13px; }
+    .eyebrow { font-size: 13px; font-weight: 600; color: var(--ink-3); }
+
+    /* large title header */
+    .topbar { padding: 10px 2px 2px; align-items: flex-end; }
+    .topbar .h1, .topbar .h2 { font-size: 32px; font-weight: 800; }
+    .logo { display: none; }
+    .brand { gap: 0; }
+
+    /* compact navigation bar that appears on scroll */
+    .navbar {
+      position: fixed; z-index: 45; top: 0; left: 0; right: 0;
+      height: calc(var(--safe-t) + 44px); padding-top: var(--safe-t);
+      display: grid; place-items: center;
+      font-size: 17px; font-weight: 600; color: var(--ink);
+      background: var(--glass);
+      backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: .5px solid var(--line);
+      opacity: 0; transform: translateY(-4px); pointer-events: none;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+    .navbar.show { opacity: 1; transform: none; }
+
+    /* surfaces */
+    .card { border: 0; box-shadow: var(--shadow); border-radius: var(--r-xl); padding: 18px; }
+    .card.tight { padding: 14px 16px; }
+    .callout { border: 0; border-radius: 14px; background: var(--surface-2); }
+    .ibox { border-radius: 12px; }
+    .chip { border: 0; background: var(--surface-2); color: var(--ink-2); font-weight: 600; padding: 5px 11px; }
+    .chip.sage { background: var(--sage-soft); color: var(--sage-ink); }
+
+    /* buttons */
+    .btn { min-height: 50px; border-radius: 14px; border: 0; font-size: 17px; font-weight: 600; background: var(--surface-2); color: var(--sage-ink); }
+    .btn.sm { min-height: 36px; font-size: 15px; border-radius: 10px; padding: 0 14px; }
+    .btn.primary, .btn.grad { background: var(--sage); color: var(--on-accent); }
+    .btn.soft { background: var(--sage-soft); color: var(--sage-ink); }
+    .btn.soft-sand { background: var(--sand-soft); color: var(--sand-ink); }
+    .btn.sand { background: var(--sand); color: #fff; }
+    [data-theme="dark"] .btn.sand { color: #2B1700; }
+    .btn.danger { background: var(--rose-soft); color: var(--rose); }
+    .btn.ghost { background: transparent; color: var(--sage-ink); }
+    .btn:active:not(:disabled) { transform: scale(.97); opacity: .85; }
+    .btn:disabled { background: var(--surface-2); color: var(--ink-3); opacity: .7; }
+    .icon-btn { width: 36px; height: 36px; border: 0; background: var(--surface-2); color: var(--sage-ink); }
+    .icon-btn.sm { width: 32px; height: 32px; }
+
+    /* segmented control */
+    .seg { border: 0; border-radius: 10px; padding: 2px; gap: 0; background: var(--surface-2); }
+    .seg button { min-height: 32px; border-radius: 8px; font-size: 14px; font-weight: 600; color: var(--ink); }
+    .seg button[aria-pressed="true"] { background: var(--surface); border: 0; box-shadow: 0 3px 8px rgba(0, 0, 0, .12), 0 1px 1px rgba(0, 0, 0, .04); }
+    [data-theme="dark"] .seg button[aria-pressed="true"] { background: #636366; }
+
+    /* options */
+    .opt { border: 0; background: var(--surface-2); color: var(--ink); border-radius: 14px; font-size: 13px; }
+    .opt[aria-pressed="true"] { background: var(--sage-soft); color: var(--sage-ink); box-shadow: inset 0 0 0 2px var(--sage); }
+    .opt.sand[aria-pressed="true"] { background: var(--sand-soft); color: var(--sand-ink); box-shadow: inset 0 0 0 2px var(--sand); }
+    .opt.rose[aria-pressed="true"] { background: var(--rose-soft); color: var(--rose); box-shadow: inset 0 0 0 2px var(--rose); }
+    .path-card { border: 0; background: var(--surface); }
+    .path-card[aria-pressed="true"], .path-card.sandy[aria-pressed="true"] { background: var(--surface); box-shadow: inset 0 0 0 2px var(--sage); }
+
+    /* inputs */
+    .input { border: 0; background: var(--surface); border-radius: 12px; min-height: 48px; font-size: 17px; }
+    .onb .input, .sheet .input { background: var(--surface-2); }
+    .input:focus { box-shadow: 0 0 0 2px var(--sage); }
+
+    /* switch */
+    .switch { width: 51px; height: 31px; border: 0; background: var(--surface-3); }
+    .switch::after { top: 2px; right: 2px; width: 27px; height: 27px; background: #fff; box-shadow: 0 3px 8px rgba(0, 0, 0, .15), 0 1px 1px rgba(0, 0, 0, .16); }
+    .switch[aria-checked="true"] { background: #34C759; }
+    .switch[aria-checked="true"]::after { transform: translateX(-20px); background: #fff; }
+
+    /* progress */
+    .bar { height: 6px; background: var(--surface-2); }
+    .bar.thin { height: 4px; }
+    .bar > i { background: var(--sage); }
+
+    /* inset grouped lists */
+    .list { border: 0; box-shadow: none; border-radius: 14px; }
+    .list-row { position: relative; border: 0; min-height: 52px; padding: 11px 16px; gap: 14px; }
+    .list-row + .list-row::before { content: ""; position: absolute; top: 0; left: 0; right: 60px; height: .5px; background: var(--line); }
+    .list-row .t { font-size: 17px; font-weight: 400; }
+    .list-row .s { font-size: 13px; }
+    .list-row .ibox.sm { width: 30px; height: 30px; border-radius: 8px; background: var(--sage); color: #fff; }
+    .list-row .ibox.sm.sand { background: #FF9500; }
+    .list-row .ibox.sm.rose { background: #FF3B30; }
+    .list-row .ibox.sm .ic { width: 17px; height: 17px; }
+    .group-title { font-size: 13px; font-weight: 400; text-transform: none; color: var(--ink-3); margin: 12px 16px -8px; }
+
+    /* tab bar: full width material */
+    .tabbar {
+      left: 0; right: 0; bottom: 0; transform: none; width: 100%; max-width: none;
+      height: calc(52px + var(--safe-b)); padding: 0 max(8px, calc((100% - 480px) / 2)) var(--safe-b);
+      border-radius: 0; border: 0; border-top: .5px solid var(--line);
+      background: var(--glass);
+      backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px);
+      box-shadow: none;
+    }
+    .tab { font-size: 10.5px; font-weight: 500; gap: 2px; color: #8E8E93; }
+    .tab .ic { width: 25px; height: 25px; }
+    .tab[aria-current="page"] { color: var(--sage); }
+    .tab[aria-current="page"] .ic { color: var(--sage); transform: none; }
+    .tab-sos .sos-core { width: 46px; height: 28px; border-radius: 99px; background: var(--sage); }
+    .tab-sos .sos-core .ic { width: 20px; height: 20px; }
+    .app { padding-bottom: calc(52px + var(--safe-b) + 28px); }
+
+    /* sheets */
+    .sheet { border: 0; border-radius: 16px 16px 0 0; background: var(--bg); padding: 8px 18px calc(var(--safe-b) + 22px); animation: sheetUp .5s var(--ease) both; }
+    [data-theme="dark"] .sheet { background: #1C1C1E; }
+    .sheet .card, .sheet .list { background: var(--surface); }
+    [data-theme="dark"] .sheet .card, [data-theme="dark"] .sheet .list { background: #2C2C2E; }
+    .sheet-handle { width: 36px; height: 5px; background: var(--surface-3); margin: 0 auto 12px; }
+    .sheet-backdrop { background: rgba(0, 0, 0, .3); backdrop-filter: none; -webkit-backdrop-filter: none; }
+
+    /* toast as a floating material capsule */
+    #toast { background: var(--glass); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border: .5px solid var(--line); box-shadow: 0 10px 30px rgba(0, 0, 0, .12); color: var(--ink); font-weight: 600; }
+
+    /* hero: sky with a large light number */
+    .hero { padding: 0; overflow: hidden; }
+    .sky { position: relative; display: block; width: 100%; height: 290px; padding: 0; overflow: hidden; }
+    .sky > svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .sky-top { position: absolute; top: 18px; right: 20px; left: 20px; display: flex; flex-direction: column; align-items: flex-start; color: #fff; text-shadow: 0 1px 14px rgba(0, 0, 0, .18); pointer-events: none; }
+    .sky-lbl { font-size: 15px; font-weight: 600; opacity: .92; }
+    .sky-num { font-size: 86px; font-weight: 200; line-height: .95; letter-spacing: -2px; margin-top: 2px; }
+    .sky-unit { font-size: 20px; font-weight: 500; opacity: .95; margin-top: 2px; }
+    .sky .scene-help { top: 14px; left: 14px; background: rgba(255, 255, 255, .22); color: #fff; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+    .hero .hero-body { padding: 14px 18px 18px; }
+
+    /* SOS orb: soft luminous gradient */
+    .sos-orb { background: radial-gradient(circle at 50% 35%, rgba(48, 213, 181, .28), rgba(0, 122, 104, .12) 60%, transparent 72%), var(--sage-soft); border: 0; box-shadow: 0 0 0 10px var(--sage-soft); }
+    .sos-orb::before, .sos-orb::after { border-color: var(--sage); }
+    .breath-orb { border: 0; background: radial-gradient(circle at 50% 35%, rgba(48, 213, 181, .5), rgba(0, 122, 104, .25) 70%); box-shadow: 0 0 60px -10px rgba(48, 213, 181, .55); }
+
+    /* journey refinements */
+    .j-big { font-size: 56px; font-weight: 800; letter-spacing: -1.5px; }
+    .tile { border: 0; background: var(--surface-2); border-radius: 12px; }
+    .tile.done { background: var(--sage-soft); }
+    .cell { height: 8px; border-radius: 4px; background: var(--surface-2); }
+    .day-peek { background: var(--surface-2); border-radius: 14px; }
+    .wk-row + .wk-row { border-top: 0; }
+    .wk-row { border-bottom: .5px solid var(--line); }
+
+    /* profile header */
+    .profile-head { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; padding: 22px 18px; }
+    .avatar { width: 84px; height: 84px; border-radius: 50%; display: grid; place-items: center; font-size: 34px; font-weight: 700; color: #fff; background: linear-gradient(160deg, #30D5B5, #007A68); }
+
+    /* onboarding: centered welcome */
+    .onb { background: var(--bg); background-image: none; }
+    .welcome-logo { width: 96px; height: 96px; border-radius: 24px; background: linear-gradient(160deg, #30D5B5, #007A68); color: #fff; box-shadow: 0 12px 30px -12px rgba(0, 122, 104, .6); }
+    .feature .ibox { background: transparent; color: var(--sage); width: 36px; }
+    .feature .ibox .ic { width: 28px; height: 28px; }
+    .steps i { height: 3px; }
+
+    .mini-links button { font-size: 15px; font-weight: 400; color: var(--sage-ink); }
+    .link-btn { font-size: 15px; font-weight: 400; color: var(--sage-ink); text-decoration: none; }
   </style>
 </head>
 <body>
+  <div id="navbar" class="navbar" aria-hidden="true"><span id="navbar-title"></span></div>
   <noscript><p style="padding:24px;text-align:center">يحتاج نَقَاء إلى تفعيل JavaScript ليعمل.</p></noscript>
 
   <div class="app">
@@ -1510,7 +1733,16 @@
     if (!TREE) buildTree();
     const light = (opts.theme || document.documentElement.dataset.theme) === 'light';
     const p = clamp(m.pd / 30, 0, 1), pd = Math.max(.25, p);
-    const P = light ? {
+    const HERO = light ? {
+      skyTop: ramp([[0, '#2B6A8E'], [1, '#3F8DB0']], p), skyBot: ramp([[0, '#E7B48C'], [1, '#F6D3A6']], p), sun: '#FFE6BF',
+      hills: '#7DB59A', ground: '#5C9C7E', trunk: '#6B4E3A', leaves: ['#11997C', '#6FD0B0'], bloss: '#FF8A7A', fruit: '#FFB020',
+      pot: '#2E4A55', potFill: '#F6F1E9', soil: '#6B4E3A', seed: '#FFB46B'
+    } : {
+      skyTop: ramp([[0, '#0A1430'], [1, '#16294A']], p), skyBot: ramp([[0, '#2D3463'], [.6, '#6B4E6E'], [1, '#C9866A']], pd), sun: '#FFB46B',
+      hills: ramp([[0, '#1A3340'], [1, '#24504A']], p), ground: ramp([[0, '#132A31'], [1, '#1D4038']], p), trunk: '#8A6A55',
+      leaves: ['#30D5B5', '#9BE7D3'], bloss: '#FF8A7A', fruit: '#FFB020', pot: '#C9D3DD', potFill: '#1F2C3A', soil: '#4A3A30', seed: '#FFB46B'
+    };
+    const P = opts.hero ? HERO : light ? {
       skyTop: '#CFE6EE', skyBot: '#FCE3CC', sun: '#F6B98A', hills: '#BFDCCB', ground: '#9CCBB0', trunk: '#8A6448',
       leaves: ['#2E9C85', '#6CC3A8'], bloss: '#F29A86', fruit: '#E8955A',
       pot: '#56636A', potFill: '#F4EEE5', soil: '#7A5A40', seed: '#E8955A'
@@ -1531,9 +1763,9 @@
       const starO = clamp(1 - p * 1.4, 0, 1) * .8;
       if (starO > 0) s += `<g opacity="${starO.toFixed(2)}" fill="#DCE4F0">` + TREE.stars.map(t => `<circle class="${opts.static ? '' : 'twinkle'}" style="animation-delay:${t.d}s" cx="${t.x.toFixed(1)}" cy="${t.y.toFixed(1)}" r="${t.r.toFixed(2)}"/>`).join('') + '</g>';
     }
-    const sunY = light ? 96 : 206 - pd * 116;
-    s += `<circle cx="292" cy="${sunY.toFixed(1)}" r="54" fill="url(#sunG)"/>
-      <circle cx="292" cy="${sunY.toFixed(1)}" r="13" fill="${P.sun}" opacity="${light ? 1 : (.5 + p * .5).toFixed(2)}"/>
+    const sunY = light ? 96 : 206 - pd * 116, sunX = opts.hero ? 76 : 292;
+    s += `<circle cx="${sunX}" cy="${sunY.toFixed(1)}" r="54" fill="url(#sunG)"/>
+      <circle cx="${sunX}" cy="${sunY.toFixed(1)}" r="13" fill="${P.sun}" opacity="${light ? 1 : (.5 + p * .5).toFixed(2)}"/>
       <path d="M0,192 Q60,164 130,182 T260,172 T360,180 V240 H0Z" fill="${P.hills}"/>
       <path d="M0,212 Q90,198 180,206 T360,203 V240 H0Z" fill="${P.ground}"/>`;
     // the old tin, drawn as a pot the tree grows from (abstract, no brand, no pouches)
@@ -1626,7 +1858,10 @@
     const v = $('#view-' + tab);
     void v.offsetWidth; v.classList.add('enter');
     if (!opts.keepScroll) window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+    $('#navbar-title').textContent = ({ today: 'اليوم', journey: 'رحلتك', sos: 'نجدة', me: 'أنا' })[tab];
+    $('#navbar').classList.toggle('show', window.scrollY > 64);
   }
+  window.addEventListener('scroll', () => { const n = $('#navbar'); if (n) n.classList.toggle('show', window.scrollY > 64); }, { passive: true });
   const rerender = () => RENDER[currentTab]();
 
   /* =========================================================
@@ -1683,17 +1918,13 @@
       </header>
 
       <section class="card hero">
-        <button class="scene compact" data-action="legend" aria-label="ماذا يعني المشهد؟">${sceneSVG(m, { align: 'xMidYMax' })}<span class="scene-help">${ic('info', 'xs')}</span></button>
+        <button class="sky" data-action="legend" aria-label="ماذا يعني المشهد؟">${sceneSVG(m, { align: 'xMidYMax', hero: true })}
+          <span class="sky-top"><span class="sky-lbl" data-live="lbl">${cp.lbl}</span><span class="sky-num num" data-live="big">${cp.big}</span><span class="sky-unit" data-live="unit">${cp.unit}</span></span>
+          <span class="scene-help">${ic('info', 'xs')}</span></button>
         <div class="hero-body">
-          <div class="row between" style="align-items:flex-end">
-            <div>
-              <p class="xs muted" style="margin:0 0 2px" data-live="lbl">${cp.lbl}</p>
-              <div class="counter"><span class="big num" data-live="big">${cp.big}</span><span class="h3 ink2" data-live="unit">${cp.unit}</span></div>
-            </div>
-            ${m.prep ? '' : `<div class="xs muted" style="text-align:left;max-width:48%" data-live="next">${ns ? esc(ns.t) + ' بعد ' + fmtDur(ns.h - m.H) : ''}</div>`}
-          </div>
-          ${m.prep ? '' : `<div class="bar thin" style="margin-top:12px"><i data-live="prog" style="width:${Math.max(2, clamp(m.pd / 30 * 100, 0, 100))}%"></i></div>`}
-          <p class="small ink2" style="margin:10px 0 0">${ic('sprout', 'xs sage')} ${sceneCaption(m)}</p>
+          ${m.prep ? `<p class="small ink2" style="margin:0">${ic('calendar', 'xs')} ${fmtDate(m.st, { weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: '2-digit' })}</p>` : `<div class="row between xs muted"><span>${ar(Math.min(30, Math.floor(m.pd)))} من ٣٠ يوماً</span><span data-live="next">${ns ? esc(ns.t) + ' بعد ' + fmtDur(ns.h - m.H) : ''}</span></div>
+          <div class="bar thin" style="margin-top:8px"><i data-live="prog" style="width:${Math.max(2, clamp(m.pd / 30 * 100, 0, 100))}%"></i></div>`}
+          <p class="small ink2" style="margin:12px 0 0">${ic('sprout', 'xs sage')} ${sceneCaption(m)}</p>
           ${!state.legendSeen && (m.prep || m.pd < 2) ? `<div class="callout sage small" style="margin-top:10px;line-height:1.8">
               <b>كيف تقرأ المشهد؟</b> العلبة عادتك القديمة، والشجرة تنمو منها: <b>ورقة</b> لكل يوم، <b>ثمرة</b> لكل تحدٍّ، <b>زهرة</b> لكل محطة كبرى.
               <div class="row" style="margin-top:8px;gap:8px"><button class="btn sm primary" data-action="legendOk">فهمت</button><button class="btn sm ghost" data-action="legend">المزيد</button></div></div>` : ''}
@@ -2201,11 +2432,9 @@
     if (meSeg === 'profile') {
       const dayLeft = m.perDay > 0 ? Math.ceil(Math.max(0, state.goalPrice - m.saved) / m.perDay) : 0;
       html += `
-      <section class="card">
-        <div class="row">
-          <div class="welcome-logo" style="width:56px;height:56px;border-radius:20px;margin:0;font-size:22px;font-weight:700">${esc(initial)}</div>
-          <div class="grow"><h2 class="h2">${esc(state.name || 'صديق نَقَاء')}</h2><p class="xs muted" style="margin:0">${m.gradual ? 'التدرّج الذكي' : 'القطع الفوري'} — ${m.prep ? 'يوم إقلاعك' : 'بدأت'} ${fmtDate(m.st, { day: 'numeric', month: 'long', year: 'numeric' })}</p></div>
-        </div>
+      <section class="card profile-head">
+          <div class="avatar">${esc(initial)}</div>
+          <div><h2 class="h2">${esc(state.name || 'صديق نَقَاء')}</h2><p class="xs muted" style="margin:0">${m.gradual ? 'التدرّج الذكي' : 'القطع الفوري'} — ${m.prep ? 'يوم إقلاعك' : 'بدأت'} ${fmtDate(m.st, { day: 'numeric', month: 'long', year: 'numeric' })}</p></div>
       </section>
 
       <section class="card">
@@ -2326,6 +2555,7 @@
     const layer = $('#sheet-layer');
     $('#sheet-body').innerHTML = html;
     layer.hidden = false;
+    document.body.classList.add('sheet-open');
     document.body.style.overflow = 'hidden';
     sheetClose = onClose || null;
     if (onMount) onMount($('#sheet-body'));
@@ -2333,6 +2563,7 @@
   }
   function closeSheet() {
     $('#sheet-layer').hidden = true;
+    document.body.classList.remove('sheet-open');
     document.body.style.overflow = '';
     const cb = sheetClose; sheetClose = null; if (cb) cb();
   }
